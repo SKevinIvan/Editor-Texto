@@ -1,0 +1,25 @@
+paquete programa01;
+publico clase $Operaciones {
+  publico estatico procedimiento principal (Cadena [ ] _argumentos) 
+	{
+?¿'
+//hola este es un comentario
+/* 
+hola que hace
+adsads 0987654jkhjkadfjs6543/&%$#
+*/
+	entero _num1;
+	_num1 = 0;
+	entero _num2;
+	_num2 = 5;
+0.04.0
+	hacerMientras
+"hola
+	{
+	_num1 = _num1 + 5;
+	} mientras (_num1 < 100 );
+	} 
+} 
+
+
+

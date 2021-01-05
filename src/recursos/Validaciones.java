@@ -1,0 +1,361 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package recursos;
+
+import java.awt.Color;
+import java.awt.event.KeyEvent;
+import java.util.ArrayList;
+import java.util.StringTokenizer;
+import javax.swing.JFrame;
+import javax.swing.JTextField;
+import javax.swing.JTextPane;
+
+/**
+ * Clase para llevar a cabo validaciones simples en cajas de texto en un
+ * ambiente de pantallas de java
+ *
+ * @author kevin2
+ */
+public class Validaciones {
+
+    /**
+     * Método que se coloca en el evento KeyType de una caja de texto con el fin
+     * de que al precionar un caracter del teclado se verifique si es un número
+     * entero, de no ser así lo elimina
+     *
+     * @param ke Objeto que refiere a la tecla atrapada por el KeyType de una
+     * caja de texto de java
+     */
+    public static void validaEntero(KeyEvent ke) {
+        if ((ke.getKeyChar() < '0' || ke.getKeyChar() > '9')
+                && ke.getKeyCode() != 8) {
+            ke.setKeyChar((char) 8);
+        }
+    }
+
+    /**
+     * Método que se coloca en el evento KeyType de una caja de texto con el fin
+     * de que al precionar un caracter del teclado se verifique si es un número
+     * con uso de punto flotante, de no ser así lo elimina
+     *
+     * @param ke Objeto que refiere a la tecla atrapada por el KeyType de una
+     * caja de texto de java
+     */
+    public static void validaFlotantes(KeyEvent ke) {
+        if ((ke.getKeyChar() < '0' || ke.getKeyChar() > '9')
+                && ke.getKeyCode() != 8 && ke.getKeyChar() != '.') {
+            ke.setKeyChar((char) 8);
+        }
+    }
+
+    /**
+     * Método que se coloca en el evento KeyType de una caja de texto con el fin
+     * de que al precionar un caracter del teclado se verifique si es un
+     * caracter alfabético, de no ser así lo elimina
+     *
+     * @param ke Objeto que refiere a la tecla atrapada por el KeyType de una
+     * caja de texto de java
+     */
+    public static void validaAlfabeticos(KeyEvent ke) {
+        if ((ke.getKeyChar() < 'a' || ke.getKeyChar() > 'z')
+                && (ke.getKeyChar() < 'A' || ke.getKeyChar() > 'Z')
+                && ke.getKeyCode() != 8 && ke.getKeyChar() != '.'
+                && ke.getKeyChar() != ' ' && ke.getKeyChar() != 'ñ'
+                && ke.getKeyChar() != 'Ñ' && ke.getKeyChar() != 'á'
+                && ke.getKeyChar() != 'Á' && ke.getKeyChar() != 'é'
+                && ke.getKeyChar() != 'É' && ke.getKeyChar() != 'í'
+                && ke.getKeyChar() != 'Í' && ke.getKeyChar() != 'ó'
+                && ke.getKeyChar() != 'Ó' && ke.getKeyChar() != 'ú'
+                && ke.getKeyChar() != 'Ú') {
+            ke.setKeyChar((char) 8);
+        }
+    }
+
+    /**
+     * Método que se coloca en el evento KeyType de una caja de texto con el fin
+     * de que al precionar un caracter del teclado se verifique si es un
+     * alfanumérico, de no ser así lo elimina
+     *
+     * @param ke Objeto que refiere a la tecla atrapada por el KeyType de una
+     * caja de texto de java
+     */
+    public static void validaAlfanumerico(KeyEvent ke) {
+        if ((ke.getKeyChar() < 'a' || ke.getKeyChar() > 'z')
+                && (ke.getKeyChar() < 'A' || ke.getKeyChar() > 'Z')
+                && (ke.getKeyChar() < '0' || ke.getKeyChar() > '9')
+                && ke.getKeyCode() != 8 && ke.getKeyChar() != '.'
+                && ke.getKeyChar() != ' ' && ke.getKeyChar() != 'ñ'
+                && ke.getKeyChar() != 'Ñ' && ke.getKeyChar() != 'á'
+                && ke.getKeyChar() != 'Á' && ke.getKeyChar() != 'é'
+                && ke.getKeyChar() != 'É' && ke.getKeyChar() != 'í'
+                && ke.getKeyChar() != 'Í' && ke.getKeyChar() != 'ó'
+                && ke.getKeyChar() != 'Ó' && ke.getKeyChar() != 'ú'
+                && ke.getKeyChar() != 'Ú') {
+            ke.setKeyChar((char) 8);
+        }
+    }
+
+    /**
+     * Método que se coloca en el evento KeyPress de una caja de texto con el
+     * fin de verificar si el contenido de la misma es entero
+     *
+     * @param jt Caja de texto a evaluar
+     * @return verdadero si el contenido de la caja es un entero y false si el
+     * contenido de la misma no es un entero
+     */
+    public static boolean verificaEntero(JTextField jt) {
+        try {
+            int x = Integer.parseInt(jt.getText());
+            return true;
+        } catch (NumberFormatException e) {
+            return false;
+        }
+    }
+
+    /**
+     * Método que se coloca en el evento KeyPress de una caja de texto con el
+     * fin de verificar si el contenido de la misma es un número con punto
+     * flotante
+     *
+     * @param jt Caja de texto a evaluar
+     * @return verdadero si el contenido de la caja es un un número con punto
+     * flotante y false si el contenido de la misma no lo es
+     */
+    public static boolean verificaDoble(JTextField jt) {
+        try {
+            double x = Double.parseDouble(jt.getText());
+            return true;
+        } catch (NumberFormatException e) {
+            return false;
+        }
+    }
+
+    /**
+     * Método que se coloca en el evento KeyPress de una caja de texto con el
+     * fin de validar si la tecla presioanada es ENTER siempre y cuando el
+     * contenido de la caja de texto sea una cadena y cambia a otro objeto
+     *
+     * @param jf Nombre del frame donde se esta haciendo la acción
+     * @param ke Variable evt del método KeyPress
+     * @param obj Objeto al que se desea pasar al momento de dar enter
+     */
+    public static void enter(JFrame jf, KeyEvent ke, Object obj) {
+        if (ke.getKeyChar() == '\n') {
+            CtrlInterfaz.cambia(obj);
+        }
+    }
+
+    /**
+     * Método que se coloca en el evento KeyPress de una caja de texto con el
+     * fin de validar si la tecla presioanada es ENTER siempre y cuando el
+     * contenido de la caja de texto sea un entero y cambia a otro objeto
+     *
+     * @param jf Nombre del frame donde se esta haciendo la acción
+     * @param ke Variable evt del método KeyPress
+     * @param jt Caja de texto donde se verifica que exista un entero
+     * @param obj Objeto al que se desea pasar al momento de dar enter
+     */
+    public static void enterEntero(JFrame jf, KeyEvent ke,
+            JTextField jt, Object obj) {
+        if (ke.getKeyChar() == '\n') {
+            if (verificaEntero(jt)) {
+                CtrlInterfaz.cambia(obj);
+            } else {
+                Mensaje.error(jf, "Se esperaba un entero");
+                CtrlInterfaz.selecciona(jt);
+            }
+
+        }
+    }
+
+    public static void enterFlotante(JFrame jf, KeyEvent ke,
+            JTextField jt, Object obj) {
+        if (ke.getKeyChar() == '\n') {
+            if (verificaDoble(jt)) {
+                CtrlInterfaz.cambia(obj);
+            } else {
+                Mensaje.error(jf, "Se esperaba un flotante");
+                CtrlInterfaz.selecciona(jt);
+            }
+
+        }
+    }
+
+    /**
+     * Método que se coloca en el evento KeyPress de una caja de texto con el
+     * fin de validar si la tecla presioanada es ENTER siempre y cuando el
+     * contenido de la caja de texto sea una cadena y cambia el color de la
+     * cadena desde el ultimo espacio hasta el final de la cadena
+     *
+     *
+     * @param txtP TextPane que se verificará el texto
+     */
+    public static void enterColor(JTextPane txtP) {
+
+        verificaPalabra(txtP);
+
+    }
+
+    public boolean caracteres(char c) {
+
+        int cCode = (int) c;
+        return c == '!' || c == '"' || c == '#' || c == '$' || c == '%' || c == '&'
+                || c == '/' || c == '(' || c == ')' || c == '=' || c == '?' || c == '¡'
+                || c == '|' || c == '¿' || c == '*' || c == '+' || c == '}' || c == '{'
+                || c == '[' || c == ']' || c == '^' || c == '-' || c == '.' || c == ','
+                || c == ';' || c == ':' || c == '_' || c == '¬' || c == '~' || c == '>'
+                || c == '#' || c == '<' || c == ' ' || c == '@' || cCode == 8 || cCode == 39;
+    }
+
+    public boolean letras(char c) {
+
+        return c >= 'a' || c <= 'z' || c >= 'A' || c <= 'Z';
+    }
+
+    public boolean numeros(char c) {
+
+        return c >= '0' || c <= '9';
+    }
+
+    public static void verificaPalabra(JTextPane txtP) {
+
+        ArrayList<String> listPalabras;
+
+        Color colorPalabra;
+        Color cAzul = new Color(0, 0, 204);
+        Color cVerde = new Color(0, 204, 0);
+        Color cRojo = new Color(255, 0, 0);
+        Color cNaranja = new Color(255, 102, 0);
+        Color cRosa = new Color(255, 0, 255);
+        Color cAmarillo = new Color(255, 204, 0);
+        Color cCafe = new Color(102, 0, 51);
+        Color cNegro = new Color(0, 0, 0);
+        Color cGris = new Color(102, 102, 102);
+        Color cMorado = new Color(153, 0, 204);
+
+        String s = txtP.getText();
+        if (s.length() != 0) {
+
+            listPalabras = new ArrayList<>();
+
+            char[] palabra = s.toCharArray();
+            String nuevaCadena = "";
+
+            for (int i = 0; i < palabra.length; i++) {
+                nuevaCadena += palabra[i];
+                if (palabra[i] == ' ' || palabra[i] == '\n' || palabra[i] == '\t' || palabra[i] == '\r' || palabra[i] == ';'
+                        || palabra[i] == '(' || palabra[i] == ')'
+                        || palabra[i] == '{' || palabra[i] == '}' || palabra[i] == '='
+                        || palabra[i] == '>' || palabra[i] == '<' || palabra[i] == '+'
+                        || palabra[i] == '-' || palabra[i] == '*'
+                        || palabra[i] == '!') {
+                    listPalabras.add(nuevaCadena);
+                    nuevaCadena = "";
+                }
+                if ((i + 1) != palabra.length) {
+                    if (palabra[i + 1] == ' ' || palabra[i + 1] == '\n' || palabra[i + 1] == '\t'
+                            || palabra[i + 1] == '\r' || palabra[i + 1] == ';'
+                            || palabra[i] == ')' || palabra[i] == '('
+                            || palabra[i] == '{' || palabra[i] == '}' || palabra[i] == '='
+                            || palabra[i] == '>' || palabra[i] == '<' || palabra[i] == '+'
+                            || palabra[i] == '-' || palabra[i] == '*'
+                            || palabra[i] == '!') {
+                        listPalabras.add(nuevaCadena);
+                        nuevaCadena = "";
+                    }
+                } else {
+                    listPalabras.add(nuevaCadena);
+                    nuevaCadena = "";
+                }
+            }
+
+            txtP.setText("");
+
+               for (int i = 0; i < listPalabras.size(); i++) {
+                switch (listPalabras.get(i).toLowerCase()) {
+                    case "publico":
+                    case "privado":
+                    case "protegido":
+                    case "clase":
+                    case "paquete":
+                    case "importar":
+                    case "estatico":
+                    case "final":
+                    case "super":
+                    case "retorno":
+                    case "procedimiento":
+                    case "funcion":
+                    case "sistema":
+                    case "linea":
+                    case "abstracta":
+                    case "extender":
+                    case "implementar":
+                    case "interfaz":
+                    case "obtener":
+                    case "asignar":
+                    case "principal":
+                    case "nuevo":
+                    case "este":
+                    case "nulo":
+                    case "leer":
+                    case "imprimir":
+                    case "defecto":
+                    case "terminar":
+                    case "salir":
+                    case "caso":
+                    case "alternativa":
+                    case "si":
+                    case "sino":
+                    case "sinoSi":
+                    case "mientras":
+                    case "hacerMientras":
+                    case "para":
+                    case "verdadero":
+                    case "falso":
+                    case "entero":
+                    case "flotante":
+                    case "doble":
+                    case "cadena":
+                    case "booleano":
+                    case "largo":
+                    case "objeto":
+                    case "caracter":
+                    case "corto":
+                    case "byte":
+                        colorPalabra = cAzul;
+                        
+                        break;
+                        
+                    case "entrada":
+                    case "salida":
+                        colorPalabra = cVerde;
+                        break;
+                    default:
+                         try {
+                        int x = Integer.parseInt(listPalabras.get(i));
+                        colorPalabra = cNaranja;
+                    } catch (NumberFormatException e) {
+                        try {
+                            float x = Float.parseFloat(listPalabras.get(i));
+                            colorPalabra = cNaranja;
+                        } catch (NumberFormatException e1) {
+                            colorPalabra = cNegro;
+                        }
+                    }
+                    break;
+
+                }
+
+                TextPaneTest.appendToPane(txtP, listPalabras.get(i), colorPalabra);
+
+            }
+
+        }
+    }
+    
+   
+
+}

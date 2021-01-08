@@ -99,7 +99,7 @@ public class Sintactico {
         this.pilaSintactico.inserta(new Nodo(nI, 0), null);
         impresionPilaSintactico.add(imprimirPila());
         impresionColaSalida.add(imprimirCola());
-        while (pilaSintactico.getTope() != null || colaSalida.getF() != null) {
+       while (pilaSintactico.getTope() != null || colaSalida.getF() != null) {
             if (pilaSintactico.getTope().getS().equals(colaSalida.getF().getS())) {
                 agregaNodos();
                 impresionPilaSintactico.add(imprimirPila());
@@ -127,10 +127,13 @@ public class Sintactico {
 
                     } else {
                         String s = buscaLoQueSeEsperaba(pilaSintactico.getTope().getS());
+                        s = buscaLoQueSeEspera(s);
                         if (s == "") {
-                            error = "Error sintactico al recibir " + colaSalida.getF().getS();
+                            s = buscaLoQueSeEspera(colaSalida.getF().getS());
+                            error = "Error sintactico al recibir " + s;
                             numError = (int) colaSalida.getF().getObj();
                         } else {
+
                             error = "Error sintactico... se esperaba un " + s;
                             numError = (int) colaSalida.getF().getObj();
                         }
@@ -141,7 +144,8 @@ public class Sintactico {
                     impresionPilaSintactico.add(imprimirPila());
                     impresionColaSalida.add(imprimirCola());
                 } else {
-                    error = "Error sintactico... se esperaba " + pilaSintactico.getTope().getS() + " en la linea " + colaSalida.getF().getObj();
+                    String s = buscaLoQueSeEspera(pilaSintactico.getTope().getS());
+                    error = "Error sintactico... se esperaba " + s + " en la linea " + colaSalida.getF().getObj();
                     numError = (int) colaSalida.getF().getObj();
                     break;
                 }
@@ -597,5 +601,68 @@ public class Sintactico {
         }
         return num;
     }
+    private String buscaLoQueSeEspera(String s) {
+        String espera = "";
+        StringTokenizer st = new StringTokenizer(s, " ", false);
+        ArrayList<String> ar = new ArrayList<>();
+        while (st.hasMoreElements()) {
+            String pa = st.nextToken();
+            if (pa.equals("o")) {
+
+            } else {
+                ar.add(pa);
+            }
+        }
+
+        Lexico ls = new Lexico();
+        String tokensAutomatas[][] = ls.getConjuntoTokensAutomatas();
+        String tokensFijos[][] = ls.getConjuntoTokensFijos();
+
+        for (int i = 0; i < ar.size(); i++) {
+            String tokenSalida = ar.get(i);
+            int token = 0;
+            String tokenS = "";
+            boolean automata = false;
+            boolean fijos = false;
+            while (token < tokensAutomatas.length) {
+
+                if (tokenSalida.equals(tokensAutomatas[token][1])) {
+
+                    tokenS = tokensAutomatas[token][0];
+                    automata = true;
+
+                }
+                token++;
+            }
+
+            if (automata) {
+                espera += tokenS + " o ";
+            } else {
+                token = 0;
+                while (token < tokensFijos.length) {
+
+                    if (tokenSalida.equals(tokensFijos[token][2])) {
+
+                        tokenS = tokensFijos[token][1]+"("+tokensFijos[token][0]+")";
+                        fijos = true;
+
+                    }
+                    token++;
+                }
+                if (fijos) {
+                    espera += tokenS + " o ";
+                }
+            }
+
+        }
+        if (espera.endsWith(" o ")) {
+
+            espera = espera.substring(0, espera.length() - 3);
+
+        }
+
+        return espera;
+    }
+
 
 }

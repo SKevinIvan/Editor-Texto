@@ -397,14 +397,14 @@ public class Sintactico {
         } catch (IOException e) {
             System.out.println("" + e);
         }
-        String s = "Tabla\n";
-        for (int i = 0; i < getTablaPredictiva().length; i++) {
-            for (int j = 0; j < getTablaPredictiva()[i].length; j++) {
-                s += getTablaPredictiva()[i][j] + "\t";
-            }
-            s += "\n";
-        }
-        System.out.println(s);
+//        String s = "Tabla\n";
+//        for (int i = 0; i < getTablaPredictiva().length; i++) {
+//            for (int j = 0; j < getTablaPredictiva()[i].length; j++) {
+//                s += getTablaPredictiva()[i][j] + "\t";
+//            }
+//            s += "\n";
+//        }
+//        System.out.println(s);
     }
 
     /**

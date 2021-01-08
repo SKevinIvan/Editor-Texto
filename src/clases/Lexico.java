@@ -381,7 +381,7 @@ public class Lexico {
     private ArrayList<String> separaCodigo() {
 
         ArrayList<String> palabras = new ArrayList<>();
-        StringTokenizer st = new StringTokenizer(getTextoCodigo(), "+ -=*&| {}()[]^/%;:,<>\n\t\r!", true);
+        StringTokenizer st = new StringTokenizer(getTextoCodigo(), "+ -=*&| {}()[]^/%;:,<>\n\t\r!\" ", true);
         String cadena;
         int contRenglon = 1; //incrementa las lineas de codigo
         int contRenglon2 = 1; //incrementa las lineas de codigo
@@ -399,6 +399,7 @@ public class Lexico {
                     contRenglon++;
                 }
             } else {
+
                 if (cadena.equals("+")) {
 
                     if (st.hasMoreElements()) {
@@ -417,9 +418,19 @@ public class Lexico {
 
                     if (st.hasMoreElements()) {
                         aux = st.nextToken();
+                        boolean bh = false;
+                        try {
+
+                            int aux32 = Integer.parseInt(aux);
+                            bh = true;
+                        } catch (Exception e) {
+
+                        }
                         if (aux.equals("=")) {
                             cadena += aux;
                         } else if (aux.equals("-")) {
+                            cadena += aux;
+                        } else if (bh) {
                             cadena += aux;
                         } else if (aux.equals(" ")) {
 
@@ -569,6 +580,24 @@ public class Lexico {
                         }
 
                     }
+                } else if (cadena.equals("\"")) {
+                    auxRe = true;
+                    contRenglon2 = contRenglon;
+                    while (st.hasMoreElements()) {
+                        aux = st.nextToken();
+                        if (aux.contains("\"")) {
+                            cadena += aux;
+                            break;
+                        } else if (aux.equals("\n")) {
+                            cadena += "\n";
+                            contRenglon++;
+                        } else if(aux.equals(" ")){
+                            cadena += " ";
+                        }else{
+                            cadena += aux;
+                        }
+                    }
+
                 }
                 palabras.add(cadena);
 

@@ -1378,8 +1378,15 @@ public class EditorPlanetProgramming extends javax.swing.JFrame {
     }//GEN-LAST:event_itemGuardarComoActionPerformed
 
     private void itemSintacticoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_itemSintacticoActionPerformed
-        crearPestaniaSintactico();
-        sintactico();
+        if (!bError) {
+            crearPestaniaSintactico();
+            sintactico();
+            bError=false;
+        } else {
+            Mensaje.advertencia(this, "El analisis sintactico no se puede realizar, debido a que hay un error léxico");
+            TextPaneTest.appendToPane(txtPanelSalida, "\nError al realizar analisis sinctatico...", cRojo);
+            
+        }
     }//GEN-LAST:event_itemSintacticoActionPerformed
 
     private void itemSemanticoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_itemSemanticoActionPerformed
@@ -2575,7 +2582,7 @@ public class EditorPlanetProgramming extends javax.swing.JFrame {
                 url = archivoExtraido.getCanonicalPath(); //obtiene la ruta del archivo
                 etiquetaNombre = archivoExtraido.getName();//obtiene el nombre del archivo/cancion                
 
-                TextPaneTest.appendToPane(txtPanelSalida, "\nAbriendo achivo...\n", cVerde);
+                TextPaneTest.appendToPane(txtPanelSalida, "\nAbriendo achivo...", cVerde);
 
                 String s = "";
                 ArrayList<String> ar = ManipulaArchivos.cargar(url);
@@ -2610,7 +2617,7 @@ public class EditorPlanetProgramming extends javax.swing.JFrame {
             }
 
         } catch (HeadlessException | IOException e) {
-            TextPaneTest.appendToPane(txtPanelSalida, "\nNo se pudo abrir el achivo...\n" + e, cRojo);
+            TextPaneTest.appendToPane(txtPanelSalida, "\nNo se pudo abrir el achivo..." + e, cRojo);
         }
 
     }
@@ -2632,7 +2639,7 @@ public class EditorPlanetProgramming extends javax.swing.JFrame {
                 if (archivo) {
                     ManipulaArchivos.guardar(txtPanelEditando.getText(), rutaArchivo);
                 }
-                TextPaneTest.appendToPane(txtPanelSalida, "\nCreando achivo...\n", cVerde);
+                TextPaneTest.appendToPane(txtPanelSalida, "\nCreando achivo...", cVerde);
                 url = archivoNuevo.getCanonicalPath(); //obtiene la ruta del archivo
                 etiquetaNombre = archivoNuevo.getName();//obtiene el nombre del archivo
                 setTitle("Editor Planet" + " - " + etiquetaNombre);
@@ -2659,7 +2666,7 @@ public class EditorPlanetProgramming extends javax.swing.JFrame {
             }
 
         } catch (HeadlessException | IOException e) {
-            TextPaneTest.appendToPane(txtPanelSalida, "\nError al crear nuevo achivo...\n" + e, cRojo);
+            TextPaneTest.appendToPane(txtPanelSalida, "\nError al crear nuevo achivo..." + e, cRojo);
         }
     }
 
@@ -2667,7 +2674,7 @@ public class EditorPlanetProgramming extends javax.swing.JFrame {
 
         if (archivo) {
             ManipulaArchivos.guardar(txtPanelEditando.getText(), rutaArchivo);
-            TextPaneTest.appendToPane(txtPanelSalida, "\nGuardando achivo...\n", cVerde);
+            TextPaneTest.appendToPane(txtPanelSalida, "\nGuardando achivo...", cVerde);
             Validaciones.enterColor(txtPanelEditando);
         } else {
             if (guardarAntesSalir()) {
@@ -2709,7 +2716,7 @@ public class EditorPlanetProgramming extends javax.swing.JFrame {
                     rutaArchivo = url;
                     archivo = true;
 
-                    TextPaneTest.appendToPane(txtPanelSalida, "\nGuardando nuevo achivo...\n", cVerde);
+                    TextPaneTest.appendToPane(txtPanelSalida, "\nGuardando nuevo achivo...", cVerde);
                     Validaciones.enterColor(txtPanelEditando);
                     //habilita MenuOpciones
                     CtrlInterfaz.habilita(true, btnGuardar, btnAbrir, btnBuscar, btnCerrar, btnCompilar, btnEjecutar, btnFormato, btnNuevo, btnReemplazar);
@@ -2729,7 +2736,7 @@ public class EditorPlanetProgramming extends javax.swing.JFrame {
                 }
 
             } catch (HeadlessException | IOException e) {
-                TextPaneTest.appendToPane(txtPanelSalida, "\nError al guardar nuevo archivo...\n" + e, cRojo);
+                TextPaneTest.appendToPane(txtPanelSalida, "\nError al guardar nuevo archivo..." + e, cRojo);
             }
 
         }
@@ -2767,7 +2774,7 @@ public class EditorPlanetProgramming extends javax.swing.JFrame {
 
         if (archivo) {
             ManipulaArchivos.guardar(txtPanelEditando.getText(), rutaArchivo);
-            TextPaneTest.appendToPane(txtPanelSalida, "\nCerrando archivo...\n", cVerde);
+            TextPaneTest.appendToPane(txtPanelSalida, "\nCerrando archivo...", cVerde);
             txtPanelEditando.setText("");
             setTitle("Editor Planet");
             archivo = false;
@@ -2791,11 +2798,12 @@ public class EditorPlanetProgramming extends javax.swing.JFrame {
 
     public void lexico() {
 
+        bError=false;
         CtrlInterfaz.habilita(true, itemGuardar, itemLexico, itemSintactico);
         CtrlInterfaz.habilita(false, itemSemantico, itemIntermedio, itemOptmizacion, itemObjeto);
         CtrlInterfaz.habilita(true, checkEditando, checkCompilando, checkSalida, checkLexico, checkSintactico);
         CtrlInterfaz.habilita(false, checkIntermedio, checkObjeto, checkOptimizacion, checkSemantico);
-        TextPaneTest.appendToPane(txtPanelSalida, "\nRealizando análisis léxico...\n", cVerde);
+        TextPaneTest.appendToPane(txtPanelSalida, "\nRealizando análisis léxico...", cVerde);
 
         int[][] matrizGeneral = {
             {1, 3, 6, 9, 12, 14, 16, 18, 20, 23, 24, 26, -1, -1, -2}, //0
@@ -2886,7 +2894,7 @@ public class EditorPlanetProgramming extends javax.swing.JFrame {
         scrollPaneLexico.setViewportView(tablaLexemas);
 
         int errora = 0;
-        boolean bError = false;
+
         for (int i = 0; i < lexemas.size(); i++) {
             //textoMostrar += " " +  + "\t" +  + "\t" + lexemas.get(i).getNumToken() + "\t" + lexemas.get(i).getRenglon() + "\n";
             if (lexemas.get(i).getNumToken() == 80 || lexemas.get(i).getNumToken() == 81 || lexemas.get(i).getNumToken() == 82 || lexemas.get(i).getNumToken() == 83 || lexemas.get(i).getNumToken() == 84 || lexemas.get(i).getNumToken() == 85 || lexemas.get(i).getNumToken() == 86 || lexemas.get(i).getNumToken() == 87 || lexemas.get(i).getNumToken() == 88 || lexemas.get(i).getNumToken() == 89 || lexemas.get(i).getNumToken() == 90 || lexemas.get(i).getNumToken() == 91 || lexemas.get(i).getNumToken() == 92 || lexemas.get(i).getNumToken() == 93 || lexemas.get(i).getNumToken() == 94) {
@@ -2899,24 +2907,25 @@ public class EditorPlanetProgramming extends javax.swing.JFrame {
             TextPaneTest.appendToPane(txtPanelSalida, "\nLexicamente incorrecto... " + lexemas.get(errora).getNombreToken()
                     + " por " + lexemas.get(errora).getLexema() + " en la linea " + lexemas.get(errora).getRenglon(), cRojo);
         } else {
-            TextPaneTest.appendToPane(txtPanelSalida, "\nLexicamente correcto...\n", cVerde);
+            TextPaneTest.appendToPane(txtPanelSalida, "\nLexicamente correcto...", cVerde);
         }
 
     }
+    boolean bError = false;
 
     public void sintactico() {
         CtrlInterfaz.habilita(true, itemGuardar, itemLexico, itemSintactico, itemSemantico);
         CtrlInterfaz.habilita(false, itemIntermedio, itemOptmizacion, itemObjeto);
-        TextPaneTest.appendToPane(txtPanelSalida, "\nRealizando análisis sintáctico...\n", cVerde);
+        TextPaneTest.appendToPane(txtPanelSalida, "\nRealizando análisis sintáctico...", cVerde);
 
         CtrlInterfaz.habilita(true, checkEditando, checkCompilando, checkSalida, checkLexico, checkSintactico, checkSemantico);
         CtrlInterfaz.habilita(false, checkIntermedio, checkObjeto, checkOptimizacion);
         if (lexemas.isEmpty()) {
-            TextPaneTest.appendToPane(txtPanelSalida, "\nNo se puede hacer el análisis sintactico, realice el análisis léxico...\n", cRojo);
+            TextPaneTest.appendToPane(txtPanelSalida, "\nNo se puede hacer el análisis sintactico, realice el análisis léxico...", cRojo);
         } else {
 
             Sintactico analisisSintactico = new Sintactico();
-                
+
             ArrayList<Lexema> ls = new ArrayList<>();
 
             /*
@@ -2928,7 +2937,6 @@ public class EditorPlanetProgramming extends javax.swing.JFrame {
             
              */
             // Ejemplo 1 (id+id*(id+id)) sintacticamente correcro
-                  
 //            Lexema l1 = new Lexema();
 //            Lexema l2 = new Lexema();
 //            Lexema l3 = new Lexema();
@@ -2965,7 +2973,6 @@ public class EditorPlanetProgramming extends javax.swing.JFrame {
 //            ls.add(l11);
 //             
             // Ejemplo 2 id+id*id ->Sintacticamente correcto
-            
 //          Lexema l1 = new Lexema();
 //            Lexema l2 = new Lexema();
 //            Lexema l3 = new Lexema();
@@ -2988,7 +2995,6 @@ public class EditorPlanetProgramming extends javax.swing.JFrame {
 //            ls.add(l4);
 //            ls.add(l5);
 //             
-           
 // Ejemplo 3    Error sintactico se esperaba un id o (
 //          Lexema l1 = new Lexema();
 //            Lexema l2 = new Lexema();
@@ -3009,17 +3015,12 @@ public class EditorPlanetProgramming extends javax.swing.JFrame {
 //            ls.add(l2);
 //            ls.add(l4);
 //            ls.add(l5);    
-
-
-          //  analisisSintactico.setLexemas(ls);
-            
-            
-             
+            //  analisisSintactico.setLexemas(ls);
             analisisSintactico.setLexemas(lexemas);
-           // analisisSintactico.setPathGramatica("Gramatica - copia.txt");
+            // analisisSintactico.setPathGramatica("Gramatica - copia.txt");
             analisisSintactico.setPathGramatica("Gramatica.txt");
-          //  analisisSintactico.setPathTablaExcel("TablaPredictiva - copia.xlsx");
-           analisisSintactico.setPathTablaExcel("TablaPredictiva3.xlsx");
+            //  analisisSintactico.setPathTablaExcel("TablaPredictiva - copia.xlsx");
+            analisisSintactico.setPathTablaExcel("TablaPredictiva3.xlsx");
             String s[] = new String[2];
             s = analisisSintactico.analisisSintactico();
             txtPanelSintactico1.setText(s[0]);
@@ -3046,8 +3047,8 @@ public class EditorPlanetProgramming extends javax.swing.JFrame {
 
                 }
 
-                txtPanelEditando.setCaretPosition(renglonCaret-1);
-              
+                txtPanelEditando.setCaretPosition(renglonCaret - 1);
+
             }
             System.out.println(analisisSintactico.getNumError());
 
@@ -3060,7 +3061,7 @@ public class EditorPlanetProgramming extends javax.swing.JFrame {
         CtrlInterfaz.habilita(false, itemOptmizacion, itemObjeto);
         CtrlInterfaz.habilita(true, checkEditando, checkCompilando, checkSalida, checkLexico, checkSintactico, checkSemantico, checkIntermedio);
         CtrlInterfaz.habilita(false, checkObjeto, checkOptimizacion);
-        TextPaneTest.appendToPane(txtPanelSalida, "\nRealizando análisis semántico...\n", cVerde);
+        TextPaneTest.appendToPane(txtPanelSalida, "\nRealizando análisis semántico...", cVerde);
 
     }
 
@@ -3069,21 +3070,21 @@ public class EditorPlanetProgramming extends javax.swing.JFrame {
         CtrlInterfaz.habilita(false, itemObjeto);
         CtrlInterfaz.habilita(true, checkEditando, checkCompilando, checkSalida, checkLexico, checkSintactico, checkSemantico, checkIntermedio, checkOptimizacion);
         CtrlInterfaz.habilita(false, checkObjeto);
-        TextPaneTest.appendToPane(txtPanelSalida, "\nGenerando código intermedio...\n", cVerde);
+        TextPaneTest.appendToPane(txtPanelSalida, "\nGenerando código intermedio...", cVerde);
     }
 
     public void optimizacion() {
         CtrlInterfaz.habilita(true, itemGuardar, itemLexico, itemSintactico, itemSemantico, itemIntermedio, itemOptmizacion, itemObjeto);
         CtrlInterfaz.habilita(true, checkEditando, checkCompilando, checkSalida, checkLexico, checkSintactico, checkSemantico, checkIntermedio, checkOptimizacion, checkObjeto);
 
-        TextPaneTest.appendToPane(txtPanelSalida, "\nRealizando optimización del código...\n", cVerde);
+        TextPaneTest.appendToPane(txtPanelSalida, "\nRealizando optimización del código...", cVerde);
 
     }
 
     public void objeto() {
         CtrlInterfaz.habilita(true, itemGuardar, itemLexico, itemSintactico, itemSemantico, itemIntermedio, itemOptmizacion, itemObjeto);
         CtrlInterfaz.habilita(true, checkEditando, checkCompilando, checkSalida, checkLexico, checkSintactico, checkSemantico, checkIntermedio, checkOptimizacion, checkObjeto);
-        TextPaneTest.appendToPane(txtPanelSalida, "\nGenerando código objeto...\n", cVerde);
+        TextPaneTest.appendToPane(txtPanelSalida, "\nGenerando código objeto...", cVerde);
 
     }
 

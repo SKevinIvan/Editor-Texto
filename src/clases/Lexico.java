@@ -503,12 +503,12 @@ public class Lexico {
                 } else if (cadena.equals("/")) {
 
                     if (st.hasMoreElements()) {
+                        auxRe = true;
+                        contRenglon2 = contRenglon;
                         aux = st.nextToken();
+                        
                         if (aux.equals("*")) {
-                            auxRe = true;
                             cadena += aux;
-                            contRenglon++;
-                            contRenglon2 = contRenglon;
 
                             while (st.hasMoreElements()) {
 
@@ -540,14 +540,18 @@ public class Lexico {
                                 cadena += aux;
                                 aux = st.nextToken();
                                 if (aux.equals("\n")) {
+                                    contRenglon++;
                                     break;
                                 }
                             }
 
-                        } else if (aux.equals("/=")) {
+                        } else if (aux.equals("=")) {
+                            auxRe = false;
                             cadena += aux;
                         } else if (aux.equals(" ")) {
-
+                            auxRe = false;
+                        }else if(aux.equals("\n")){
+                            contRenglon++;
                         } else {
                             aux1 = true;
                         }
@@ -591,9 +595,9 @@ public class Lexico {
                         } else if (aux.equals("\n")) {
                             cadena += "\n";
                             contRenglon++;
-                        } else if(aux.equals(" ")){
+                        } else if (aux.equals(" ")) {
                             cadena += " ";
-                        }else{
+                        } else {
                             cadena += aux;
                         }
                     }

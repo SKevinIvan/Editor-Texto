@@ -41,9 +41,7 @@
 <Encapsulamiento> → <Metodo>  
 <Atributo> →  <DeclaracionAtributo>   
 <Atributo> →  <Objeto>  
-
 <Atributo> →  <AsignacionAtributo> 52
-
 <DeclaracionAtributo> → <TipoDato> <Arreglo> <AsignacionAtributo>  <ConjuntoAtributo> 52 
 <ConjuntoAtributo> → 50 <AsignacionAtributo> <ConjuntoAtributo>
 <ConjuntoAtributo>  → λ
@@ -141,23 +139,24 @@
 <Alternativa1> →  λ   
 <Alternativa2> → 29 53 <Sentencia> 30 52   
 <Condicion> → 58 <Operacion> 59 <OperadorCondicion>
-<Condicion> → <Expresion> <Condicion>
+<Condicion> → <Operacion> <OperadorCondicion>
 <OperadorCondicion> → 46 <Condicion>
 <OperadorCondicion> → 48 <Condicion>
 <OperadorCondicion> → λ  
 <Operacion> → <OperacionParentesis>
 <Operacion> → <Expresion>
 <OperacionParentesis> →  58 <OperacionParentesis1> 
+<OperacionParentesis1> → 58  <OperacionParentesis>
 <OperacionParentesis1> → <ExpresionOperacion1> 59 <OperadorAritRel>
 <OperacionParentesis1> → <ExpresionOperacion2> 59 <OperadorAritRelLog> 
 <OperacionParentesis1> → <ExpresionOperacion3> 59 <OperadorRel> 
 <OperacionParentesis1> → <ExpresionOperacion4> 59 <OperadorLog>
 <OperacionParentesis1> → <ExpresionOperacion5> 59 <OperadorLog>
-<Expresion> → <ExpresionOperacion1>
-<Expresion> → <ExpresionOperacion2>
-<Expresion> → <ExpresionOperacion3>
-<Expresion> → <ExpresionOperacion4>
-<Expresion> → <ExpresionOperacion5>
+<Expresion> → <ExpresionOperacion1> 
+<Expresion> → <ExpresionOperacion2> 
+<Expresion> → <ExpresionOperacion3> 
+<Expresion> → <ExpresionOperacion4> 
+<Expresion> → <ExpresionOperacion5> 
 <ExpresionOperacion1> → <Numero> <OperadorAritRel>
 <ExpresionOperacion2> → <LlamadaAtributo> <TipoAtributo> <OperadorAritRelLog>
 <ExpresionOperacion2> → <LlamadaFuncion> <OperadorAritRelLog>
@@ -165,23 +164,29 @@
 <ExpresionOperacion3> → 76 <OperadorRelConcat> 
 <ExpresionOperacion3> → 26 <OperadorRelConcat> 
 <ExpresionOperacion4> → <Boleano> <OperadorLog>
-<ExpresionOperacion5> → 49 58 <ExpresionOperacion4> 59 <OperadorLog>  
-<OperadorAritRel> → 44 <ExpresionOperacion1> 
-<OperadorAritRel> → 45 <ExpresionOperacion1>
-<OperadorAritRel> → 46 <ExpresionOperacion1> 
+<ExpresionOperacion5> → 49 <Condicion>
+<OperadorAritRel> → 44 <OperadorAritRel1>
+<OperadorAritRel> → 45 <OperadorAritRel1>
+<OperadorAritRel> → 46 <OperadorAritRel1> 
 <OperadorAritRel> → λ
-<OperadorAritRelLog> → 44 <ExpresionOperacion2> 
-<OperadorAritRelLog> → 45 <ExpresionOperacion2>
-<OperadorAritRelLog> → 46 <ExpresionOperacion2> 
-<OperadorAritRelLog> → 48 <ExpresionOperacion2> 
+<OperadorAritRel1> → 58 <ExpresionOperacion1> 59 <OperadorAritRel>
+<OperadorAritRel1> → <ExpresionOperacion1>
+<OperadorAritRelLog> → 44 <OperadorAritRelLog1>
+<OperadorAritRelLog> → 45 <OperadorAritRelLog1>
+<OperadorAritRelLog> → 46 <OperadorAritRelLog1>
+<OperadorAritRelLog> → 48 <OperadorAritRelLog1> 
 <OperadorAritRelLog> → λ
-<OperadorRelConcat> →  44 <ExpresionOperacion3>
-<OperadorRelConcat> → 46 <ExpresionOperacion3> 
+<OperadorAritRelLog1> → 58 <ExpresionOperacion2> 59 <OperadorAritRelLog>
+<OperadorAritRelLog1> → <ExpresionOperacion2>
+<OperadorRelConcat> →  44 <OperadorRelConcat1> 
+<OperadorRelConcat> → 46 <OperadorRelConcat1>
 <OperadorRelConcat> →  λ 
-<OperadorLog> → 48 <OperadorLogLog> 
-<OperadorLogLog> → <ExpresionOperacion4>
-<OperadorLogLog> → <ExpresionOperacion5> 
+<OperadorRelConcat1> → 58 <ExpresionOperacion3> 59 <OperadorRelConcat>
+<OperadorRelConcat1> → <ExpresionOperacion3>
+<OperadorLog> → 48 <OperadorLogLog1>
 <OperadorLog> → λ
+<OperadorLogLog1> → 58 <OperadorLog> 59 <OperadorLog>
+<OperadorLogLog1> → <Expresion>
 <OperacionSistema> → 15 58 <OperacionSistema1> 59 52  
 <OperacionSistema1> → <Lectura>  
 <OperacionSistema1> → <Escritura>  
@@ -190,4 +195,5 @@
 <Escritura> → 28 58 <Operacion>  59  
 <Salida> → 31 58 59
 <Concatenacion> → 44 <Operacion> 
-<Concatenacion> → λ 
+<Concatenacion> → λ
+<OperadorRelConcat1> → <ExpresionOperacion2> 

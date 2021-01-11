@@ -47,13 +47,19 @@ import java.util.Calendar;
 import java.util.GregorianCalendar;
 import java.util.StringTokenizer;
 import javax.swing.JButton;
+import javax.swing.JFrame;
 import javax.swing.JScrollPane;
+import javax.swing.JTextArea;
 import javax.swing.JTextPane;
 import javax.swing.JToolBar;
 import javax.swing.UIManager;
 import javax.swing.border.EmptyBorder;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.text.AbstractDocument;
 import javax.swing.text.BadLocationException;
+import javax.swing.text.Document;
+import javax.swing.text.DocumentFilter;
+import javax.swing.text.Element;
 
 /**
  *
@@ -1382,11 +1388,11 @@ public class EditorPlanetProgramming extends javax.swing.JFrame {
         if (!bError) {
             crearPestaniaSintactico();
             sintactico();
-            bError=false;
+            bError = false;
         } else {
             Mensaje.advertencia(this, "El analisis sintactico no se puede realizar, debido a que hay un error léxico");
             TextPaneTest.appendToPane(txtPanelSalida, "\nError al realizar analisis sinctatico...", cRojo);
-            
+
         }
     }//GEN-LAST:event_itemSintacticoActionPerformed
 
@@ -2012,6 +2018,7 @@ public class EditorPlanetProgramming extends javax.swing.JFrame {
         }
 
     }
+    int tb = 0;
 
     public void crearPestaniaEdicion() {
 
@@ -2029,12 +2036,20 @@ public class EditorPlanetProgramming extends javax.swing.JFrame {
             txtPanelEditando.setSelectionColor(new java.awt.Color(153, 204, 255));
 
             txtPanelEditando.setEditorKit(new TabSizeEditorKit());
+            //NewLineFilter n=new NewLineFilter();
+            //AbstractDocument doc = (AbstractDocument) txtPanelEditando.getDocument();
+            
+            //doc.setDocumentFilter(n);
+
             txtPanelEditando.addKeyListener(new java.awt.event.KeyAdapter() {
                 @Override
                 public void keyPressed(java.awt.event.KeyEvent evt) {
                     // txtPanelSalidaKeyPressed(evt);
                     if (evt.getKeyChar() == '\n') {
 
+                    }
+                    if (evt.getKeyChar() == '\t') {
+                        tb++;
                     }
                 }
 
@@ -2799,7 +2814,7 @@ public class EditorPlanetProgramming extends javax.swing.JFrame {
 
     public void lexico() {
 
-        bError=false;
+        bError = false;
         CtrlInterfaz.habilita(true, itemGuardar, itemLexico, itemSintactico);
         CtrlInterfaz.habilita(false, itemSemantico, itemIntermedio, itemOptmizacion, itemObjeto);
         CtrlInterfaz.habilita(true, checkEditando, checkCompilando, checkSalida, checkLexico, checkSintactico);
@@ -3335,9 +3350,7 @@ public class EditorPlanetProgramming extends javax.swing.JFrame {
          * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
          */
 
-         
-          
-       try {
+        try {
             for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
                 if ("Windows".equals(info.getName())) {
                     javax.swing.UIManager.setLookAndFeel(info.getClassName());
@@ -3632,38 +3645,6 @@ public class EditorPlanetProgramming extends javax.swing.JFrame {
         return buf;
     }
 
-    private static class HighlightLineTextPaneRojo extends JTextPane {
-
-        public HighlightLineTextPaneRojo() {
-            // Has to be marked as transparent so the background is not replaced by 
-            // super.paintComponent(g); 
-            setOpaque(false);
-        }
-
-        @Override
-        protected void paintComponent(Graphics g) {
-            g.setColor(getBackground());
-            g.fillRect(0, 0, getWidth(), getHeight());
-            try {
-                Rectangle rect = modelToView(getCaretPosition());
-                if (rect != null) {
-                    //g.setColor(new java.awt.Color(232, 242, 254));
-                    g.setColor(new java.awt.Color(255, 153, 153));
-
-                    g.fillRect(0, rect.y, getWidth(), rect.height);
-                }
-            } catch (BadLocationException e) {
-            }
-            super.paintComponent(g);
-        }
-
-        @Override
-        public void repaint(long tm, int x, int y, int width, int height) {
-            // This forces repaints to repaint the entire TextPane. 
-            super.repaint(tm, 0, 0, getWidth(), getHeight());
-        }
-    }
-
     private static class HighlightLineTextPaneAzul extends JTextPane {
 
         public HighlightLineTextPaneAzul() {
@@ -3680,7 +3661,7 @@ public class EditorPlanetProgramming extends javax.swing.JFrame {
                 Rectangle rect = modelToView(getCaretPosition());
                 if (rect != null) {
                     g.setColor(new java.awt.Color(232, 242, 254));
-                    //g.setColor(new java.awt.Color(255,153,153));
+                    // g.setColor(new java.awt.Color(255, 153, 153));
 
                     g.fillRect(0, rect.y, getWidth(), rect.height);
                 }
@@ -3696,4 +3677,55 @@ public class EditorPlanetProgramming extends javax.swing.JFrame {
         }
     }
 
+    private static class NewLineFilter extends DocumentFilter {
+
+        @Override
+        public void insertString(DocumentFilter.FilterBypass fb, int offs, String str, AttributeSet a)
+                throws BadLocationException {
+            if ("\n".equals(str)) {
+                str = addWhiteSpace(fb.getDocument(), offs);
+            }
+
+            super.insertString(fb, offs, str, a);
+        }
+
+        @Override
+        public void replace(DocumentFilter.FilterBypass fb, int offs, int length, String str, AttributeSet a)
+                throws BadLocationException {
+            if ("\n".equals(str)) {
+                str = addWhiteSpace(fb.getDocument(), offs);
+            }
+
+            super.replace(fb, offs, length, str, a);
+        }
+
+        private String addWhiteSpace(Document doc, int offset)
+                throws BadLocationException {
+            StringBuilder whiteSpace = new StringBuilder("\n");
+            Element rootElement = doc.getDefaultRootElement();
+            int line = rootElement.getElementIndex(offset);
+            int i = rootElement.getElement(line).getStartOffset();
+
+            while (true) {
+                String temp = doc.getText(i, 1);
+
+                if (temp.equals(" ") || temp.equals("\t")) {
+                    whiteSpace.append(temp);
+                    i++;
+                } else {
+                    break;
+                }
+            }
+
+            return whiteSpace.toString();
+        }
+
+        /* private static void createAndShowUI() {
+            JTextArea textArea = new JTextArea(5, 50);
+            AbstractDocument doc = (AbstractDocument) textArea.getDocument();
+            doc.setDocumentFilter(new recursos.NewLineFilter());
+
+        }
+         */
+    }
 }

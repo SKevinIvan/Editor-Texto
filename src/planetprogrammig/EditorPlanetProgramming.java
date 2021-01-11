@@ -50,6 +50,7 @@ import javax.swing.JButton;
 import javax.swing.JScrollPane;
 import javax.swing.JTextPane;
 import javax.swing.JToolBar;
+import javax.swing.UIManager;
 import javax.swing.border.EmptyBorder;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.text.BadLocationException;
@@ -3020,7 +3021,7 @@ public class EditorPlanetProgramming extends javax.swing.JFrame {
             // analisisSintactico.setPathGramatica("Gramatica - copia.txt");
             analisisSintactico.setPathGramatica("Gramatica.txt");
             //  analisisSintactico.setPathTablaExcel("TablaPredictiva - copia.xlsx");
-            analisisSintactico.setPathTablaExcel("TablaPredictiva3.xlsx");
+            analisisSintactico.setPathTablaExcel("TablaPredictiva4.xlsx");
             String s[] = new String[2];
             s = analisisSintactico.analisisSintactico();
             txtPanelSintactico1.setText(s[0]);
@@ -3334,7 +3335,9 @@ public class EditorPlanetProgramming extends javax.swing.JFrame {
          * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
          */
 
-        try {
+         
+          
+       try {
             for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
                 if ("Windows".equals(info.getName())) {
                     javax.swing.UIManager.setLookAndFeel(info.getClassName());

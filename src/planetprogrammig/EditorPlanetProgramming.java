@@ -26,7 +26,6 @@ import recursos.*;
 import clases.*;
 import estructurasDatos.Nodo;
 import estructurasDatos.PilaD;
-import java.awt.BorderLayout;
 import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
@@ -38,7 +37,6 @@ import java.awt.datatransfer.DataFlavor;
 import java.awt.datatransfer.StringSelection;
 import java.awt.datatransfer.Transferable;
 import java.awt.datatransfer.UnsupportedFlavorException;
-import java.awt.font.TextLayout;
 import java.awt.image.BufferedImage;
 import java.awt.print.PageFormat;
 import java.awt.print.PrinterException;
@@ -46,13 +44,10 @@ import java.awt.print.PrinterJob;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 import java.util.StringTokenizer;
-import javax.swing.JButton;
-import javax.swing.JFrame;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JScrollPane;
-import javax.swing.JTextArea;
 import javax.swing.JTextPane;
-import javax.swing.JToolBar;
-import javax.swing.UIManager;
 import javax.swing.border.EmptyBorder;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.text.AbstractDocument;
@@ -108,11 +103,13 @@ public class EditorPlanetProgramming extends javax.swing.JFrame {
     private void txtPanelEditandoCaretUpdate(javax.swing.event.CaretEvent evt) {
 
         if (!(txtPanelEditando.getText().isEmpty()) && (true)) {
+             btnGuardar.setEnabled(true);
             if (pilaDeshacer.getTope() == null) {
                 n1 = new Nodo(txtPanelEditando.getText(), -1);
                 pilaDeshacer.inserta(n1, null);
                 btnDeshacer.setEnabled(true);
                 itemDeshacer.setEnabled(true);
+                
             } else {
                 if (!pilaDeshacer.getTope().getS().equals(txtPanelEditando.getText())) {
                     n1 = new Nodo(txtPanelEditando.getText(), -1);
@@ -135,6 +132,7 @@ public class EditorPlanetProgramming extends javax.swing.JFrame {
                 itemCortar.setEnabled(true);
                 btnCopiar.setEnabled(true);
                 btnCortar.setEnabled(true);
+                 btnGuardar.setEnabled(true);
 
             } else {
 
@@ -159,7 +157,7 @@ public class EditorPlanetProgramming extends javax.swing.JFrame {
             itemCortar.setEnabled(false);
             btnCopiar.setEnabled(false);
             btnCortar.setEnabled(false);
-
+            btnGuardar.setEnabled(false);
         }
 
     }
@@ -1263,16 +1261,26 @@ public class EditorPlanetProgramming extends javax.swing.JFrame {
     }//GEN-LAST:event_btnNuevoActionPerformed
 
     private void btnAbrirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAbrirActionPerformed
+        setCursor(new Cursor(Cursor.WAIT_CURSOR));
         abrir();
         if (archivo) {
             posicionC = txtPanelEditando.getCaretPosition();
             formato();
             txtPanelEditando.setCaretPosition(posicionC);
         }
+
+        setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
     }//GEN-LAST:event_btnAbrirActionPerformed
 
     private void btnGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarActionPerformed
+        setCursor(new Cursor(Cursor.WAIT_CURSOR));
+        int ints = txtPanelEditando.getCaretPosition();
+
         guardar();
+        if (ints != -1) {
+            txtPanelEditando.setCaretPosition(ints);
+        }
+        setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
     }//GEN-LAST:event_btnGuardarActionPerformed
 
     private void btnCortarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCortarActionPerformed
@@ -1331,6 +1339,7 @@ public class EditorPlanetProgramming extends javax.swing.JFrame {
         // ejecutar();
         crearPestaniaLexico();
         lexico();
+
     }//GEN-LAST:event_btnEjecutarActionPerformed
 
     private void itemIntermedioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_itemIntermedioActionPerformed
@@ -1372,8 +1381,10 @@ public class EditorPlanetProgramming extends javax.swing.JFrame {
     }//GEN-LAST:event_formWindowOpened
 
     private void itemLexicoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_itemLexicoActionPerformed
+        setCursor(new Cursor(Cursor.WAIT_CURSOR));
         crearPestaniaLexico();
         lexico();
+        setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
     }//GEN-LAST:event_itemLexicoActionPerformed
 
     private void itemGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_itemGuardarActionPerformed
@@ -1385,10 +1396,15 @@ public class EditorPlanetProgramming extends javax.swing.JFrame {
     }//GEN-LAST:event_itemGuardarComoActionPerformed
 
     private void itemSintacticoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_itemSintacticoActionPerformed
+
         if (!bError) {
+
+            setCursor(new Cursor(Cursor.WAIT_CURSOR));
             crearPestaniaSintactico();
             sintactico();
             bError = false;
+
+            setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
         } else {
             Mensaje.advertencia(this, "El analisis sintactico no se puede realizar, debido a que hay un error léxico");
             TextPaneTest.appendToPane(txtPanelSalida, "\nError al realizar analisis sinctatico...", cRojo);
@@ -1472,9 +1488,12 @@ public class EditorPlanetProgramming extends javax.swing.JFrame {
     }//GEN-LAST:event_popMSeleccionTotalActionPerformed
     int posicionC = 0;
     private void btnFormatoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnFormatoActionPerformed
+        setCursor(new Cursor(Cursor.WAIT_CURSOR));
         posicionC = txtPanelEditando.getCaretPosition();
         formato();
+        
         txtPanelEditando.setCaretPosition(posicionC);
+        setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
     }//GEN-LAST:event_btnFormatoActionPerformed
 
     private void checkLexicoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_checkLexicoActionPerformed
@@ -1628,7 +1647,9 @@ public class EditorPlanetProgramming extends javax.swing.JFrame {
     }//GEN-LAST:event_pestaniasEntradaSalidasComponentAdded
 
     private void btnTraducirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTraducirActionPerformed
-
+        posicionC = txtPanelEditando.getCaretPosition();
+        formato();
+        txtPanelEditando.setCaretPosition(posicionC);
     }//GEN-LAST:event_btnTraducirActionPerformed
 
     private void popMCerrarTodoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_popMCerrarTodoActionPerformed
@@ -2037,25 +2058,43 @@ public class EditorPlanetProgramming extends javax.swing.JFrame {
 
             txtPanelEditando.setEditorKit(new TabSizeEditorKit());
             //NewLineFilter n=new NewLineFilter();
-            //AbstractDocument doc = (AbstractDocument) txtPanelEditando.getDocument();
-            
-            //doc.setDocumentFilter(n);
+            // AbstractDocument doc = (AbstractDocument) txtPanelEditando.getDocument();
 
+            // doc.setDocumentFilter(n);
             txtPanelEditando.addKeyListener(new java.awt.event.KeyAdapter() {
                 @Override
                 public void keyPressed(java.awt.event.KeyEvent evt) {
                     // txtPanelSalidaKeyPressed(evt);
-                    if (evt.getKeyChar() == '\n') {
 
-                    }
-                    if (evt.getKeyChar() == '\t') {
-                        tb++;
-                    }
                 }
 
                 @Override
                 public void keyTyped(java.awt.event.KeyEvent evt) {
                     //txtPanelSalidaKeyTyped(evt);
+                    if (evt.getKeyChar() == '\n') {
+                        /*  String[] lineas = txtPanelEditando.getText().split("\n");
+                        int caretPosition = txtPanelEditando.getCaretPosition();
+                        Element root = txtPanelEditando.getDocument().getDefaultRootElement();
+                        int currentLine = root.getElementIndex(caretPosition);
+                        String su = lineas[currentLine-1];
+                        String tcc[] = su.split("\t");
+                        // System.out.println(tcc.length - 1);
+                        tb = tcc.length-1;
+                        int j = 0;
+
+                        while (j <=tb) {
+                            int p = txtPanelEditando.getCaretPosition();
+                            String s = "\t";
+                            StyleContext sc2 = StyleContext.getDefaultStyleContext();
+                            AttributeSet aset2 = sc2.addAttribute(SimpleAttributeSet.EMPTY, StyleConstants.Foreground, Color.black);
+
+                            txtPanelEditando.setCaretPosition(p);
+                            txtPanelEditando.setCharacterAttributes(aset2, true);
+                            txtPanelEditando.replaceSelection(s);
+                            j++;
+                        }
+
+                         */                    }
                 }
             });
 
@@ -3066,8 +3105,11 @@ public class EditorPlanetProgramming extends javax.swing.JFrame {
                 txtPanelEditando.setCaretPosition(renglonCaret - 1);
 
             }
-            System.out.println(analisisSintactico.getNumError());
-
+            if (analisisSintactico.getNumError() != 0) {
+                TextPaneTest.appendToPane(txtPanelSalida, "\nSintacticamente incorrecto..." + " error en la línea " + analisisSintactico.getNumError(), cRojo);
+            } else {
+                TextPaneTest.appendToPane(txtPanelSalida, "\nSintacticamente correcto...", cVerde);
+            }
         }
 
     }
@@ -3677,36 +3719,14 @@ public class EditorPlanetProgramming extends javax.swing.JFrame {
         }
     }
 
-    private static class NewLineFilter extends DocumentFilter {
+    private String addWhiteSpace(Document doc, int offset) {
+        StringBuilder whiteSpace = new StringBuilder("\n");
+        Element rootElement = doc.getDefaultRootElement();
+        int line = rootElement.getElementIndex(offset);
+        int i = rootElement.getElement(line).getStartOffset();
 
-        @Override
-        public void insertString(DocumentFilter.FilterBypass fb, int offs, String str, AttributeSet a)
-                throws BadLocationException {
-            if ("\n".equals(str)) {
-                str = addWhiteSpace(fb.getDocument(), offs);
-            }
-
-            super.insertString(fb, offs, str, a);
-        }
-
-        @Override
-        public void replace(DocumentFilter.FilterBypass fb, int offs, int length, String str, AttributeSet a)
-                throws BadLocationException {
-            if ("\n".equals(str)) {
-                str = addWhiteSpace(fb.getDocument(), offs);
-            }
-
-            super.replace(fb, offs, length, str, a);
-        }
-
-        private String addWhiteSpace(Document doc, int offset)
-                throws BadLocationException {
-            StringBuilder whiteSpace = new StringBuilder("\n");
-            Element rootElement = doc.getDefaultRootElement();
-            int line = rootElement.getElementIndex(offset);
-            int i = rootElement.getElement(line).getStartOffset();
-
-            while (true) {
+        while (true) {
+            try {
                 String temp = doc.getText(i, 1);
 
                 if (temp.equals(" ") || temp.equals("\t")) {
@@ -3715,17 +3735,11 @@ public class EditorPlanetProgramming extends javax.swing.JFrame {
                 } else {
                     break;
                 }
+            } catch (BadLocationException ex) {
+                Logger.getLogger(EditorPlanetProgramming.class.getName()).log(Level.SEVERE, null, ex);
             }
-
-            return whiteSpace.toString();
         }
 
-        /* private static void createAndShowUI() {
-            JTextArea textArea = new JTextArea(5, 50);
-            AbstractDocument doc = (AbstractDocument) textArea.getDocument();
-            doc.setDocumentFilter(new recursos.NewLineFilter());
-
-        }
-         */
+        return whiteSpace.toString();
     }
 }

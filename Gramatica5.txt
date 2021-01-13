@@ -129,7 +129,7 @@
 <SentenciaSi1> →   λ  
 <SentenciaSino> → 35 54 <Sentencia> 55   
 <SentenciaSinoSi> → 36 58 <Condicion> 59 54 <Sentencia> 55 <SentenciaSi1>  
-<SentenciaPara> → 39 58 <Variable> 52 <Condicion> 52 70 <Iteracion> 59 54 <Sentencia> 55 
+<SentenciaPara> → 39 58 <Variable> 52 <Condicion> 52 70 <Iteracion> 59 54 <Sentencia> 55  
 <SentenciaMientras> → 37 58 <Condicion> 59 54  <Sentencia>  55 
 <SentenciaHacerMientras> → 38 54 <Sentencia> 55 37 58 <Condicion> 59 52 
 <SentenciaCaso> → 32 58  70 59 54 <Alternativa> 55  
@@ -143,10 +143,10 @@
 <OperadorCondicion> → 46 <Condicion>
 <OperadorCondicion> → 48 <Condicion>
 <OperadorCondicion> → λ  
-<Operacion> → <OperacionParentesis>
+<Operacion> → <OperacionParentesis1>
 <Operacion> → <Expresion>
-<OperacionParentesis> →  58 <Operacion> 59 <OperadorCondicion>  
-<OperacionParentesis1> → 58 <OperacionParentesis1> 
+<OperacionParentesis> →  58 <OperacionParentesis1>  
+<OperacionParentesis1> → 58  <OperacionParentesis1>
 <OperacionParentesis1> → <ExpresionOperacion1> 59 <OperadorAritRel>
 <OperacionParentesis1> → <ExpresionOperacion2> 59 <OperadorAritRelLog> 
 <OperacionParentesis1> → <ExpresionOperacion3> 59 <OperadorAritRel> 

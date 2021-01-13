@@ -239,8 +239,9 @@ public class Validaciones {
         String s = txtP.getText();
         if (s.length() != 0) {
 
-            listPalabras = new ArrayList<>();
+            /*listPalabras = new ArrayList<>();
 
+            
             char[] palabra = s.toCharArray();
             String nuevaCadena = "";
 
@@ -271,11 +272,223 @@ public class Validaciones {
                     nuevaCadena = "";
                 }
             }
+             */
+            ArrayList<String> palabras = new ArrayList<>();
+            StringTokenizer st = new StringTokenizer(txtP.getText(), "+ -=*&| {}()[]^/%;:,<>\n\t\r!\" ", true);
+            String cadena;
+            boolean aux1;
 
+            while (st.hasMoreElements()) {
+                String aux = "";
+                aux1 = false;
+                cadena = st.nextToken();
+
+                if (cadena.equals("+")) {
+
+                    if (st.hasMoreElements()) {
+                        aux = st.nextToken();
+                        if (aux.equals("=")) {
+                            cadena += aux;
+                        } else if (aux.equals("+")) {
+                            cadena += aux;
+                        } else if (aux.equals(" ")) {
+                            cadena += aux;
+                        } else {
+                            aux1 = true;
+                        }
+                    }
+                } else if (cadena.equals("-")) {
+
+                    if (st.hasMoreElements()) {
+                        aux = st.nextToken();
+                        boolean bh = false;
+                        try {
+
+                            int aux32 = Integer.parseInt(aux);
+                            bh = true;
+                        } catch (Exception e) {
+                           
+                        }
+                        if (aux.equals("=")) {
+                            cadena += aux;
+                        } else if (aux.equals("-")) {
+                            cadena += aux;
+                        } else if (bh) {
+                            cadena += aux;
+                        } else if (aux.equals(" ")) {
+                            cadena += aux;
+                        } else {
+                            aux1 = true;
+                        }
+                    }
+                } else if (cadena.equals("*")) {
+
+                    if (st.hasMoreElements()) {
+                        aux = st.nextToken();
+                        if (aux.equals("=")) {
+                            cadena += aux;
+                        } else if (aux.equals("/")) {
+                            cadena += aux;
+                        } else if (aux.equals(" ")) {
+                            cadena += aux;
+                        } else {
+                            aux1 = true;
+                        }
+                    }
+                } else if (cadena.equals("=")) {
+
+                    if (st.hasMoreElements()) {
+                        aux = st.nextToken();
+                        if (aux.equals("=")) {
+                            cadena += aux;
+                        } else if (aux.equals(" ")) {
+                            cadena += aux;
+                        } else {
+                            aux1 = true;
+                        }
+                    }
+                } else if (cadena.equals("&")) {
+                    if (st.hasMoreElements()) {
+                        aux = st.nextToken();
+                        if (aux.equals("&")) {
+                            cadena += aux;
+                        } else if (aux.equals(" ")) {
+                            cadena += aux;
+                        } else {
+                            cadena += aux;
+                        }
+
+                    }
+                } else if (cadena.equals("|")) {
+
+                    if (st.hasMoreElements()) {
+                        aux = st.nextToken();
+                        if (aux.equals("|")) {
+                            cadena += aux;
+                        } else if (aux.equals(" ")) {
+                            cadena += aux;
+                        } else {
+                            aux1 = true;
+                        }
+                    }
+                } else if (cadena.equals("!")) {
+
+                    if (st.hasMoreElements()) {
+                        aux = st.nextToken();
+                        if (aux.equals("=")) {
+                            cadena += aux;
+                        } else if (aux.equals(" ")) {
+                            cadena += aux;
+                        } else {
+                            aux1 = true;
+                        }
+                    }
+                } else if (cadena.equals("/")) {
+
+                    if (st.hasMoreElements()) {
+                        aux = st.nextToken();
+
+                        if (aux.equals("*")) {
+                            cadena += aux;
+
+                            while (st.hasMoreElements()) {
+
+                                cadena += aux;
+                                aux = st.nextToken();
+                                if (aux.equals("*")) {
+
+                                    String aux2 = st.nextToken();
+                                    aux += aux2;
+                                    if (aux2.equals("/")) {
+
+                                        cadena += aux;
+
+                                        break;
+                                    } else {
+                                        if (aux.equals("\n")) {
+                                            cadena += aux;
+                                        }
+                                    }
+                                } else {
+                                    if (aux.equals("\n")) {
+                                        cadena += aux;
+                                    }
+                                }
+                            }
+                        } else if (aux.equals("/")) {
+
+                            while (st.hasMoreElements()) {
+                                cadena += aux;
+                                aux = st.nextToken();
+                                if (aux.equals("\n")) {
+                                    cadena += aux;
+                                    break;
+                                }
+                            }
+
+                        } else if (aux.equals("=")) {
+                            cadena += aux;
+                        } else if (aux.equals(" ")) {
+                            cadena += aux;
+                        } else if (aux.equals("\n")) {
+                            cadena += aux;
+                        } else {
+                            aux1 = true;
+                        }
+
+                    }
+                } else if (cadena.equals("<")) {
+
+                    if (st.hasMoreElements()) {
+                        aux = st.nextToken();
+                        if (aux.equals("=")) {
+                            cadena += aux;
+                        } else if (aux.equals(">")) {
+                            cadena += aux;
+                        } else if (aux.equals(" ")) {
+                            cadena += aux;
+                        } else {
+                            aux1 = true;
+                        }
+                    }
+                } else if (cadena.equals(">")) {
+
+                    if (st.hasMoreElements()) {
+                        aux = st.nextToken();
+                        if (aux.equals("=")) {
+                            cadena += aux;
+                        } else if (aux.equals(" ")) {
+                            cadena += aux;
+                        } else {
+                            aux1 = true;
+                        }
+
+                    }
+                } else if (cadena.equals("\"")) {
+                    while (st.hasMoreElements()) {
+                        aux = st.nextToken();
+                        if (aux.contains("\"")) {
+                            cadena += aux;
+                            break;
+                        } else if (aux.equals("\n")) {
+                            cadena += "\n";
+                        } else if (aux.equals(" ")) {
+                            cadena += " ";
+                        } else {
+                            cadena += aux;
+                        }
+                    }
+
+                }
+                palabras.add(cadena);
+                if (aux1) {
+                    palabras.add(aux);
+                }
+            }
             txtP.setText("");
 
-               for (int i = 0; i < listPalabras.size(); i++) {
-                switch (listPalabras.get(i).toLowerCase()) {
+            for (int i = 0; i < palabras.size(); i++) {
+                switch (palabras.get(i).toLowerCase()) {
                     case "publico":
                     case "privado":
                     case "protegido":
@@ -326,36 +539,178 @@ public class Validaciones {
                     case "corto":
                     case "byte":
                         colorPalabra = cAzul;
-                        
+
                         break;
-                        
+
                     case "entrada":
                     case "salida":
                         colorPalabra = cVerde;
                         break;
                     default:
-                         try {
-                        int x = Integer.parseInt(listPalabras.get(i));
-                        colorPalabra = cNaranja;
-                    } catch (NumberFormatException e) {
                         try {
-                            float x = Float.parseFloat(listPalabras.get(i));
+                            int x = Integer.parseInt(palabras.get(i));
                             colorPalabra = cNaranja;
-                        } catch (NumberFormatException e1) {
-                            colorPalabra = cNegro;
+                        } catch (NumberFormatException e) {
+                            try {
+                                float x = Float.parseFloat(palabras.get(i));
+                                colorPalabra = cNaranja;
+                            } catch (NumberFormatException e1) {
+                                colorPalabra = cNegro;
+                            }
                         }
-                    }
-                    break;
+                        break;
 
                 }
+                if (palabras.get(i).startsWith("$")||palabras.get(i).startsWith("&")) {
+                    TextPaneTest.ponerEstilo(txtP, "NEGRITAS", palabras.get(i));
+                }else if(palabras.get(i).startsWith("/*")||palabras.get(i).startsWith("//")){
+                    TextPaneTest.appendToPane(txtP, palabras.get(i), cGris);
+                } else if(palabras.get(i).startsWith("'")||palabras.get(i).startsWith("\"")){
+                    TextPaneTest.appendToPane(txtP, palabras.get(i), cNaranja);
+                }
+                else {
+                    TextPaneTest.appendToPane(txtP, palabras.get(i), colorPalabra);
+                }
 
+            }
+
+        }
+    }
+
+    public static void conviertePalabra(JTextPane txtP) {
+
+        ArrayList<String> listPalabras;
+
+        Color colorPalabra;
+        Color cAzul = new Color(0, 0, 204);
+        Color cVerde = new Color(0, 204, 0);
+        Color cRojo = new Color(255, 0, 0);
+        Color cNaranja = new Color(255, 102, 0);
+        Color cRosa = new Color(255, 0, 255);
+        Color cAmarillo = new Color(255, 204, 0);
+        Color cCafe = new Color(102, 0, 51);
+        Color cNegro = new Color(0, 0, 0);
+        Color cGris = new Color(102, 102, 102);
+        Color cMorado = new Color(153, 0, 204);
+
+        String s = txtP.getText();
+        if (s.length() != 0) {
+
+            listPalabras = new ArrayList<>();
+
+            char[] palabra = s.toCharArray();
+            String nuevaCadena = "";
+
+            for (int i = 0; i < palabra.length; i++) {
+                nuevaCadena += palabra[i];
+                if (palabra[i] == ' ' || palabra[i] == '\n' || palabra[i] == '\t' || palabra[i] == '\r' || palabra[i] == ';'
+                        || palabra[i] == '(' || palabra[i] == ')'
+                        || palabra[i] == '{' || palabra[i] == '}' || palabra[i] == '='
+                        || palabra[i] == '>' || palabra[i] == '<' || palabra[i] == '+'
+                        || palabra[i] == '-' || palabra[i] == '*'
+                        || palabra[i] == '!') {
+                    listPalabras.add(nuevaCadena);
+                    nuevaCadena = "";
+                }
+                if ((i + 1) != palabra.length) {
+                    if (palabra[i + 1] == ' ' || palabra[i + 1] == '\n' || palabra[i + 1] == '\t'
+                            || palabra[i + 1] == '\r' || palabra[i + 1] == ';'
+                            || palabra[i] == ')' || palabra[i] == '('
+                            || palabra[i] == '{' || palabra[i] == '}' || palabra[i] == '='
+                            || palabra[i] == '>' || palabra[i] == '<' || palabra[i] == '+'
+                            || palabra[i] == '-' || palabra[i] == '*'
+                            || palabra[i] == '!') {
+                        listPalabras.add(nuevaCadena);
+                        nuevaCadena = "";
+                    }
+                } else {
+                    listPalabras.add(nuevaCadena);
+                    nuevaCadena = "";
+                }
+            }
+
+            txtP.setText("");
+
+            for (int i = 0; i < listPalabras.size(); i++) {
+                switch (listPalabras.get(i).toLowerCase()) {
+                    case "publico":
+
+                    case "privado":
+                    case "protegido":
+                    case "clase":
+                    case "paquete":
+                    case "importar":
+                    case "estatico":
+                    case "final":
+                    case "super":
+                    case "retorno":
+                    case "procedimiento":
+                    case "funcion":
+                    case "sistema":
+                    case "linea":
+                    case "abstracta":
+                    case "extender":
+                    case "implementar":
+                    case "interfaz":
+                    case "obtener":
+                    case "asignar":
+                    case "principal":
+                    case "nuevo":
+                    case "este":
+                    case "nulo":
+                    case "leer":
+                    case "imprimir":
+                    case "defecto":
+                    case "terminar":
+                    case "salir":
+                    case "caso":
+                    case "alternativa":
+                    case "si":
+                    case "sino":
+                    case "sinoSi":
+                    case "mientras":
+                    case "hacerMientras":
+                    case "para":
+                    case "verdadero":
+                    case "falso":
+                    case "entero":
+                    case "flotante":
+                    case "doble":
+                    case "cadena":
+                    case "booleano":
+                    case "largo":
+                    case "objeto":
+                    case "caracter":
+                    case "corto":
+                    case "byte":
+                        colorPalabra = cAzul;
+
+                        break;
+
+                    case "entrada":
+                    case "salida":
+                        colorPalabra = cVerde;
+                        break;
+                    default:
+                        try {
+                            int x = Integer.parseInt(listPalabras.get(i));
+                            colorPalabra = cNaranja;
+                        } catch (NumberFormatException e) {
+                            try {
+                                float x = Float.parseFloat(listPalabras.get(i));
+                                colorPalabra = cNaranja;
+                            } catch (NumberFormatException e1) {
+                                colorPalabra = cNegro;
+                            }
+                        }
+                        break;
+
+                }
                 TextPaneTest.appendToPane(txtP, listPalabras.get(i), colorPalabra);
 
             }
 
         }
     }
-    
-   
 
 }

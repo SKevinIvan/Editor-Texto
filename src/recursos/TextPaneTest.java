@@ -98,6 +98,15 @@ public class TextPaneTest {
         tp.replaceSelection(" ");
 
     }
+    public static void ponerTab(JTextPane tp) {
+        StyleContext sc2 = StyleContext.getDefaultStyleContext();
+        AttributeSet aset2 = sc2.addAttribute(SimpleAttributeSet.EMPTY, StyleConstants.Foreground, Color.black);
+
+        tp.setCaretPosition(tp.getDocument().getLength());
+        tp.setCharacterAttributes(aset2, true);
+        tp.replaceSelection("\t");
+
+    }
 
     public static void ponerEnter(JTextPane tp) {
         StyleContext sc2 = StyleContext.getDefaultStyleContext();

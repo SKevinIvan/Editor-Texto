@@ -19,8 +19,11 @@ public class NumeroLinea extends JPanel
     public final static float LEFT = 0.0f;
     public final static float CENTER = 0.5f;
     public final static float RIGHT = 1.0f;
-    private Color color1 = new Color(102, 102, 102);
-    private Color color2 = new Color(204, 204, 204);
+    //private Color color1 = new Color(102, 102, 102);
+    private Color color1 = new Color(0, 0, 0);
+   // private Color color2 = new Color(204, 204, 204);
+   //
+    private Color color2 = new Color(234, 234,234);
     private final static Border OUTER = new MatteBorder(0, 0, 0, 2, Color.GRAY);
 
     private final static int heightI = Integer.MAX_VALUE - 1000000;
@@ -50,6 +53,7 @@ public class NumeroLinea extends JPanel
         setFont(new Font("Monospaced", Font.PLAIN, 12));
         setBorderGap(5);
         setCurrentLineForeground(color1);
+        setForeground(new Color(97,97,97));
         setDigitAlignment(RIGHT);
         setMinimumDisplayDigits(minimumDisplayDigits);
 
@@ -75,6 +79,7 @@ public class NumeroLinea extends JPanel
         this.borderGap = borderGap;
         Border inner = new EmptyBorder(0, borderGap, 0, borderGap);
         setBorder(new CompoundBorder(OUTER, inner));
+       
         lastDigits = 0;
         setPreferredWidth();
     }

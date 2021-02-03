@@ -8,7 +8,6 @@ package recursos;
 import java.awt.Component;
 import java.awt.Graphics;
 import java.awt.Image;
-import java.awt.Point;
 import java.awt.Rectangle;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
@@ -16,10 +15,7 @@ import java.awt.event.MouseMotionAdapter;
 import java.awt.image.BufferedImage;
 import java.awt.image.ImageObserver;
 
-import javax.swing.JButton;
-import javax.swing.JFrame;
 import javax.swing.JTabbedPane;
-import javax.swing.JTextArea;
 
 public class DraggableTabbedPane extends JTabbedPane {
 
@@ -109,5 +105,4 @@ public class DraggableTabbedPane extends JTabbedPane {
 
     }
 
-    
 }

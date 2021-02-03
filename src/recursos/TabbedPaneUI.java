@@ -13,9 +13,9 @@ import javax.swing.UIManager;
 import javax.swing.plaf.basic.BasicTabbedPaneUI;
 
 /**
- * Clase que sirve para poner formato a las pestañas del TabbedPane una vez que 
+ * Clase que sirve para poner formato a las pestañas del TabbedPane una vez que
  * se seleccione una cambia de color junto con su contorno
- * 
+ *
  * @author kevin2
  */
 public class TabbedPaneUI extends BasicTabbedPaneUI {
@@ -25,11 +25,12 @@ public class TabbedPaneUI extends BasicTabbedPaneUI {
     public Color colorNoSeleccion = new Color(204, 204, 204);
     public Color colorBordeContenedor = colorSeleccion;
     //Fin de la declaración de variables de tipo Color
-    
+
     /**
-     * Método sobreescrito que pinta de diferente color las pestañas si son seleccionadas o no.
-     * 
-     * @param g Objeto de tipo Graphics 
+     * Método sobreescrito que pinta de diferente color las pestañas si son
+     * seleccionadas o no.
+     *
+     * @param g Objeto de tipo Graphics
      * @param tabPlacement Número total de pestañas
      * @param tabIndex Indice de la pestaña
      * @param x Posición X de la pestaña
@@ -47,9 +48,10 @@ public class TabbedPaneUI extends BasicTabbedPaneUI {
     }
 
     /**
-     * Método sobreescrito que sirve para pintar el borde de la pestaña seleccionada
-     * 
-     * @param g Objeto de tipo Graphics 
+     * Método sobreescrito que sirve para pintar el borde de la pestaña
+     * seleccionada
+     *
+     * @param g Objeto de tipo Graphics
      * @param tabPlacement Número total de pestañas
      * @param tabIndex Indice de la pestaña
      * @param x Posición X de la pestaña
@@ -67,8 +69,8 @@ public class TabbedPaneUI extends BasicTabbedPaneUI {
 
     /**
      * Método que sirve para pintar el margen de la pestaña seleccionada
-     * 
-     * @param g Objeto de tipo Graphics 
+     *
+     * @param g Objeto de tipo Graphics
      * @param tabPlacement Número de pestañas total
      * @param selectedIndex Indice de la pestaña seleccionada
      */

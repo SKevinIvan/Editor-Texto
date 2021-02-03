@@ -62,7 +62,6 @@ public class BotonX extends JButton implements MouseListener {
         });
     }
 
-
     /**
      * Método que sirve para graficar y pintar una X cuando el Mouse pase sobre
      * ella o colocar una imagen de cerrar

@@ -7,7 +7,7 @@ package estructurasDatos;
 
 /**
  *
- * @author Mauro Sanchez2
+ * @author por_Sa
  */
 public class Nodo
 {

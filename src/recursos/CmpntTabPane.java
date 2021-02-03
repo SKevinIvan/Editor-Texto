@@ -8,9 +8,9 @@ package recursos;
 import javax.swing.*;
 
 /**
- * Clase que integra una etiqueta para el título de la pestaña, un botón para cerrarla
- * y un icono 
- * 
+ * Clase que integra una etiqueta para el título de la pestaña, un botón para
+ * cerrarla y un icono
+ *
  * @author kevin2
  */
 public class CmpntTabPane extends JPanel {
@@ -20,11 +20,12 @@ public class CmpntTabPane extends JPanel {
     private final int tipoX;
     private final ImageIcon image;
     //Fin de la declaración de las variables para la clase
-    
+
     /**
-     * Constructor de la clase PanelTab que inicaliza las variables 
-     * 
-     * @param txtPane El contenedor de pestañas en donde se le añadirá el componente a la pestaña
+     * Constructor de la clase PanelTab que inicaliza las variables
+     *
+     * @param txtPane El contenedor de pestañas en donde se le añadirá el
+     * componente a la pestaña
      * @param tipoX Tipo de X que se mostrará en el botón de cierre
      * @param image Icono que se le colocará en la pestaña
      */
@@ -37,9 +38,9 @@ public class CmpntTabPane extends JPanel {
     }
 
     /**
-     * Método de la clase que incorpora la etiqueta y el icono junto con el 
-     * del botón de la X
-     * 
+     * Método de la clase que incorpora la etiqueta y el icono junto con el del
+     * botón de la X
+     *
      */
     private void establecerEncabezado() {
         if (txtPane != null) {

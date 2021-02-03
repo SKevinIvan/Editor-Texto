@@ -307,7 +307,7 @@ public class Validaciones {
                             int aux32 = Integer.parseInt(aux);
                             bh = true;
                         } catch (Exception e) {
-                           
+
                         }
                         if (aux.equals("=")) {
                             cadena += aux;
@@ -384,25 +384,19 @@ public class Validaciones {
                         }
                     }
                 } else if (cadena.equals("/")) {
-
+/////////////////////////////////////////////////////////////////
                     if (st.hasMoreElements()) {
                         aux = st.nextToken();
 
                         if (aux.equals("*")) {
                             cadena += aux;
-
                             while (st.hasMoreElements()) {
-
-                                cadena += aux;
                                 aux = st.nextToken();
                                 if (aux.equals("*")) {
-
-                                    String aux2 = st.nextToken();
-                                    aux += aux2;
-                                    if (aux2.equals("/")) {
-
+                                    cadena += aux;
+                                    aux = st.nextToken();
+                                    if (aux.equals("/")) {
                                         cadena += aux;
-
                                         break;
                                     } else {
                                         if (aux.equals("\n")) {
@@ -410,9 +404,7 @@ public class Validaciones {
                                         }
                                     }
                                 } else {
-                                    if (aux.equals("\n")) {
-                                        cadena += aux;
-                                    }
+                                    cadena += aux;
                                 }
                             }
                         } else if (aux.equals("/")) {
@@ -437,6 +429,7 @@ public class Validaciones {
                         }
 
                     }
+                    ///////////////////////////////////////////////////
                 } else if (cadena.equals("<")) {
 
                     if (st.hasMoreElements()) {
@@ -561,14 +554,13 @@ public class Validaciones {
                         break;
 
                 }
-                if (palabras.get(i).startsWith("$")||palabras.get(i).startsWith("&")) {
+                if (palabras.get(i).startsWith("$") || palabras.get(i).startsWith("&")) {
                     TextPaneTest.ponerEstilo(txtP, "NEGRITAS", palabras.get(i));
-                }else if(palabras.get(i).startsWith("/*")||palabras.get(i).startsWith("//")){
+                } else if (palabras.get(i).startsWith("/*") || palabras.get(i).startsWith("//")) {
                     TextPaneTest.appendToPane(txtP, palabras.get(i), cGris);
-                } else if(palabras.get(i).startsWith("'")||palabras.get(i).startsWith("\"")){
+                } else if (palabras.get(i).startsWith("'") || palabras.get(i).startsWith("\"")) {
                     TextPaneTest.appendToPane(txtP, palabras.get(i), cNaranja);
-                }
-                else {
+                } else {
                     TextPaneTest.appendToPane(txtP, palabras.get(i), colorPalabra);
                 }
 

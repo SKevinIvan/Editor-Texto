@@ -10,7 +10,7 @@ import javax.swing.JFrame;
 
 /**
  *
- * @author Mauro Sanchez2
+ * @author por_sa
  */
 public class LSLC
 {

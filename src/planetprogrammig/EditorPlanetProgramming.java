@@ -30,6 +30,7 @@ import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Insets;
+import java.awt.Point;
 import java.awt.Rectangle;
 import java.awt.RenderingHints;
 import java.awt.datatransfer.Clipboard;
@@ -52,9 +53,11 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.text.AbstractDocument;
 import javax.swing.text.BadLocationException;
+import javax.swing.text.DefaultHighlighter;
 import javax.swing.text.Document;
-import javax.swing.text.DocumentFilter;
 import javax.swing.text.Element;
+import javax.swing.text.Highlighter;
+import javax.swing.text.JTextComponent;
 
 /**
  *
@@ -103,13 +106,13 @@ public class EditorPlanetProgramming extends javax.swing.JFrame {
     private void txtPanelEditandoCaretUpdate(javax.swing.event.CaretEvent evt) {
 
         if (!(txtPanelEditando.getText().isEmpty()) && (true)) {
-             btnGuardar.setEnabled(true);
+            btnGuardar.setEnabled(true);
             if (pilaDeshacer.getTope() == null) {
                 n1 = new Nodo(txtPanelEditando.getText(), -1);
                 pilaDeshacer.inserta(n1, null);
                 btnDeshacer.setEnabled(true);
                 itemDeshacer.setEnabled(true);
-                
+
             } else {
                 if (!pilaDeshacer.getTope().getS().equals(txtPanelEditando.getText())) {
                     n1 = new Nodo(txtPanelEditando.getText(), -1);
@@ -132,7 +135,7 @@ public class EditorPlanetProgramming extends javax.swing.JFrame {
                 itemCortar.setEnabled(true);
                 btnCopiar.setEnabled(true);
                 btnCortar.setEnabled(true);
-                 btnGuardar.setEnabled(true);
+                btnGuardar.setEnabled(true);
 
             } else {
 
@@ -230,6 +233,7 @@ public class EditorPlanetProgramming extends javax.swing.JFrame {
         itemCerrar = new javax.swing.JMenuItem();
         spArchivo = new javax.swing.JPopupMenu.Separator();
         itemSalir = new javax.swing.JMenuItem();
+        jMenuItem10 = new javax.swing.JMenuItem();
         menuEdicion = new javax.swing.JMenu();
         itemDeshacer = new javax.swing.JMenuItem();
         itemRehacer = new javax.swing.JMenuItem();
@@ -278,6 +282,9 @@ public class EditorPlanetProgramming extends javax.swing.JFrame {
         spAyuda = new javax.swing.JPopupMenu.Separator();
         jMenuItem1 = new javax.swing.JMenuItem();
         itemAcerca = new javax.swing.JMenuItem();
+        jMenu2 = new javax.swing.JMenu();
+        jMenuItem11 = new javax.swing.JMenuItem();
+        jMenuItem12 = new javax.swing.JMenuItem();
 
         popMRehacer.setText("Rehacer");
         popMenuEditar.add(popMRehacer);
@@ -825,6 +832,14 @@ public class EditorPlanetProgramming extends javax.swing.JFrame {
         });
         menuArchivo.add(itemSalir);
 
+        jMenuItem10.setText("AgregarPestaña");
+        jMenuItem10.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem10ActionPerformed(evt);
+            }
+        });
+        menuArchivo.add(jMenuItem10);
+
         MenuInicio.add(menuArchivo);
 
         menuEdicion.setText("Edición");
@@ -938,7 +953,7 @@ public class EditorPlanetProgramming extends javax.swing.JFrame {
         });
         menuEdicion.add(jMenuItem3);
 
-        jMenuItem9.setIcon(new javax.swing.ImageIcon(getClass().getResource("/iconos/18977 - viewmag.png"))); // NOI18N
+        jMenuItem9.setIcon(new javax.swing.ImageIcon(getClass().getResource("/iconos/18978 - viewmag_1.png"))); // NOI18N
         jMenuItem9.setText("Restaurar 100%");
         jMenuItem9.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -1235,6 +1250,21 @@ public class EditorPlanetProgramming extends javax.swing.JFrame {
 
         MenuInicio.add(menuAyuda);
 
+        jMenu2.setText("Dibujar");
+
+        jMenuItem11.setText("Nuevo lienzo");
+        jMenuItem11.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem11ActionPerformed(evt);
+            }
+        });
+        jMenu2.add(jMenuItem11);
+
+        jMenuItem12.setText("Guardar como");
+        jMenu2.add(jMenuItem12);
+
+        MenuInicio.add(jMenu2);
+
         setJMenuBar(MenuInicio);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -1491,7 +1521,7 @@ public class EditorPlanetProgramming extends javax.swing.JFrame {
         setCursor(new Cursor(Cursor.WAIT_CURSOR));
         posicionC = txtPanelEditando.getCaretPosition();
         formato();
-        
+
         txtPanelEditando.setCaretPosition(posicionC);
         setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
     }//GEN-LAST:event_btnFormatoActionPerformed
@@ -1988,6 +2018,24 @@ public class EditorPlanetProgramming extends javax.swing.JFrame {
 
         // TODO add your handling code here:
     }//GEN-LAST:event_pestaniasEntradaSalidasKeyPressed
+    public int i = 1;
+    private void jMenuItem10ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem10ActionPerformed
+        // TODO add your handling code here:
+        crearPagEdicion("", "txt");
+    }//GEN-LAST:event_jMenuItem10ActionPerformed
+
+    private void jMenuItem11ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem11ActionPerformed
+        CmpntTabPane panelI = new CmpntTabPane(pestaniasEntradaSalidas, 0, imgCursor);
+        JScrollPane scrollPaneI = new JScrollPane();
+        scrollPaneI.setViewportView(new Paint());
+        if (pestaniasEntradaSalidas.getTabCount() == 0) {
+            pestaniasEntradaSalidas.add("Página de inicio", scrollPaneI);
+        } else {
+            pestaniasEntradaSalidas.insertTab("Pintando", null, scrollPaneI, null, pestaniasEntradaSalidas.getTabCount());
+        }
+        pestaniasEntradaSalidas.setTabComponentAt(pestaniasEntradaSalidas.getTabCount() - 1, panelI);
+        // pestaniasEntradaSalidas.setSelectedIndex(0);
+    }//GEN-LAST:event_jMenuItem11ActionPerformed
 
     public void openEditor() {
 
@@ -2057,10 +2105,9 @@ public class EditorPlanetProgramming extends javax.swing.JFrame {
             txtPanelEditando.setSelectionColor(new java.awt.Color(153, 204, 255));
 
             txtPanelEditando.setEditorKit(new TabSizeEditorKit());
-            //NewLineFilter n=new NewLineFilter();
-            // AbstractDocument doc = (AbstractDocument) txtPanelEditando.getDocument();
+            AbstractDocument documento = (AbstractDocument) txtPanelEditando.getDocument();
 
-            // doc.setDocumentFilter(n);
+            documento.setDocumentFilter(new NewLineFilter());
             txtPanelEditando.addKeyListener(new java.awt.event.KeyAdapter() {
                 @Override
                 public void keyPressed(java.awt.event.KeyEvent evt) {
@@ -2072,29 +2119,8 @@ public class EditorPlanetProgramming extends javax.swing.JFrame {
                 public void keyTyped(java.awt.event.KeyEvent evt) {
                     //txtPanelSalidaKeyTyped(evt);
                     if (evt.getKeyChar() == '\n') {
-                        /*  String[] lineas = txtPanelEditando.getText().split("\n");
-                        int caretPosition = txtPanelEditando.getCaretPosition();
-                        Element root = txtPanelEditando.getDocument().getDefaultRootElement();
-                        int currentLine = root.getElementIndex(caretPosition);
-                        String su = lineas[currentLine-1];
-                        String tcc[] = su.split("\t");
-                        // System.out.println(tcc.length - 1);
-                        tb = tcc.length-1;
-                        int j = 0;
-
-                        while (j <=tb) {
-                            int p = txtPanelEditando.getCaretPosition();
-                            String s = "\t";
-                            StyleContext sc2 = StyleContext.getDefaultStyleContext();
-                            AttributeSet aset2 = sc2.addAttribute(SimpleAttributeSet.EMPTY, StyleConstants.Foreground, Color.black);
-
-                            txtPanelEditando.setCaretPosition(p);
-                            txtPanelEditando.setCharacterAttributes(aset2, true);
-                            txtPanelEditando.replaceSelection(s);
-                            j++;
-                        }
-
-                         */                    }
+                        highlight(txtPanelEditando, "public");
+                    }
                 }
             });
 
@@ -2119,6 +2145,7 @@ public class EditorPlanetProgramming extends javax.swing.JFrame {
             }
             pestaniasEntradaSalidas.setTabComponentAt(indexTab, panelTab[0]);
             checkEditando.setSelected(true);
+
         }
     }
 
@@ -2638,7 +2665,63 @@ public class EditorPlanetProgramming extends javax.swing.JFrame {
                 etiquetaNombre = archivoExtraido.getName();//obtiene el nombre del archivo/cancion                
 
                 TextPaneTest.appendToPane(txtPanelSalida, "\nAbriendo achivo...", cVerde);
-
+                String etiExt[] = etiquetaNombre.split(".");
+                for (int j = 0; j < etiExt.length; j++) {
+                    System.out.println(etiExt[j]);
+                }
+                String extencion = "";
+                switch (extencion) {
+                    case "html":
+                        //HTML
+                        break;
+                    case "css":
+                        //CSS
+                        break;
+                    case "js":
+                        //JAVASCRIPT
+                        break;
+                    case "pl":
+                        //PROLOG
+                        break;
+                    case "csdos":
+                        //CS-DOS
+                        break;
+                    case "txt":
+                        //TEXTO PLANO
+                        break;
+                    case "c":
+                        //C
+                        break;
+                    case "cs":
+                        //C#
+                        break;
+                    case "php":
+                        //PHP
+                        break;
+                    case "sql":
+                        //SQL
+                        break;
+                    case "ino":
+                        //ARDUINO
+                        break;
+                    case "h":
+                        //LIBRERIA ARDUINO
+                        break;
+                    case "class":
+                        //CLASE DE JAVA
+                        break;
+                    case "java":
+                        //JAVA
+                        break;
+                    case "asm":
+                        //ENSAMBLADOR
+                        break;
+                    case "hs":
+                        //HASKEL
+                        break;
+                    default:
+                        break;
+                }
                 String s = "";
                 ArrayList<String> ar = ManipulaArchivos.cargar(url);
 
@@ -2649,7 +2732,19 @@ public class EditorPlanetProgramming extends javax.swing.JFrame {
                         s += ar.get(i);
                     }
                     //Escribiendo el texto en el editor
-                    txtPanelEditando.setText(s);
+                    if (txtPanelEditando == null) {
+                        crearPestaniaEdicion();
+
+                        txtPanelEditando.setText(s);
+                    } else {
+                        if (txtPanelEditando.getText().isEmpty()) {
+
+                            txtPanelEditando.setText(s);
+                        } else {
+                            crearPagEdicion(s, extencion);
+                        }
+
+                    }
                     //Encabezado con el titulo del archivo
                     setTitle("Editor Planet" + " - " + etiquetaNombre);
                     //habilita MenuOpciones
@@ -2691,8 +2786,14 @@ public class EditorPlanetProgramming extends javax.swing.JFrame {
             if (archivoNuevo != null) // si no se selecciono ningun archivo no hace nada
             {
 
-                if (archivo) {
-                    ManipulaArchivos.guardar(txtPanelEditando.getText(), rutaArchivo);
+                if (txtPanelEditando != null) {
+                    if (archivo) {
+                        ManipulaArchivos.guardar(txtPanelEditando.getText(), rutaArchivo);
+                    }
+
+                } else {
+                    crearPestaniaEdicion();
+
                 }
                 TextPaneTest.appendToPane(txtPanelSalida, "\nCreando achivo...", cVerde);
                 url = archivoNuevo.getCanonicalPath(); //obtiene la ruta del archivo
@@ -3616,7 +3717,11 @@ public class EditorPlanetProgramming extends javax.swing.JFrame {
     private javax.swing.JMenuItem itemSemantico;
     private javax.swing.JMenuItem itemSintactico;
     private javax.swing.JMenu jMenu1;
+    private javax.swing.JMenu jMenu2;
     private javax.swing.JMenuItem jMenuItem1;
+    private javax.swing.JMenuItem jMenuItem10;
+    private javax.swing.JMenuItem jMenuItem11;
+    private javax.swing.JMenuItem jMenuItem12;
     private javax.swing.JMenuItem jMenuItem2;
     private javax.swing.JMenuItem jMenuItem3;
     private javax.swing.JMenuItem jMenuItem4;
@@ -3687,6 +3792,36 @@ public class EditorPlanetProgramming extends javax.swing.JFrame {
         return buf;
     }
 
+    private void crearPagEdicion(String s, String extension) {
+        javax.swing.JScrollPane scrollPag = new javax.swing.JScrollPane();
+        PanelTextoEditor pag = new PanelTextoEditor();
+
+        // txtPanelEditando = new javax.swing.JTextPane();
+        pag.setComponentPopupMenu(popMenuEditar);
+        scrollPag.setViewportView(pag);
+        pestaniasEntradaSalidas.addTab("Nuevo " + i, scrollPag);
+        i++;
+        NumeroLinea numLinea = new NumeroLinea(pag);
+        scrollPag.setRowHeaderView(numLinea);
+
+        CmpntTabPane pnlTab = new CmpntTabPane(pestaniasEntradaSalidas, 0, imageEditar);
+        int indexTab = 0;
+        /*
+        for (int i = 0; i < pestaniasEntradaSalidas.getTabCount(); i++) {
+            if (pestaniasEntradaSalidas.getTitleAt(i).equals("Editando")) {
+                indexTab = i;
+            }
+        }
+         */
+        AbstractDocument doc = (AbstractDocument) pag.getDocument();
+        doc.setDocumentFilter(new NewLineFilter());
+        pag.setText(s);
+        pestaniasEntradaSalidas.setTabComponentAt((pestaniasEntradaSalidas.getTabCount() - 1), pnlTab);
+        /*
+        checkEditando.setSelected(true);
+         */
+    }
+
     private static class HighlightLineTextPaneAzul extends JTextPane {
 
         public HighlightLineTextPaneAzul() {
@@ -3719,27 +3854,49 @@ public class EditorPlanetProgramming extends javax.swing.JFrame {
         }
     }
 
-    private String addWhiteSpace(Document doc, int offset) {
-        StringBuilder whiteSpace = new StringBuilder("\n");
-        Element rootElement = doc.getDefaultRootElement();
-        int line = rootElement.getElementIndex(offset);
-        int i = rootElement.getElement(line).getStartOffset();
+// Creates highlights around all occurrences of pattern in textComp
+    public void highlight(JTextComponent textComp, String pattern) {
+        // First remove all old highlights
+        removeHighlights(textComp);
 
-        while (true) {
-            try {
-                String temp = doc.getText(i, 1);
+        try {
+            Highlighter hilite = textComp.getHighlighter();
+            Document doc = textComp.getDocument();
+            String text = doc.getText(0, doc.getLength());
+            int pos = 0;
 
-                if (temp.equals(" ") || temp.equals("\t")) {
-                    whiteSpace.append(temp);
-                    i++;
-                } else {
-                    break;
-                }
-            } catch (BadLocationException ex) {
-                Logger.getLogger(EditorPlanetProgramming.class.getName()).log(Level.SEVERE, null, ex);
+            // Search for pattern
+            while ((pos = text.indexOf(pattern, pos)) >= 0) {
+                // Create highlighter using private painter and apply around pattern
+                hilite.addHighlight(pos, pos + pattern.length(), myHighlightPainter);
+                pos += pattern.length();
+            }
+        } catch (BadLocationException e) {
+        }
+    }
+
+// Removes only our private highlights
+    public void removeHighlights(JTextComponent textComp) {
+        Highlighter hilite = textComp.getHighlighter();
+        Highlighter.Highlight[] hilites = hilite.getHighlights();
+
+        for (int i = 0; i < hilites.length; i++) {
+            if (hilites[i].getPainter() instanceof MyHighlightPainter) {
+                hilite.removeHighlight(hilites[i]);
+
             }
         }
-
-        return whiteSpace.toString();
     }
+
+// An instance of the private subclass of the default highlight painter
+    Highlighter.HighlightPainter myHighlightPainter = new MyHighlightPainter(Color.YELLOW);
+
+// A private subclass of the default highlight painter
+    class MyHighlightPainter extends DefaultHighlighter.DefaultHighlightPainter {
+
+        public MyHighlightPainter(Color color) {
+            super(color);
+        }
+    }
+
 }

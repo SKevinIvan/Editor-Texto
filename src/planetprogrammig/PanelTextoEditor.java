@@ -7,8 +7,11 @@ package planetprogrammig;
 
 import java.awt.Color;
 import java.awt.Graphics;
+import java.awt.Insets;
 import java.awt.Rectangle;
 import javax.swing.JTextPane;
+import javax.swing.border.EmptyBorder;
+import javax.swing.event.CaretEvent;
 import javax.swing.text.AttributeSet;
 import javax.swing.text.BadLocationException;
 import javax.swing.text.SimpleAttributeSet;
@@ -20,7 +23,7 @@ import recursos.Mensaje;
  *
  * @author por_s
  */
-public class PanelTextoEditor extends javax.swing.JTextPane {
+public class PanelTextoEditor extends javax.swing.JTextPane implements javax.swing.event.CaretListener {
 
     @Override
     protected void paintComponent(Graphics g) {
@@ -50,6 +53,11 @@ public class PanelTextoEditor extends javax.swing.JTextPane {
         // Has to be marked as transparent so the background is not replaced by 
         // super.paintComponent(g); 
         setOpaque(false);
+        EmptyBorder eb = new EmptyBorder(new Insets(0, 5, 0, 0));
+        this.setBorder(eb);
+
+
+        this.setEditorKit(new TabSizeEditorKit());
 
         this.setFont(new java.awt.Font("Monospaced", 0, 14)); // NOI18N
         this.setSelectionColor(new java.awt.Color(153, 204, 255));
@@ -160,6 +168,12 @@ public class PanelTextoEditor extends javax.swing.JTextPane {
         tp.setCaretPosition(tp.getDocument().getLength());
         tp.setCharacterAttributes(aset2, true);
         tp.replaceSelection("\n");
+    }
+
+    @Override
+    public void caretUpdate(CaretEvent ce) {
+       
+    
     }
 
 }

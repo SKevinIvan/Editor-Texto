@@ -6,7 +6,6 @@
 package planetprogrammig;
 
 import javax.swing.text.*;
-import javax.swing.*;
 
 public class TabSizeEditorKit extends StyledEditorKit {
 

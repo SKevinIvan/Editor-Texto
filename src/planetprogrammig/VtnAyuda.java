@@ -5,6 +5,8 @@
  */
 package planetprogrammig;
 
+import Utils.CustomJTree;
+import Utils.Node;
 import java.awt.Image;
 import java.awt.Toolkit;
 
@@ -14,10 +16,48 @@ import java.awt.Toolkit;
  */
 public class VtnAyuda extends javax.swing.JDialog {
 
+    private final CustomJTree tree = new CustomJTree();
+
+    private void loadProyect() {
+
+        Node package1 = new Node(Utils.TypeFile.PACKAGE, "Interfaces");
+        package1.addChild(new Node(Utils.TypeFile.CLASS, "Inode.jey"));
+
+        Node package2 = new Node(Utils.TypeFile.PACKAGE, "Resources");
+        Node package22 = new Node(Utils.TypeFile.PACKAGE, "Img");
+        package22.addChild(new Node(Utils.TypeFile.IMAGE, "BuildPackage.png"));
+        package22.addChild(new Node(Utils.TypeFile.IMAGE, "class.png"));
+        package22.addChild(new Node(Utils.TypeFile.IMAGE, "CodesPackage.png"));
+        package22.addChild(new Node(Utils.TypeFile.IMAGE, "Configuration.png"));
+        package2.addChild(package22);
+
+        Node package3 = new Node(Utils.TypeFile.PACKAGE, "Utils");
+        package3.addChild(new Node(Utils.TypeFile.CLASS, "CustomJtree.jey"));
+        package3.addChild(new Node(Utils.TypeFile.CLASS, "Node.jey"));
+        package3.addChild(new Node(Utils.TypeFile.CLASS, "Project.jey"));
+        package3.addChild(new Node(Utils.TypeFile.CLASS, "TypeFile.jey"));
+
+        Node package4 = new Node(Utils.TypeFile.PACKAGE, "View");
+        package4.addChild(new Node(Utils.TypeFile.CLASS, "Frame.jey"));
+
+        Node packageSource = new Node(Utils.TypeFile.FOLDER_SOURCE, "Source Packages");
+        packageSource.addChilds(package1, package2, package3, package4);
+
+        Node packageBuild = new Node(Utils.TypeFile.FOLDER_BUILD, "output");
+        packageBuild.addChild(new Node(Utils.TypeFile.COMPILED_CLASS, "Node.out"));
+
+        Node project = new Node(Utils.TypeFile.PROYECT, "CustomJTre");
+        project.addChilds(packageSource, packageBuild);
+        tree.loadNewProyect(project);
+    }
+
     /**
      * Creates new form Ayuda
+     *
      * @param parent designa a quien esta heredando la ventana
-     * @param modal es un booleano que dice que si se mueve el cursor a otra parte este tendra que cerrarse esta ventana para que se pueda ver otra parte
+     * @param modal es un booleano que dice que si se mueve el cursor a otra
+     * parte este tendra que cerrarse esta ventana para que se pueda ver otra
+     * parte
      */
     public VtnAyuda(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
@@ -27,7 +67,10 @@ public class VtnAyuda extends javax.swing.JDialog {
         this.setIconImage(icono);
         setLocationRelativeTo(parent);
         setResizable(false);
-        
+        loadProyect();
+        tree.setBounds(0, 0, jPanel2.getWidth(), jPanel2.getHeight());
+        jPanel2.add(tree);
+
     }
 
     /**
@@ -39,17 +82,13 @@ public class VtnAyuda extends javax.swing.JDialog {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jScrollPane2 = new javax.swing.JScrollPane();
-        jTree2 = new javax.swing.JTree();
         jPanel1 = new javax.swing.JPanel();
         panel1 = new org.edisoncor.gui.panel.Panel();
         jButton3 = new javax.swing.JButton();
+        jPanel2 = new javax.swing.JPanel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setBackground(new java.awt.Color(0, 102, 102));
-
-        jTree2.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 1, true));
-        jScrollPane2.setViewportView(jTree2);
 
         jPanel1.setBackground(new java.awt.Color(255, 255, 255));
         jPanel1.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 1, true));
@@ -86,12 +125,23 @@ public class VtnAyuda extends javax.swing.JDialog {
             .addComponent(jButton3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
+        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
+        jPanel2.setLayout(jPanel2Layout);
+        jPanel2Layout.setHorizontalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 167, Short.MAX_VALUE)
+        );
+        jPanel2Layout.setVerticalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 0, Short.MAX_VALUE)
+        );
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 167, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addComponent(panel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -102,8 +152,8 @@ public class VtnAyuda extends javax.swing.JDialog {
                 .addComponent(panel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane2)
-                    .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                    .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
         );
 
         pack();
@@ -155,8 +205,7 @@ public class VtnAyuda extends javax.swing.JDialog {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton3;
     private javax.swing.JPanel jPanel1;
-    private javax.swing.JScrollPane jScrollPane2;
-    private javax.swing.JTree jTree2;
+    private javax.swing.JPanel jPanel2;
     private org.edisoncor.gui.panel.Panel panel1;
     // End of variables declaration//GEN-END:variables
 }

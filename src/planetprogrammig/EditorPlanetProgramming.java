@@ -5,6 +5,8 @@
  */
 package planetprogrammig;
 
+import Utils.CustomJTree;
+import Utils.Node;
 import java.awt.Color;
 import java.awt.Cursor;
 import java.awt.HeadlessException;
@@ -30,7 +32,6 @@ import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Insets;
-import java.awt.Point;
 import java.awt.Rectangle;
 import java.awt.RenderingHints;
 import java.awt.datatransfer.Clipboard;
@@ -45,8 +46,6 @@ import java.awt.print.PrinterJob;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 import java.util.StringTokenizer;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.JScrollPane;
 import javax.swing.JTextPane;
 import javax.swing.border.EmptyBorder;
@@ -55,7 +54,6 @@ import javax.swing.text.AbstractDocument;
 import javax.swing.text.BadLocationException;
 import javax.swing.text.DefaultHighlighter;
 import javax.swing.text.Document;
-import javax.swing.text.Element;
 import javax.swing.text.Highlighter;
 import javax.swing.text.JTextComponent;
 
@@ -63,12 +61,14 @@ import javax.swing.text.JTextComponent;
  *
  * @author kevin2
  */
-public class EditorPlanetProgramming extends javax.swing.JFrame {
+public final class EditorPlanetProgramming extends javax.swing.JFrame {
 
     /**
      * Creates new form EditorPlanetProgramming
      */
+
     public EditorPlanetProgramming() {
+       
         TabbedPaneUI blackTabbedPaneUI = new TabbedPaneUI();
         panelTab = new CmpntTabPane[9];
         //Inicializacion de las pilas de los cambios
@@ -76,6 +76,7 @@ public class EditorPlanetProgramming extends javax.swing.JFrame {
         pilaRehacer = new PilaD();
 
         initComponents();
+     
         Image icono = Toolkit.getDefaultToolkit().getImage(ClassLoader.getSystemResource("imagenes/planetUrano.png"));
         this.setIconImage(icono);
         setTitle("Planet Editor");
@@ -285,6 +286,9 @@ public class EditorPlanetProgramming extends javax.swing.JFrame {
         jMenu2 = new javax.swing.JMenu();
         jMenuItem11 = new javax.swing.JMenuItem();
         jMenuItem12 = new javax.swing.JMenuItem();
+        jMenu3 = new javax.swing.JMenu();
+        jMenuItem13 = new javax.swing.JMenuItem();
+        jMenuItem14 = new javax.swing.JMenuItem();
 
         popMRehacer.setText("Rehacer");
         popMenuEditar.add(popMRehacer);
@@ -665,7 +669,6 @@ public class EditorPlanetProgramming extends javax.swing.JFrame {
         progressBarEditor.setStringPainted(true);
         toolBarAccesosDirectos.add(progressBarEditor);
 
-        pestaniasEntradaSalidas.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(204, 204, 204), 1, true));
         pestaniasEntradaSalidas.setTabLayoutPolicy(javax.swing.JTabbedPane.SCROLL_TAB_LAYOUT);
         pestaniasEntradaSalidas.setComponentPopupMenu(popMenuCerrar);
         pestaniasEntradaSalidas.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
@@ -1265,14 +1268,24 @@ public class EditorPlanetProgramming extends javax.swing.JFrame {
 
         MenuInicio.add(jMenu2);
 
+        jMenu3.setText("Notas");
+
+        jMenuItem13.setText("Agregar nota");
+        jMenu3.add(jMenuItem13);
+
+        jMenuItem14.setText("Ver lista de notas");
+        jMenu3.add(jMenuItem14);
+
+        MenuInicio.add(jMenu3);
+
         setJMenuBar(MenuInicio);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(pestaniasEntradaSalidas)
-            .addComponent(toolBarAccesosDirectos, javax.swing.GroupLayout.DEFAULT_SIZE, 1331, Short.MAX_VALUE)
+            .addComponent(toolBarAccesosDirectos, javax.swing.GroupLayout.DEFAULT_SIZE, 1403, Short.MAX_VALUE)
+            .addComponent(pestaniasEntradaSalidas, javax.swing.GroupLayout.Alignment.TRAILING)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -1627,49 +1640,72 @@ public class EditorPlanetProgramming extends javax.swing.JFrame {
     private void pestaniasEntradaSalidasComponentRemoved(java.awt.event.ContainerEvent evt) {//GEN-FIRST:event_pestaniasEntradaSalidasComponentRemoved
 
         if (evt.getChild().getName() != null) {
-            if (evt.getChild().getName().equals("scrollPaneEditando")) {
-                checkEditando.setSelected(false);
-            } else if (evt.getChild().getName().equals("scrollPaneCompilando")) {
-                checkCompilando.setSelected(false);
-            } else if (evt.getChild().getName().equals("scrollPaneSalida")) {
-                checkSalida.setSelected(false);
-            } else if (evt.getChild().getName().equals("scrollPaneLexico")) {
-                checkLexico.setSelected(false);
-            } else if (evt.getChild().getName().equals("scrollPaneSintactico")) {
-                checkSintactico.setSelected(false);
-            } else if (evt.getChild().getName().equals("scrollPaneSemantico")) {
-                checkSemantico.setSelected(false);
-            } else if (evt.getChild().getName().equals("scrollPaneIntermedio")) {
-                checkIntermedio.setSelected(false);
-            } else if (evt.getChild().getName().equals("scrollPaneOptimizacion")) {
-                checkOptimizacion.setSelected(false);
-            } else if (evt.getChild().getName().equals("scrollPaneObjeto")) {
-                checkObjeto.setSelected(false);
+            switch (evt.getChild().getName()) {
+                case "scrollPaneEditando":
+                    checkEditando.setSelected(false);
+                    break;
+                case "scrollPaneCompilando":
+                    checkCompilando.setSelected(false);
+                    break;
+                case "scrollPaneSalida":
+                    checkSalida.setSelected(false);
+                    break;
+                case "scrollPaneLexico":
+                    checkLexico.setSelected(false);
+                    break;
+                case "scrollPaneSintactico":
+                    checkSintactico.setSelected(false);
+                    break;
+                case "scrollPaneSemantico":
+                    checkSemantico.setSelected(false);
+                    break;
+                case "scrollPaneIntermedio":
+                    checkIntermedio.setSelected(false);
+                    break;
+                case "scrollPaneOptimizacion":
+                    checkOptimizacion.setSelected(false);
+                    break;
+                case "scrollPaneObjeto":
+                    checkObjeto.setSelected(false);
+                    break;
+                default:
+                    break;
             }
         }
     }//GEN-LAST:event_pestaniasEntradaSalidasComponentRemoved
 
     private void pestaniasEntradaSalidasComponentAdded(java.awt.event.ContainerEvent evt) {//GEN-FIRST:event_pestaniasEntradaSalidasComponentAdded
         if (evt.getChild().getName() != null) {
-            if (evt.getChild().getName().equals("scrollPaneEditando")) {
-                checkEditando.setSelected(true);
-
-            } else if (evt.getChild().getName().equals("scrollPaneCompilando")) {
-                checkCompilando.setSelected(true);
-            } else if (evt.getChild().getName().equals("scrollPaneSalida")) {
-                checkSalida.setSelected(true);
-            } else if (evt.getChild().getName().equals("scrollPaneLexico")) {
-                checkLexico.setSelected(true);
-            } else if (evt.getChild().getName().equals("scrollPaneSintactico")) {
-                checkSintactico.setSelected(true);
-            } else if (evt.getChild().getName().equals("scrollPaneSemantico")) {
-                checkSemantico.setSelected(true);
-            } else if (evt.getChild().getName().equals("scrollPaneIntermedio")) {
-                checkIntermedio.setSelected(true);
-            } else if (evt.getChild().getName().equals("scrollPaneOptimizacion")) {
-                checkOptimizacion.setSelected(true);
-            } else if (evt.getChild().getName().equals("scrollPaneObjeto")) {
-                checkObjeto.setSelected(true);
+            switch (evt.getChild().getName()) {
+                case "scrollPaneEditando":
+                    checkEditando.setSelected(true);
+                    break;
+                case "scrollPaneCompilando":
+                    checkCompilando.setSelected(true);
+                    break;
+                case "scrollPaneSalida":
+                    checkSalida.setSelected(true);
+                    break;
+                case "scrollPaneLexico":
+                    checkLexico.setSelected(true);
+                    break;
+                case "scrollPaneSintactico":
+                    checkSintactico.setSelected(true);
+                    break;
+                case "scrollPaneSemantico":
+                    checkSemantico.setSelected(true);
+                    break;
+                case "scrollPaneIntermedio":
+                    checkIntermedio.setSelected(true);
+                    break;
+                case "scrollPaneOptimizacion":
+                    checkOptimizacion.setSelected(true);
+                    break;
+                case "scrollPaneObjeto":
+                    checkObjeto.setSelected(true);
+                    break;
+                default:
+                    break;
             }
 
         }
@@ -1714,25 +1750,37 @@ public class EditorPlanetProgramming extends javax.swing.JFrame {
     }//GEN-LAST:event_popMCerrarActionPerformed
 
     private void popMLimpiarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_popMLimpiarActionPerformed
-        if (pestaniasEntradaSalidas.getTitleAt(pestaniasEntradaSalidas.getSelectedIndex()).equals("Editando")) {
-            txtPanelEditando.setText("");
-        } else if (pestaniasEntradaSalidas.getTitleAt(pestaniasEntradaSalidas.getSelectedIndex()).equals("Compilando")) {
-            txtPanelCompilando.setText("");
-        } else if (pestaniasEntradaSalidas.getTitleAt(pestaniasEntradaSalidas.getSelectedIndex()).equals("Salida")) {
-            txtPanelSalida.setText("");
-        } else if (pestaniasEntradaSalidas.getTitleAt(pestaniasEntradaSalidas.getSelectedIndex()).equals("Léxico")) {
-            txtPanelLexico.setText("");
-        } else if (pestaniasEntradaSalidas.getTitleAt(pestaniasEntradaSalidas.getSelectedIndex()).equals("Sintáctico")) {
-            txtPanelSintactico1.setText("");
-            txtPanelSintactico2.setText("");
-        } else if (pestaniasEntradaSalidas.getTitleAt(pestaniasEntradaSalidas.getSelectedIndex()).equals("Semántico")) {
-            txtPanelSemantico.setText("");
-        } else if (pestaniasEntradaSalidas.getTitleAt(pestaniasEntradaSalidas.getSelectedIndex()).equals("Intermedio")) {
-            txtPanelIntermedio.setText("");
-        } else if (pestaniasEntradaSalidas.getTitleAt(pestaniasEntradaSalidas.getSelectedIndex()).equals("Optimización")) {
-            txtPanelOptimizacion.setText("");
-        } else if (pestaniasEntradaSalidas.getTitleAt(pestaniasEntradaSalidas.getSelectedIndex()).equals("Objeto")) {
-            txtPanelObjeto.setText("");
+        switch (pestaniasEntradaSalidas.getTitleAt(pestaniasEntradaSalidas.getSelectedIndex())) {
+            case "Editando":
+                txtPanelEditando.setText("");
+                break;
+            case "Compilando":
+                txtPanelCompilando.setText("");
+                break;
+            case "Salida":
+                txtPanelSalida.setText("");
+                break;
+            case "Léxico":
+                txtPanelLexico.setText("");
+                break;
+            case "Sintáctico":
+                txtPanelSintactico1.setText("");
+                txtPanelSintactico2.setText("");
+                break;
+            case "Semántico":
+                txtPanelSemantico.setText("");
+                break;
+            case "Intermedio":
+                txtPanelIntermedio.setText("");
+                break;
+            case "Optimización":
+                txtPanelOptimizacion.setText("");
+                break;
+            case "Objeto":
+                txtPanelObjeto.setText("");
+                break;
+            default:
+                break;
         }
     }//GEN-LAST:event_popMLimpiarActionPerformed
 
@@ -2107,29 +2155,23 @@ public class EditorPlanetProgramming extends javax.swing.JFrame {
             txtPanelEditando.setEditorKit(new TabSizeEditorKit());
             AbstractDocument documento = (AbstractDocument) txtPanelEditando.getDocument();
 
-            documento.setDocumentFilter(new NewLineFilter());
             txtPanelEditando.addKeyListener(new java.awt.event.KeyAdapter() {
                 @Override
                 public void keyPressed(java.awt.event.KeyEvent evt) {
                     // txtPanelSalidaKeyPressed(evt);
-
+                    //  documento.setDocumentFilter(new NewLineFilter());
                 }
 
                 @Override
                 public void keyTyped(java.awt.event.KeyEvent evt) {
                     //txtPanelSalidaKeyTyped(evt);
                     if (evt.getKeyChar() == '\n') {
-                        highlight(txtPanelEditando, "public");
+                        //     highlight(txtPanelEditando, "public");
                     }
                 }
             });
 
-            txtPanelEditando.addCaretListener(new javax.swing.event.CaretListener() {
-                @Override
-                public void caretUpdate(javax.swing.event.CaretEvent evt) {
-                    txtPanelEditandoCaretUpdate(evt);
-                }
-            });
+            txtPanelEditando.addCaretListener(this::txtPanelEditandoCaretUpdate);
             txtPanelEditando.setComponentPopupMenu(popMenuEditar);
             scrollPaneEditando.setViewportView(txtPanelEditando);
             pestaniasEntradaSalidas.addTab("Editando", scrollPaneEditando);
@@ -2138,9 +2180,9 @@ public class EditorPlanetProgramming extends javax.swing.JFrame {
             scrollPaneEditando.setRowHeaderView(numLineEditor);
             panelTab[0] = new CmpntTabPane(pestaniasEntradaSalidas, 0, imageEditar);
             int indexTab = 0;
-            for (int i = 0; i < pestaniasEntradaSalidas.getTabCount(); i++) {
-                if (pestaniasEntradaSalidas.getTitleAt(i).equals("Editando")) {
-                    indexTab = i;
+            for (int p = 0; p < pestaniasEntradaSalidas.getTabCount(); p++) {
+                if (pestaniasEntradaSalidas.getTitleAt(p).equals("Editando")) {
+                    indexTab = p;
                 }
             }
             pestaniasEntradaSalidas.setTabComponentAt(indexTab, panelTab[0]);
@@ -2181,9 +2223,9 @@ public class EditorPlanetProgramming extends javax.swing.JFrame {
             panelTab[1] = new CmpntTabPane(pestaniasEntradaSalidas, 0, imageCompilar);
 
             int indexTab = 0;
-            for (int i = 0; i < pestaniasEntradaSalidas.getTabCount(); i++) {
-                if (pestaniasEntradaSalidas.getTitleAt(i).equals("Compilando")) {
-                    indexTab = i;
+            for (int j = 0; j < pestaniasEntradaSalidas.getTabCount(); j++) {
+                if (pestaniasEntradaSalidas.getTitleAt(j).equals("Compilando")) {
+                    indexTab = j;
                 }
             }
             pestaniasEntradaSalidas.setTabComponentAt(indexTab, panelTab[1]);
@@ -2218,9 +2260,9 @@ public class EditorPlanetProgramming extends javax.swing.JFrame {
             scrollPaneSalida.setRowHeaderView(numLineSalida);
             panelTab[2] = new CmpntTabPane(pestaniasEntradaSalidas, 0, imageSalida);
             int indexTab = 0;
-            for (int i = 0; i < pestaniasEntradaSalidas.getTabCount(); i++) {
-                if (pestaniasEntradaSalidas.getTitleAt(i).equals("Salida")) {
-                    indexTab = i;
+            for (int p = 0; p < pestaniasEntradaSalidas.getTabCount(); p++) {
+                if (pestaniasEntradaSalidas.getTitleAt(p).equals("Salida")) {
+                    indexTab = p;
                 }
             }
             pestaniasEntradaSalidas.setTabComponentAt(indexTab, panelTab[2]);
@@ -2255,9 +2297,9 @@ public class EditorPlanetProgramming extends javax.swing.JFrame {
             scrollPaneLexico.setRowHeaderView(numLineLexico);
             panelTab[3] = new CmpntTabPane(pestaniasEntradaSalidas, 0, imageLexico);
             int indexTab = 0;
-            for (int i = 0; i < pestaniasEntradaSalidas.getTabCount(); i++) {
-                if (pestaniasEntradaSalidas.getTitleAt(i).equals("Léxico")) {
-                    indexTab = i;
+            for (int p = 0; p < pestaniasEntradaSalidas.getTabCount(); p++) {
+                if (pestaniasEntradaSalidas.getTitleAt(p).equals("Léxico")) {
+                    indexTab = p;
                 }
             }
             pestaniasEntradaSalidas.setTabComponentAt(indexTab, panelTab[3]);
@@ -2320,9 +2362,9 @@ public class EditorPlanetProgramming extends javax.swing.JFrame {
             scrollPaneSintactico2.setRowHeaderView(numLineSintactico2);
             panelTab[4] = new CmpntTabPane(pestaniasEntradaSalidas, 0, imageSintactico);
             int indexTab = 0;
-            for (int i = 0; i < pestaniasEntradaSalidas.getTabCount(); i++) {
-                if (pestaniasEntradaSalidas.getTitleAt(i).equals("Sintáctico")) {
-                    indexTab = i;
+            for (int p = 0; p < pestaniasEntradaSalidas.getTabCount(); p++) {
+                if (pestaniasEntradaSalidas.getTitleAt(p).equals("Sintáctico")) {
+                    indexTab = p;
                 }
             }
             pestaniasEntradaSalidas.setTabComponentAt(indexTab, panelTab[4]);
@@ -2360,9 +2402,9 @@ public class EditorPlanetProgramming extends javax.swing.JFrame {
             scrollPaneSemantico.setRowHeaderView(numLineSemantico);
             panelTab[5] = new CmpntTabPane(pestaniasEntradaSalidas, 0, imageSemantico);
             int indexTab = 0;
-            for (int i = 0; i < pestaniasEntradaSalidas.getTabCount(); i++) {
-                if (pestaniasEntradaSalidas.getTitleAt(i).equals("Semántico")) {
-                    indexTab = i;
+            for (int j = 0; j < pestaniasEntradaSalidas.getTabCount(); j++) {
+                if (pestaniasEntradaSalidas.getTitleAt(j).equals("Semántico")) {
+                    indexTab = j;
                 }
             }
             pestaniasEntradaSalidas.setTabComponentAt(indexTab, panelTab[5]);
@@ -2395,9 +2437,9 @@ public class EditorPlanetProgramming extends javax.swing.JFrame {
             scrollPaneIntermedio.setRowHeaderView(numLineIntermedio);
             panelTab[6] = new CmpntTabPane(pestaniasEntradaSalidas, 0, imageIntermedio);
             int indexTab = 0;
-            for (int i = 0; i < pestaniasEntradaSalidas.getTabCount(); i++) {
-                if (pestaniasEntradaSalidas.getTitleAt(i).equals("Intermedio")) {
-                    indexTab = i;
+            for (int p = 0; p < pestaniasEntradaSalidas.getTabCount(); p++) {
+                if (pestaniasEntradaSalidas.getTitleAt(p).equals("Intermedio")) {
+                    indexTab = p;
                 }
             }
             pestaniasEntradaSalidas.setTabComponentAt(indexTab, panelTab[6]);
@@ -2430,9 +2472,9 @@ public class EditorPlanetProgramming extends javax.swing.JFrame {
             scrollPaneOptimizacion.setRowHeaderView(numLineOptimizado);
             panelTab[7] = new CmpntTabPane(pestaniasEntradaSalidas, 0, imageOptimizacion);
             int indexTab = 0;
-            for (int i = 0; i < pestaniasEntradaSalidas.getTabCount(); i++) {
-                if (pestaniasEntradaSalidas.getTitleAt(i).equals("Optimización")) {
-                    indexTab = i;
+            for (int j = 0; j < pestaniasEntradaSalidas.getTabCount(); j++) {
+                if (pestaniasEntradaSalidas.getTitleAt(j).equals("Optimización")) {
+                    indexTab = j;
                 }
             }
             pestaniasEntradaSalidas.setTabComponentAt(indexTab, panelTab[7]);
@@ -2465,9 +2507,9 @@ public class EditorPlanetProgramming extends javax.swing.JFrame {
             scrollPaneObjeto.setRowHeaderView(numLineObjeto);
             panelTab[8] = new CmpntTabPane(pestaniasEntradaSalidas, 0, imageObjeto);
             int indexTab = 0;
-            for (int i = 0; i < pestaniasEntradaSalidas.getTabCount(); i++) {
-                if (pestaniasEntradaSalidas.getTitleAt(i).equals("Objeto")) {
-                    indexTab = i;
+            for (int j = 0; j < pestaniasEntradaSalidas.getTabCount(); j++) {
+                if (pestaniasEntradaSalidas.getTitleAt(j).equals("Objeto")) {
+                    indexTab = j;
                 }
             }
             pestaniasEntradaSalidas.setTabComponentAt(indexTab, panelTab[8]);
@@ -2666,8 +2708,8 @@ public class EditorPlanetProgramming extends javax.swing.JFrame {
 
                 TextPaneTest.appendToPane(txtPanelSalida, "\nAbriendo achivo...", cVerde);
                 String etiExt[] = etiquetaNombre.split(".");
-                for (int j = 0; j < etiExt.length; j++) {
-                    System.out.println(etiExt[j]);
+                for (String etiExt1 : etiExt) {
+                    System.out.println(etiExt1);
                 }
                 String extencion = "";
                 switch (extencion) {
@@ -2728,8 +2770,8 @@ public class EditorPlanetProgramming extends javax.swing.JFrame {
                 rutaArchivo = url;
                 this.archivo = true;
                 if (ar != null) {
-                    for (int i = 0; i < ar.size(); i++) {
-                        s += ar.get(i);
+                    for (int j = 0; j < ar.size(); j++) {
+                        s += ar.get(j);
                     }
                     //Escribiendo el texto en el editor
                     if (txtPanelEditando == null) {
@@ -2780,8 +2822,8 @@ public class EditorPlanetProgramming extends javax.swing.JFrame {
             selecciona.setFileFilter(filtro);  //se agrega el filtro al file chooser
             selecciona.showSaveDialog(this);
             File archivoNuevo = selecciona.getSelectedFile(); //obtiene el archivo en la variable archivo
-            String url = ""; //borra la ruta para evitar que se quede una anterior
-            String etiquetaNombre = "";
+            String url; //borra la ruta para evitar que se quede una anterior
+            String etiquetaNombre;
 
             if (archivoNuevo != null) // si no se selecciono ningun archivo no hace nada
             {
@@ -2851,8 +2893,8 @@ public class EditorPlanetProgramming extends javax.swing.JFrame {
                 selecciona.setFileFilter(filtro);  //se agrega el filtro al file chooser
                 selecciona.showSaveDialog(this);
                 File archivoNuevo = selecciona.getSelectedFile(); //obtiene el archivo en la variable archivo
-                String url = ""; //borra la ruta para evitar que se quede una anterior
-                String etiquetaNombre = "";
+                String url; //borra la ruta para evitar que se quede una anterior
+                String etiquetaNombre;
 
                 if (archivoNuevo != null) // si no se selecciono ningun archivo no hace nada
                 {
@@ -2907,7 +2949,7 @@ public class EditorPlanetProgramming extends javax.swing.JFrame {
             selecciona.setFileFilter(filtro);  //se agrega el filtro al file chooser
             selecciona.showSaveDialog(this);
             File archivoNuevo = selecciona.getSelectedFile(); //obtiene el archivo en la variable archivo
-            String url = ""; //borra la ruta para evitar que se quede una anterior
+            String url; //borra la ruta para evitar que se quede una anterior
 
             if (archivoNuevo != null) // si no se selecciono ningun archivo no hace nada
             {
@@ -2993,8 +3035,7 @@ public class EditorPlanetProgramming extends javax.swing.JFrame {
             {-1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -3}//28
         };
 
-        char[] alfabeto = {'"', 'A', 'L', '$', '&', '_', '~', '@', 'D', '-', '#', '\'', 'C', '.', '?'};
-
+        //char[] alfabeto = {'"', 'A', 'L', '$', '&', '_', '~', '@', 'D', '-', '#', '\'', 'C', '.', '?'};
         //Lexico analisisLexico = new Lexico(txtPanelEditando.getText(), "+-=*&| {}()[]!?^/%;:,<>\n\t\r\b\f", matrizGeneral, alfabeto);
         Lexico analisisLexico = new Lexico(txtPanelEditando.getText(), "+-=*&| {}()[]!?^/%;:,<>\n\t\r\b\f", "Tabla del automata general.xlsx");
 
@@ -3018,6 +3059,7 @@ public class EditorPlanetProgramming extends javax.swing.JFrame {
                 false, false, false, false
             };
 
+            @Override
             public boolean isCellEditable(int rowIndex, int columnIndex) {
                 return canEdit[columnIndex];
             }
@@ -3035,13 +3077,13 @@ public class EditorPlanetProgramming extends javax.swing.JFrame {
         model = new DefaultTableModel(null, columnas);
         String[] filas = new String[4];
 
-        for (int i = 0; i < lexemas.size(); i++) {
+        for (int p = 0; p < lexemas.size(); p++) {
             //textoMostrar += " " +  + "\t" +  + "\t" + lexemas.get(i).getNumToken() + "\t" + lexemas.get(i).getRenglon() + "\n";
 
-            filas[0] = lexemas.get(i).getLexema();
-            filas[1] = lexemas.get(i).getNombreToken();
-            filas[2] = String.valueOf(lexemas.get(i).getNumToken());
-            filas[3] = String.valueOf(lexemas.get(i).getRenglon());
+            filas[0] = lexemas.get(p).getLexema();
+            filas[1] = lexemas.get(p).getNombreToken();
+            filas[2] = String.valueOf(lexemas.get(p).getNumToken());
+            filas[3] = String.valueOf(lexemas.get(p).getRenglon());
 
             model.addRow(filas);
         }
@@ -3051,10 +3093,10 @@ public class EditorPlanetProgramming extends javax.swing.JFrame {
 
         int errora = 0;
 
-        for (int i = 0; i < lexemas.size(); i++) {
+        for (int p = 0; p < lexemas.size(); p++) {
             //textoMostrar += " " +  + "\t" +  + "\t" + lexemas.get(i).getNumToken() + "\t" + lexemas.get(i).getRenglon() + "\n";
-            if (lexemas.get(i).getNumToken() == 80 || lexemas.get(i).getNumToken() == 81 || lexemas.get(i).getNumToken() == 82 || lexemas.get(i).getNumToken() == 83 || lexemas.get(i).getNumToken() == 84 || lexemas.get(i).getNumToken() == 85 || lexemas.get(i).getNumToken() == 86 || lexemas.get(i).getNumToken() == 87 || lexemas.get(i).getNumToken() == 88 || lexemas.get(i).getNumToken() == 89 || lexemas.get(i).getNumToken() == 90 || lexemas.get(i).getNumToken() == 91 || lexemas.get(i).getNumToken() == 92 || lexemas.get(i).getNumToken() == 93 || lexemas.get(i).getNumToken() == 94) {
-                errora = i;
+            if (lexemas.get(p).getNumToken() == 80 || lexemas.get(p).getNumToken() == 81 || lexemas.get(p).getNumToken() == 82 || lexemas.get(p).getNumToken() == 83 || lexemas.get(p).getNumToken() == 84 || lexemas.get(p).getNumToken() == 85 || lexemas.get(p).getNumToken() == 86 || lexemas.get(p).getNumToken() == 87 || lexemas.get(p).getNumToken() == 88 || lexemas.get(p).getNumToken() == 89 || lexemas.get(p).getNumToken() == 90 || lexemas.get(p).getNumToken() == 91 || lexemas.get(p).getNumToken() == 92 || lexemas.get(p).getNumToken() == 93 || lexemas.get(p).getNumToken() == 94) {
+                errora = p;
                 bError = true;
                 break;
             }
@@ -3081,106 +3123,12 @@ public class EditorPlanetProgramming extends javax.swing.JFrame {
         } else {
 
             Sintactico analisisSintactico = new Sintactico();
-
-            ArrayList<Lexema> ls = new ArrayList<>();
-
-            /*
-            id - 5
-            +  - 1
-            *  - 2
-            (  - 3
-            )  - 4
-            
-             */
-            // Ejemplo 1 (id+id*(id+id)) sintacticamente correcro
-//            Lexema l1 = new Lexema();
-//            Lexema l2 = new Lexema();
-//            Lexema l3 = new Lexema();
-//            Lexema l4 = new Lexema();
-//            Lexema l5 = new Lexema();
-//            Lexema l6 = new Lexema();
-//            Lexema l7 = new Lexema();
-//            Lexema l8 = new Lexema();
-//            Lexema l9 = new Lexema();
-//            Lexema l10 = new Lexema();
-//            Lexema l11 = new Lexema();
-//            l1.setNumToken(3);
-//            l2.setNumToken(5);
-//            l3.setNumToken(1);
-//            l4.setNumToken(5);
-//            l5.setNumToken(2);
-//            l6.setNumToken(3);
-//            l7.setNumToken(5);
-//            l8.setNumToken(1);
-//            l9.setNumToken(5);
-//            l10.setNumToken(4);
-//            l11.setNumToken(4);
-//
-//            ls.add(l1);
-//            ls.add(l2);
-//            ls.add(l3);
-//            ls.add(l4);
-//            ls.add(l5);
-//            ls.add(l6);
-//            ls.add(l7);
-//            ls.add(l8);
-//            ls.add(l9);
-//            ls.add(l10);
-//            ls.add(l11);
-//             
-            // Ejemplo 2 id+id*id ->Sintacticamente correcto
-//          Lexema l1 = new Lexema();
-//            Lexema l2 = new Lexema();
-//            Lexema l3 = new Lexema();
-//            Lexema l4 = new Lexema();
-//            Lexema l5 = new Lexema();
-//            Lexema l6 = new Lexema();
-//            Lexema l7 = new Lexema();
-//            Lexema l8 = new Lexema();
-//            Lexema l9 = new Lexema();
-//            Lexema l10 = new Lexema();
-//            Lexema l11 = new Lexema();
-//            l1.setNumToken(5);
-//            l2.setNumToken(1);
-//            l3.setNumToken(5);
-//            l4.setNumToken(2);
-//            l5.setNumToken(5);
-//            ls.add(l1);
-//            ls.add(l2);
-//            ls.add(l3);
-//            ls.add(l4);
-//            ls.add(l5);
-//             
-// Ejemplo 3    Error sintactico se esperaba un id o (
-//          Lexema l1 = new Lexema();
-//            Lexema l2 = new Lexema();
-//            Lexema l3 = new Lexema();
-//            Lexema l4 = new Lexema();
-//            Lexema l5 = new Lexema();
-//            Lexema l6 = new Lexema();
-//            Lexema l7 = new Lexema();
-//            Lexema l8 = new Lexema();
-//            Lexema l9 = new Lexema();
-//            Lexema l10 = new Lexema();
-//            Lexema l11 = new Lexema();
-//            l1.setNumToken(5);
-//            l2.setNumToken(1);
-//            l4.setNumToken(2);
-//            l5.setNumToken(5);
-//            ls.add(l1);
-//            ls.add(l2);
-//            ls.add(l4);
-//            ls.add(l5);    
-            //  analisisSintactico.setLexemas(ls);
             analisisSintactico.setLexemas(lexemas);
-            // analisisSintactico.setPathGramatica("Gramatica - copia.txt");
             analisisSintactico.setPathGramatica("Gramatica.txt");
-            //  analisisSintactico.setPathTablaExcel("TablaPredictiva - copia.xlsx");
             analisisSintactico.setPathTablaExcel("TablaPredictiva4.xlsx");
-            String s[] = new String[2];
-            s = analisisSintactico.analisisSintactico();
-            txtPanelSintactico1.setText(s[0]);
-            txtPanelSintactico2.setText(s[1]);
+            String o[] = analisisSintactico.analisisSintactico();
+            txtPanelSintactico1.setText(o[0]);
+            txtPanelSintactico2.setText(o[1]);
             int contador = 0;
             int renglonCaret = 0;
 
@@ -3248,7 +3196,24 @@ public class EditorPlanetProgramming extends javax.swing.JFrame {
     }
 
     public void compilar() {
+        setCursor(new Cursor(Cursor.WAIT_CURSOR));
+        crearPestaniaLexico();
+        lexico();
+        setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
+        if (!bError) {
 
+            setCursor(new Cursor(Cursor.WAIT_CURSOR));
+            crearPestaniaSintactico();
+            sintactico();
+            bError = false;
+
+            setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
+        } else {
+            Mensaje.advertencia(this, "El analisis sintactico no se puede realizar, debido a que hay un error léxico");
+            TextPaneTest.appendToPane(txtPanelSalida, "\nError al realizar analisis sinctatico...", cRojo);
+
+        }
+        
     }
 
     public void ejecutar() {
@@ -3479,7 +3444,7 @@ public class EditorPlanetProgramming extends javax.swing.JFrame {
         System.out.println("Salida del dato: " + entrada);
 
         TextPaneTest c = new TextPaneTest();
-        c.ponerEstilo(txtPanelSalida, "CURSIVA Y NEGRITA", "\n" + entrada);
+        TextPaneTest.ponerEstilo(txtPanelSalida, "CURSIVA Y NEGRITA", "\n" + entrada);
 
     }
 
@@ -3619,11 +3584,11 @@ public class EditorPlanetProgramming extends javax.swing.JFrame {
     private int pointFinal = 0;
 
     private int vecSal[];
-    private CmpntTabPane panelTab[];
+    private final CmpntTabPane panelTab[];
     //Cursor
-    private ImageIcon imgCursor = new ImageIcon(ClassLoader.getSystemResource("iconos/17857 - animal bug insect ladybird.png"));
+    private final ImageIcon imgCursor = new ImageIcon(ClassLoader.getSystemResource("iconos/17857 - animal bug insect ladybird.png"));
     private Cursor cursorForm1;
-    private Toolkit tk = Toolkit.getDefaultToolkit();
+    private final Toolkit tk = Toolkit.getDefaultToolkit();
     //Ajustar a la pantalla
     private int altoScreen;
     private int anchoScreen;
@@ -3718,10 +3683,13 @@ public class EditorPlanetProgramming extends javax.swing.JFrame {
     private javax.swing.JMenuItem itemSintactico;
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenu jMenu2;
+    private javax.swing.JMenu jMenu3;
     private javax.swing.JMenuItem jMenuItem1;
     private javax.swing.JMenuItem jMenuItem10;
     private javax.swing.JMenuItem jMenuItem11;
     private javax.swing.JMenuItem jMenuItem12;
+    private javax.swing.JMenuItem jMenuItem13;
+    private javax.swing.JMenuItem jMenuItem14;
     private javax.swing.JMenuItem jMenuItem2;
     private javax.swing.JMenuItem jMenuItem3;
     private javax.swing.JMenuItem jMenuItem4;
@@ -3880,10 +3848,9 @@ public class EditorPlanetProgramming extends javax.swing.JFrame {
         Highlighter hilite = textComp.getHighlighter();
         Highlighter.Highlight[] hilites = hilite.getHighlights();
 
-        for (int i = 0; i < hilites.length; i++) {
-            if (hilites[i].getPainter() instanceof MyHighlightPainter) {
-                hilite.removeHighlight(hilites[i]);
-
+        for (Highlighter.Highlight hilite1 : hilites) {
+            if (hilite1.getPainter() instanceof MyHighlightPainter) {
+                hilite.removeHighlight(hilite1);
             }
         }
     }

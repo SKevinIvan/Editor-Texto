@@ -1307,13 +1307,13 @@ public final class EditorPlanetProgramming extends javax.swing.JFrame {
         abrir();
         if (archivo) {
             posicionC = txtPanelEditando.getCaretPosition();
-          //  formato();
+            //  formato();
             try {
                 txtPanelEditando.setCaretPosition(posicionC);
             } catch (Exception e) {
                 System.out.println("Posicion del cursor no valida");
             }
-            
+
         }
 
         setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
@@ -3007,7 +3007,6 @@ public final class EditorPlanetProgramming extends javax.swing.JFrame {
         CtrlInterfaz.habilita(false, checkIntermedio, checkObjeto, checkOptimizacion, checkSemantico);
         TextPaneTest.appendToPane(txtPanelSalida, "\nRealizando análisis léxico...", cVerde);
 
-
         //char[] alfabeto = {'"', 'A', 'L', '$', '&', '_', '~', '@', 'D', '-', '#', '\'', 'C', '.', '?'};
         //Lexico analisisLexico = new Lexico(txtPanelEditando.getText(), "+-=*&| {}()[]!?^/%;:,<>\n\t\r\b\f", matrizGeneral, alfabeto);
         Lexico analisisLexico = new Lexico(txtPanelEditando.getText(), "+-=*&| {}()[]!?^/%;:,<>\n\t\r\b\f", "Tabla del automata general.xlsx");
@@ -3068,7 +3067,21 @@ public final class EditorPlanetProgramming extends javax.swing.JFrame {
 
         for (int p = 0; p < lexemas.size(); p++) {
             //textoMostrar += " " +  + "\t" +  + "\t" + lexemas.get(i).getNumToken() + "\t" + lexemas.get(i).getRenglon() + "\n";
-            if (lexemas.get(p).getNumToken() == 80 || lexemas.get(p).getNumToken() == 81 || lexemas.get(p).getNumToken() == 82 || lexemas.get(p).getNumToken() == 83 || lexemas.get(p).getNumToken() == 84 || lexemas.get(p).getNumToken() == 85 || lexemas.get(p).getNumToken() == 86 || lexemas.get(p).getNumToken() == 87 || lexemas.get(p).getNumToken() == 88 || lexemas.get(p).getNumToken() == 89 || lexemas.get(p).getNumToken() == 90 || lexemas.get(p).getNumToken() == 91 || lexemas.get(p).getNumToken() == 92 || lexemas.get(p).getNumToken() == 93 || lexemas.get(p).getNumToken() == 94) {
+            if (lexemas.get(p).getNumToken() == 85 ||
+                    lexemas.get(p).getNumToken() == 86 || 
+                    lexemas.get(p).getNumToken() == 87 || 
+                    lexemas.get(p).getNumToken() == 88 ||
+                    lexemas.get(p).getNumToken() == 89 ||
+                    lexemas.get(p).getNumToken() == 90 ||
+                    lexemas.get(p).getNumToken() == 91 ||
+                    lexemas.get(p).getNumToken() == 92 ||
+                    lexemas.get(p).getNumToken() == 93 || 
+                    lexemas.get(p).getNumToken() == 94 ||
+                    lexemas.get(p).getNumToken() == 95 ||
+                    lexemas.get(p).getNumToken() == 96 ||
+                    lexemas.get(p).getNumToken() == 97 ||
+                    lexemas.get(p).getNumToken() == 98||
+                    lexemas.get(p).getNumToken() == 84) {
                 errora = p;
                 bError = true;
                 break;

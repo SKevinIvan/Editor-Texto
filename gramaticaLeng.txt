@@ -12,7 +12,7 @@
 <Comentario>   →   82 
 <Comentario>   →   83 
 <Libreria>   →   6 <ImportarLibreria>
-<ImportarLibreria>   →   71  59 <ImportarLibreria2>  81 58 
+<ImportarLibreria>   →   <ImportarLibreria2>  81 58 
 <ImportarLibreria2>  →    71 59 <ImportarLibreria2>  
 <ImportarLibreria2>  →   λ 
 <ModificadorAcceso>  →   1 

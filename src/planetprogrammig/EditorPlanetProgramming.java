@@ -66,9 +66,8 @@ public final class EditorPlanetProgramming extends javax.swing.JFrame {
     /**
      * Creates new form EditorPlanetProgramming
      */
-
     public EditorPlanetProgramming() {
-       
+
         TabbedPaneUI blackTabbedPaneUI = new TabbedPaneUI();
         panelTab = new CmpntTabPane[9];
         //Inicializacion de las pilas de los cambios
@@ -76,7 +75,7 @@ public final class EditorPlanetProgramming extends javax.swing.JFrame {
         pilaRehacer = new PilaD();
 
         initComponents();
-     
+
         Image icono = Toolkit.getDefaultToolkit().getImage(ClassLoader.getSystemResource("imagenes/planetUrano.png"));
         this.setIconImage(icono);
         setTitle("Planet Editor");
@@ -1308,8 +1307,13 @@ public final class EditorPlanetProgramming extends javax.swing.JFrame {
         abrir();
         if (archivo) {
             posicionC = txtPanelEditando.getCaretPosition();
-            formato();
-            txtPanelEditando.setCaretPosition(posicionC);
+          //  formato();
+            try {
+                txtPanelEditando.setCaretPosition(posicionC);
+            } catch (Exception e) {
+                System.out.println("Posicion del cursor no valida");
+            }
+            
         }
 
         setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
@@ -1714,7 +1718,7 @@ public final class EditorPlanetProgramming extends javax.swing.JFrame {
 
     private void btnTraducirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTraducirActionPerformed
         posicionC = txtPanelEditando.getCaretPosition();
-        formato();
+        formatoIngles();
         txtPanelEditando.setCaretPosition(posicionC);
     }//GEN-LAST:event_btnTraducirActionPerformed
 
@@ -3003,37 +3007,6 @@ public final class EditorPlanetProgramming extends javax.swing.JFrame {
         CtrlInterfaz.habilita(false, checkIntermedio, checkObjeto, checkOptimizacion, checkSemantico);
         TextPaneTest.appendToPane(txtPanelSalida, "\nRealizando análisis léxico...", cVerde);
 
-        int[][] matrizGeneral = {
-            {1, 3, 6, 9, 12, 14, 16, 18, 20, 23, 24, 26, -1, -1, -2}, //0
-            {2, 1, 1, -1, -1, -1, -1, -1, 1, -1, -1, -1, 1, -1, -2},//1
-            {-1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -3},//2
-            {-1, 5, 3, -1, -1, -1, -1, -1, 4, -1, -1, -1, -1, -1, -3},//3
-            {-1, -1, -1, -1, -1, -1, -1, -1, 4, -1, -1, -1, -1, -1, -3},//4
-            {-1, -1, 3, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -3},//5
-            {-1, 7, 6, -1, -1, -1, -1, -1, 8, -1, -1, -1, -1, -1, -3},//6
-            {-1, -1, 6, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -3},//7
-            {-1, -1, -1, -1, -1, -1, -1, -1, 8, -1, -1, -1, -1, -1, -3},//8
-            {-1, 10, 10, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -2},//9
-            {-1, 10, 10, -1, -1, 11, -1, -1, 10, -1, -1, -1, -1, -1, -3},//10
-            {-1, 10, 10, -1, -1, -1, -1, -1, 10, -1, -1, -1, -1, -1, -2},//11
-            {-1, 13, 13, -1, -1, -1, -1, -1, 13, -1, -1, -1, -1, -1, -2},//12
-            {-1, 13, 13, -1, -1, -1, -1, -1, 13, -1, -1, -1, -1, -1, -3},//13
-            {-1, -1, 15, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -2},//14
-            {-1, 15, 15, -1, -1, -1, -1, -1, 15, -1, -1, -1, -1, -1, -3},//15
-            {-1, 17, 17, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -2},//16
-            {-1, 17, 17, -1, -1, -1, -1, -1, 17, -1, -1, -1, -1, -1, -3},//17
-            {-1, 19, 19, -1, -1, -1, -1, -1, 19, -1, -1, -1, -1, -1, -2},//18
-            {-1, 19, 19, -1, -1, -1, -1, -1, 19, -1, -1, -1, -1, -1, -3},//19
-            {-1, -1, -1, -1, -1, -1, -1, -1, 20, -1, -1, -1, -1, 21, -3},//20
-            {-1, -1, -1, -1, -1, -1, -1, -1, 22, -1, -1, -1, -1, -1, -2},//21
-            {-1, -1, -1, -1, -1, -1, -1, -1, 22, -1, -1, -1, -1, -1, -3},//22
-            {-1, -1, -1, -1, -1, -1, -1, -1, 20, -1, -1, -1, -1, -1, -2},//23
-            {-1, 25, 25, -1, -1, -1, -1, -1, 25, -1, -1, -1, -1, -1, -2},//24
-            {-1, 25, 25, -1, -1, -1, -1, -1, 25, -1, -1, -1, -1, -1, -3},//25
-            {-1, 27, 27, -1, -1, -1, -1, -1, 27, -1, -1, -1, 27, -1, -2},//26
-            {-1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, 28, -1, -1, -2},//27
-            {-1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -3}//28
-        };
 
         //char[] alfabeto = {'"', 'A', 'L', '$', '&', '_', '~', '@', 'D', '-', '#', '\'', 'C', '.', '?'};
         //Lexico analisisLexico = new Lexico(txtPanelEditando.getText(), "+-=*&| {}()[]!?^/%;:,<>\n\t\r\b\f", matrizGeneral, alfabeto);
@@ -3124,8 +3097,8 @@ public final class EditorPlanetProgramming extends javax.swing.JFrame {
 
             Sintactico analisisSintactico = new Sintactico();
             analisisSintactico.setLexemas(lexemas);
-            analisisSintactico.setPathGramatica("Gramatica.txt");
-            analisisSintactico.setPathTablaExcel("TablaPredictiva4.xlsx");
+            analisisSintactico.setPathGramatica("gramaticaLeng.txt");
+            analisisSintactico.setPathTablaExcel("TablaPredictivaV1.xlsx");
             String o[] = analisisSintactico.analisisSintactico();
             txtPanelSintactico1.setText(o[0]);
             txtPanelSintactico2.setText(o[1]);
@@ -3213,7 +3186,7 @@ public final class EditorPlanetProgramming extends javax.swing.JFrame {
             TextPaneTest.appendToPane(txtPanelSalida, "\nError al realizar analisis sinctatico...", cRojo);
 
         }
-        
+
     }
 
     public void ejecutar() {
@@ -3788,6 +3761,10 @@ public final class EditorPlanetProgramming extends javax.swing.JFrame {
         /*
         checkEditando.setSelected(true);
          */
+    }
+
+    private void formatoIngles() {
+
     }
 
     private static class HighlightLineTextPaneAzul extends JTextPane {

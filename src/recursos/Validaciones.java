@@ -274,7 +274,7 @@ public class Validaciones {
             }
              */
             ArrayList<String> palabras = new ArrayList<>();
-            StringTokenizer st = new StringTokenizer(txtP.getText(), "+ -=*&| {}()[]^/%;:,<>\n\t\r!\" ", true);
+            StringTokenizer st = new StringTokenizer(txtP.getText(), "+ .-=*&| {}()[]^/%;:,<>\n\t\r!\" ", true);
             String cadena;
             boolean aux1;
 
@@ -473,70 +473,140 @@ public class Validaciones {
                     }
 
                 }
-                palabras.add(cadena);
-                if (aux1) {
-                    palabras.add(aux);
+
+                try {
+                    int aux32 = Integer.parseInt(cadena);
+                    if (st.hasMoreElements()) {
+                        aux = st.nextToken();
+                        if (aux.equals("=")) {
+                            cadena += aux;
+                        } else if (aux.equals(" ")) {
+                            cadena += aux;
+                        } else {
+                            aux1 = true;
+                        }
+
+                    }
+
+                } catch (Exception e) {
+
+                    palabras.add(cadena);
+                    if (aux1) {
+                        palabras.add(aux);
+                    }
                 }
+
             }
             txtP.setText("");
 
             for (int i = 0; i < palabras.size(); i++) {
                 switch (palabras.get(i).toLowerCase()) {
                     case "publico":
+                    case "public":
                     case "privado":
+                    case "private":
                     case "protegido":
+                    case "protected":
                     case "clase":
+                    case "class":
                     case "paquete":
+                    case "package":
                     case "importar":
+                    case "import":
                     case "estatico":
+                    case "static":
                     case "final":
                     case "super":
                     case "retorno":
+                    case "return":
                     case "procedimiento":
+                    case "procedure":
                     case "funcion":
+                    case "funtion":
                     case "sistema":
+                    case "system":
                     case "linea":
+                    case "line":
                     case "abstracta":
+                    case "abstract":
                     case "extender":
+                    case "extends":
                     case "implementar":
+                    case "implements":
                     case "interfaz":
-                    case "obtener":
-                    case "asignar":
+                    case "interface":
                     case "principal":
+                    case "main":
                     case "nuevo":
+                    case "new":
                     case "este":
+                    case "this":
                     case "nulo":
+                    case "null":
                     case "leer":
-                    case "imprimir":
+                    case "read":
+                    case "escribir":
+                    case "write":
                     case "defecto":
+                    case "default":
                     case "terminar":
+                    case "break":
                     case "salir":
+                    case "exit":
                     case "caso":
+                    case "switch":
                     case "alternativa":
+                    case "case":
                     case "si":
+                    case "if":
                     case "sino":
-                    case "sinoSi":
+                    case "else":
+                    case "sinosi":
+                    case "elseif":
                     case "mientras":
-                    case "hacerMientras":
+                    case "while":
+                    case "hacer":
+                    case "do":
                     case "para":
+                    case "for":
                     case "verdadero":
+                    case "true":
                     case "falso":
+                    case "false":
                     case "entero":
+                    case "int":
                     case "flotante":
+                    case "float":
                     case "doble":
+                    case "double":
                     case "cadena":
+                    case "string":
                     case "booleano":
+                    case "boolean":
                     case "largo":
+                    case "long":
                     case "objeto":
+                    case "object":
                     case "caracter":
+                    case "char":
                     case "corto":
+                    case "short":
                     case "byte":
+                    case "captar":
+                    case "catch":
+                    case "intentar":
+                    case "try":
+                    case "finalmente":
+                    case "finally":
+                    case "constructor":
                         colorPalabra = cAzul;
 
                         break;
 
                     case "entrada":
+                    case "in":
                     case "salida":
+                    case "out":
                         colorPalabra = cVerde;
                         break;
                     default:

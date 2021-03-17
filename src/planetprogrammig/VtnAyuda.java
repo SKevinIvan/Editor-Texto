@@ -70,6 +70,7 @@ public class VtnAyuda extends javax.swing.JDialog {
         loadProyect();
         tree.setBounds(0, 0, jPanel2.getWidth(), jPanel2.getHeight());
         jPanel2.add(tree);
+        
 
     }
 

@@ -10,7 +10,8 @@ import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
-public class Lexico {
+
+public class  Lexico {
 
     //Inicio de declaracion de atributos
     private String textoCodigo;
@@ -24,7 +25,7 @@ public class Lexico {
     private ArrayList<Lexema> listaLexico;
     private int[] numRenglon;
     //Fin de declaración de atributos
-
+    Sintactico s,j,k=new Sintactico();
     public Lexico() {
     }
 
@@ -85,21 +86,21 @@ public class Lexico {
      */
     public String[][] getConjuntoErrores() {
         String listaErrores[][] = {
-            {"Caracter desconocido", "80"},
-            {"Nombre de proyecto no valido", "81"},
-            {"Nombre de paquete no valido", "82"},
-            {"Nombre de clase no valido", "83"},
-            {"Nombre de funcion o procedimiento no valido", "84"},
-            {"Nombre de variable no valida", "85"},
-            {"Nombre de constante no valida", "86"},
-            {"Nombre de variable de objeto no valida", "87"},
-            {"Numero entero o byte incorrectos", "88"},
-            {"Numero de flotante o doble o largo o corto incorrectos", "89"},
-            {"Cadena no valida", "90"},
-            {"Caracter no valido", "91"},
-            {"Nombre de libreria no valida", "92"},
-            {"Comentario de linea no valida", "93"},
-            {"Comentario de bloque no valida", "94"},};
+            {"Caracter desconocido", "84"},
+            {"Nombre de proyecto no valido", "85"},
+            {"Nombre de paquete no valido", "86"},
+            {"Nombre de clase no valido", "87"},
+            {"Nombre de funcion o procedimiento no valido", "88"},
+            {"Nombre de variable no valida", "89"},
+            {"Nombre de constante no valida", "90"},
+            {"Nombre de variable de objeto no valida", "91"},
+            {"Numero entero o byte incorrectos", "92"},
+            {"Numero de flotante o doble o largo o corto incorrectos", "93"},
+            {"Cadena no valida", "94"},
+            {"Caracter no valido", "95"},
+            {"Nombre de libreria no valida", "96"},
+            {"Comentario de linea no valida", "97"},
+            {"Comentario de bloque no valida", "98"},};
 
         this.conjuntoErrores = listaErrores;
         return conjuntoErrores;
@@ -121,20 +122,20 @@ public class Lexico {
      */
     public String[][] getConjuntoTokensAutomatas() {
         String[][] listaTokensAutomatas = {
-            {"Nombre de proyecto", "66"},
-            {"Nombre de paquete", "67"},
-            {"Nombre de clase", "68"},
-            {"Nombre de funcion o procedimiento", "69"},
-            {"Nombre de variable", "70"},
-            {"Nombre de constante", "71"},
-            {"Nombre de variable de objeto", "72"},
-            {"Numero entero o byte", "73"},
-            {"Numero flotante o doble o largo o corto", "74"},
-            {"Cadena", "75"},
-            {"Caracter", "76"},
-            {"Nombre de libreria", "77"},
-            {"Comentario de linea", "78"},
-            {"Comentario de bloque", "79"}
+            {"Nombre de proyecto", "70"},
+            {"Nombre de paquete", "71"},
+            {"Nombre de clase", "72"},
+            {"Nombre de funcion o procedimiento", "73"},
+            {"Nombre de variable", "74"},
+            {"Nombre de constante", "75"},
+            {"Nombre de variable de objeto", "76"},
+            {"Numero entero o byte", "77"},
+            {"Numero flotante o doble o largo o corto", "78"},
+            {"Cadena", "79"},
+            {"Caracter", "80"},
+            {"Nombre de libreria", "81"},
+            {"Comentario de linea", "82"},
+            {"Comentario de bloque", "83"}
         };
         this.conjuntoTokensAutomatas = listaTokensAutomatas;
         return listaTokensAutomatas;
@@ -156,95 +157,91 @@ public class Lexico {
      */
     public String[][] getConjuntoTokensFijos() {
         String[][] listaTokensFijos = {
-            {"publico", "Modificador de acceso: publico", "1"},
-            {"privado", "Modificador de acceso: privado", "2"},
-            {"protegido", "Modificador de acceso: protegido", "3"},
-            {"clase", "Palabra reservada: clase", "4"},
-            {"paquete", "Palabra reservada: paquete", "5"},
-            {"importar", "Palabra reservada: importar", "6"},
-            {"estatico", "Palabra reservada: estatico", "7"},
-            {"final", "Palabra reservada: final", "8"},
-            {"super", "Palabra reservada: super", "9"},
-            {"retorno", "Palabra reservada: retorno", "10"},
-            {"procedimiento", "Palabra reservada: procedimiento", "11"},
-            {"funcion", "Palabra reservada: funcion", "12"},
-            {"entrada", "Palabra reservada: entrada", "13"},
-            {"salida", "Palabra reservada: salida", "14"},
-            {"sistema", "Palabra reservada: sistema", "15"},
-            {"linea", "Palabra reservada: linea", "16"},
-            {"abstracta", "Palabra reservada: abstracta", "17"},
-            {"extender", "Palabra reservada: extender", "18"},
-            {"implementar", "Palabra reservada: implementar", "19"},
-            {"interfaz", "Palabra reservada: interfaz", "20"},
-            {"obtener", "Palabra reservada: obtener", "21"},
-            {"asignar", "Palabra reservada: asignar", "22"},
-            {"principal", "Palabra reservada: principal", "23"},
-            {"nuevo", "Palabra reservada: nuevo", "24"},
-            {"este", "Palabra reservada: este", "25"},
-            {"nulo", "Palabra reservada: nulo", "26"},
-            {"leer", "Palabra reservada: leer", "27"},
-            {"imprimir", "Palabra reservada: imprimir", "28"},
-            {"defecto", "Palabra reservada: defecto", "29"},
-            {"terminar", "Palabra reservada: terminar", "30"},
-            {"salir", "Palabra reservada: salir", "31"},
-            {"caso", "Palabra reservada: caso", "32"},
-            {"alternativa", "Palabra reservada: alternativa", "33"},
-            {"si", "Estructura de seleccion: si", "34"},
-            {"sino", "Estructura de seleccion: sino", "35"},
-            {"sinoSi", "Estructura de seleccion: sinoSi", "36"},
-            {"mientras", "Cliclo: mientras", "37"},
-            {"hacerMientras", "Ciclo: harcerMientras", "38"},
-            {"para", "Ciclo: para", "39"},
-            {"verdadero", "Palabra reservada: verdadero", "40"},
-            {"falso", "Palabra reservada: falso", "41"},
-            {"entero", "Tipo de dato: entero", "42"},
-            {"flotante", "Tipo de dato: flotante", "42"},
-            {"doble", "Tipo de dato: double", "42"},
-            {"cadena", "Tipo de dato: cadena", "42"},
-            {"booleano", "Tipo de dato: booleano", "42"},
-            {"largo", "Tipo de dato: largo", "42"},
-            {"objeto", "Tipo de dato: objeto", "42"},
-            {"caracter", "Tipo de dato: caracter", "43"},
-            {"corto", "Tipo de dato: corto", "43"},
-            {"byte", "Tipo de dato: byte", "43"},
-            {"+", "Operador artimetico suma o concatenación", "44"},
-            {"-", "Operador aritmetico resta", "45"},
-            {"*", "Operador aritmetico producto", "45"},
-            {"/", "Operador artimetico cociente", "45"},
-            {"%", "Operador artimetico residuo de cociente", "45"},
-            {"^", "Operador aritmetico potencia", "45"},
-            {"<", "Opererador relacional: menor que", "46"},
-            {">", "Operador relacional: mayor que", "46"},
-            {">=", "Operador relacional: mayor igual que", "46"},
-            {"<=", "Operador relacional: menor igual que", "46"},
-            {"==", "Operador relacional: comparacion igual", "46"},
-            {"!=", "Operador relaciona: diferente que", "46"},
-            {"<>", "Operador relacional: diferente que", "46"},
-            {"+=", "Asignacion matementica: añade a ", "47"},
-            {"-=", "Asiganacion matematica: resta a", "47"},
-            {"/=", "Asiganción matemetica: divide a", "47"},
-            {"*=", "Asiganción matematica: multiplica a", "47"},
-            {"=", "Asignacion: Igual", "95"},
-            {"&&", "Operador lógico: Y ", "48"},
-            {"||", "Operador lógico: O", "48"},
-            {"!", "Operador lógico: No", "49"},
-            {",", "Caracter especial: Coma", "50"},
-            {".", "Caracter especial: Punto", "51"},
-            {";", "Caracter especial: Punto y coma", "52"},
-            {":", "Caracter especial: Dos puntos", "53"},
-            {"{", "Caracter especial: Llave que abre", "54"},
-            {"}", "Caracter especial: Llave que cierra", "55"},
-            {"[", "Caracter especial: Corchete que abre", "56"},
-            {"]", "Caracter especial: Corchete que cierra", "57"},
-            {"(", "Caracter especial: Parentesis que abre", "58"},
-            {")", "Caracter especial: Parenctesis que cierra", "59"},
-            {"\\", "Caracter especial: Diagonal invertida", "60"},
-            {"//", "Comentario de linea", "61"},
-            {"/*", "Comentatio de bloque que abre", "62"},
-            {"*/", "Comentario de bloque que cierra", "63"},
-            {"++", "Asignación matematica: incrementa uno", "64"},
-            {"--", "Asignación matematica: decrementa uno", "65"},
-            {"constructor", "Constructor", "96"}};
+            {"publico", "Modificador de acceso: publico", "1","public"},
+            {"privado", "Modificador de acceso: privado", "2","private"},
+            {"protegido", "Modificador de acceso: protegido", "3","proteted"},
+            {"clase", "Palabra reservada: clase", "4","class"},
+            {"paquete", "Palabra reservada: paquete", "5","package"},
+            {"importar", "Palabra reservada: importar", "6","import"},
+            {"estatico", "Palabra reservada: estatico", "7","static"},
+            {"final", "Palabra reservada: final", "8","final"},
+            {"super", "Palabra reservada: super", "9","super"},
+            {"retorna", "Palabra reservada: retorno", "10","return"},
+            {"procedimiento", "Palabra reservada: procedimiento", "11","procedure"},
+            {"funcion", "Palabra reservada: funcion", "12","funtion"},
+            {"entrada", "Palabra reservada: entrada", "13","in"},
+            {"salida", "Palabra reservada: salida", "14","out"},
+            {"sistema", "Palabra reservada: sistema", "15","system"},
+            {"linea", "Palabra reservada: linea", "16","line"},
+            {"abstracta", "Palabra reservada: abstracta", "17","abstracta"},
+            {"extender", "Palabra reservada: extender", "18","extends"},
+            {"implementar", "Palabra reservada: implementar", "19","implements"},
+            {"interfaz", "Palabra reservada: interfaz", "20","interface"},
+            {"principal", "Palabra reservada: principal", "21","main"},
+            {"nuevo", "Palabra reservada: nuevo", "22","new"},
+            {"este", "Palabra reservada: este", "23","this"},
+            {"nulo", "Palabra reservada: nulo", "24","null"},
+            {"leer", "Palabra reservada: leer", "25","read"},
+            {"escribir", "Palabra reservada: imprimir", "26","write"},
+            {"defecto", "Palabra reservada: defecto", "27","default"},  
+            {"terminar", "Palabra reservada: terminar", "28","break"},
+            {"salir", "Palabra reservada: salir", "29","exit"},
+            {"caso", "Palabra reservada: caso", "30","switch"},
+            {"alternativa", "Palabra reservada: alternativa", "31","case"},
+            {"si", "Estructura de seleccion: si", "32","if"},
+            {"sino", "Estructura de seleccion: sino", "33","else"},
+            {"sinoSi", "Estructura de seleccion: sinoSi", "34","elseIf"},
+            {"mientras", "Cliclo: mientras", "35","while"},
+            {"hacer", "Ciclo: harcerMientras", "36","do"},
+            {"para", "Ciclo: para", "37","for"},
+            {"verdadero", "Palabra reservada: verdadero", "38","true"},
+            {"falso", "Palabra reservada: falso", "39","false"},
+            {"constructor", "Constructor", "40","constructor"},
+            {"intentar", "Intentar", "41","try"},
+            {"captar", "Captar", "42","catch"},
+            {"finalmente", "Finalmente", "43","finally"},
+            {"entero", "Tipo de dato: entero", "44","int"},
+            {"flotante", "Tipo de dato: flotante", "44","float"},
+            {"doble", "Tipo de dato: double", "44","double"},
+            {"cadena", "Tipo de dato: cadena", "44","string"},
+            {"largo", "Tipo de dato: largo", "44","long"},
+            {"objeto", "Tipo de dato: objeto", "44","object"},
+            {"caracter", "Tipo de dato: caracter", "45","char"},
+            {"corto", "Tipo de dato: corto", "45","short"},
+            {"byte", "Tipo de dato: byte", "45","byte"},
+            {"booleano", "Tipo de dato: booleano", "46","boolean"},
+            {"-", "Operador aritmetico resta", "48","-"},
+            {"*", "Operador aritmetico producto", "49","*"},
+            {"/", "Operador artimetico cociente", "49","/"},
+            {"%", "Operador artimetico residuo de cociente", "49","%"},
+            {"^", "Operador aritmetico potencia", "49","^"},
+            {"<", "Opererador relacional: menor que", "50","<"},
+            {">", "Operador relacional: mayor que", "50",">"},
+            {">=", "Operador relacional: mayor igual que", "50",">="},
+            {"<=", "Operador relacional: menor igual que", "50","<="},
+            {"==", "Operador relacional: comparacion igual", "51","=="},
+            {"!=", "Operador relaciona: diferente que", "51","!="},
+            {"+=", "Asignacion matementica: añade a ", "53","+="},
+            {"-=", "Asiganacion matematica: resta a", "53","-="},
+            {"/=", "Asiganción matemetica: divide a", "53","/="},
+            {"*=", "Asiganción matematica: multiplica a", "53","*="},
+            {"=", "Asignacion: Igual", "54","="},
+            {"&&", "Operador lógico: Y ", "55","&&"},
+            {"||", "Operador lógico: O", "55","||"},
+            {"!", "Operador lógico: No", "56","!"},
+            {",", "Caracter especial: Coma", "57",","},
+            {";", "Caracter especial: Punto y coma", "58",";"},
+            {".", "Caracter especial: Punto", "59","."},
+            {":", "Caracter especial: Dos puntos", "60",":"},
+            {"{", "Caracter especial: Llave que abre", "61","{"},
+            {"}", "Caracter especial: Llave que cierra", "62","}"},
+            {"[", "Caracter especial: Corchete que abre", "63","["},
+            {"]", "Caracter especial: Corchete que cierra", "64","]"},
+            {"(", "Caracter especial: Parentesis que abre", "65","("},
+            {")", "Caracter especial: Parenctesis que cierra", "66",")"},
+            {"\\", "Caracter especial: Diagonal invertida", "67","\\"},
+            {"++", "Asignación matematica: incrementa uno", "68","++"},
+            {"--", "Asignación matematica: decrementa uno", "69","--"}};
         this.conjuntoTokensFijos = listaTokensFijos;
         return listaTokensFijos;
     }
@@ -381,7 +378,7 @@ public class Lexico {
     private ArrayList<String> separaCodigo() {
 
         ArrayList<String> palabras = new ArrayList<>();
-        StringTokenizer st = new StringTokenizer(getTextoCodigo(), "+ -=*&| {}()[]^/%;:,<>\n\t\r!\" ", true);
+        StringTokenizer st = new StringTokenizer(getTextoCodigo(), "+ -=*&| {}().[]^/%;:,<>\n\t\r!\" ", true);
         String cadena;
         int contRenglon = 1; //incrementa las lineas de codigo
         int contRenglon2 = 1; //incrementa las lineas de codigo
@@ -399,7 +396,7 @@ public class Lexico {
                     contRenglon++;
                 }
             } else {
-
+                
                 if (cadena.equals("+")) {
 
                     if (st.hasMoreElements()) {
@@ -662,9 +659,9 @@ public class Lexico {
             boolean automata = true;
             while (token < getConjuntoTokensFijos().length) {
 
-                if (lstPalabras.get(i).equals(getConjuntoTokensFijos()[token][0])) {
+                if (lstPalabras.get(i).equals(getConjuntoTokensFijos()[token][0])||lstPalabras.get(i).equals(getConjuntoTokensFijos()[token][3])) {
 
-                    cadenaAnalizada.setLexema(getConjuntoTokensFijos()[token][0]);
+                    cadenaAnalizada.setLexema(lstPalabras.get(i));
                     cadenaAnalizada.setNombreToken(getConjuntoTokensFijos()[token][1]);
                     cadenaAnalizada.setNumToken(Integer.parseInt(getConjuntoTokensFijos()[token][2]));
 
@@ -747,127 +744,145 @@ public class Lexico {
         a.analisisAutomata();
 
         if (a.getEstado() == -4) {
-            cadenaAnalizada.setNumToken(78);
+            cadenaAnalizada.setNumToken(84);
             cadenaAnalizada.setNombreToken("Caracter desconocido");
         } else {
-            if (a.getTransaccionFinal() == 1 || a.getTransaccionFinal() == 2) {
-                if (a.getResAutomata().equals("Cadena valida")) {
-                    cadenaAnalizada.setNumToken(75);
-                    cadenaAnalizada.setNombreToken("Cadena");
-                } else {
-                    cadenaAnalizada.setNumToken(90);
-                    cadenaAnalizada.setNombreToken("Cadena no valida");
-                }
-            } else if (a.getTransaccionFinal() == 3 || a.getTransaccionFinal() == 4 || a.getTransaccionFinal() == 5) {
-                if (a.getResAutomata().equals("Cadena valida")) {
-                    cadenaAnalizada.setNumToken(66);
-                    cadenaAnalizada.setNombreToken("Nombre de proyecto");
-                } else {
-                    cadenaAnalizada.setNumToken(81);
-                    cadenaAnalizada.setNombreToken("Nombre de proyecto no valido");
-                }
-            } else if (a.getTransaccionFinal() == 6 || a.getTransaccionFinal() == 7 || a.getTransaccionFinal() == 8) {
-                if (a.getResAutomata().equals("Cadena valida")) {
-                    cadenaAnalizada.setNumToken(67);
-                    cadenaAnalizada.setNombreToken("Nombre de paquete");
-                } else {
-                    cadenaAnalizada.setNumToken(83);
-                    cadenaAnalizada.setNombreToken("Nombre de paquete no valido");
-                }
-            } else if (a.getTransaccionFinal() == 9 || a.getTransaccionFinal() == 10 || a.getTransaccionFinal() == 11) {
-                if (a.getResAutomata().equals("Cadena valida")) {
-                    cadenaAnalizada.setNumToken(68);
-                    cadenaAnalizada.setNombreToken("Nombre de clase");
-                } else {
+            switch (a.getTransaccionFinal()) {
+                case 1:
+                case 2:
+                    if (a.getResAutomata().equals("Cadena valida")) {
+                        cadenaAnalizada.setNumToken(79);
+                        cadenaAnalizada.setNombreToken("Cadena");
+                    } else {
+                        cadenaAnalizada.setNumToken(94);
+                        cadenaAnalizada.setNombreToken("Cadena no valida");
+                    }   break;
+                case 3:
+                case 4:
+                case 5:
+                    if (a.getResAutomata().equals("Cadena valida")) {
+                        cadenaAnalizada.setNumToken(70);
+                        cadenaAnalizada.setNombreToken("Nombre de proyecto");
+                    } else {
+                        cadenaAnalizada.setNumToken(85);
+                        cadenaAnalizada.setNombreToken("Nombre de proyecto no valido");
+                    }   break;
+                case 6:
+                case 7:
+                case 8:
+                    if (a.getResAutomata().equals("Cadena valida")) {
+                        cadenaAnalizada.setNumToken(71);
+                        cadenaAnalizada.setNombreToken("Nombre de paquete");
+                    } else {
+                        cadenaAnalizada.setNumToken(86);
+                        cadenaAnalizada.setNombreToken("Nombre de paquete no valido");
+                    }   break;
+                case 9:
+                case 10:
+                case 11:
+                    if (a.getResAutomata().equals("Cadena valida")) {
+                        cadenaAnalizada.setNumToken(72);
+                        cadenaAnalizada.setNombreToken("Nombre de clase");
+                    } else {
+                        cadenaAnalizada.setNumToken(87);
+                        cadenaAnalizada.setNombreToken("Nombre de clase no valido");
+                    }   break;
+                case 12:
+                case 13:
+                    if (a.getResAutomata().equals("Cadena valida")) {
+                        cadenaAnalizada.setNumToken(73);
+                        cadenaAnalizada.setNombreToken("Nombre de funcion o procedimiento");
+                    } else {
+                        cadenaAnalizada.setNumToken(88);
+                        cadenaAnalizada.setNombreToken("Nombre de funcion o procedimiento no valido");
+                    }   break;
+                case 14:
+                case 15:
+                    if (a.getResAutomata().equals("Cadena valida")) {
+                        cadenaAnalizada.setNumToken(74);
+                        cadenaAnalizada.setNombreToken("Nombre de variable");
+                    } else {
+                        cadenaAnalizada.setNumToken(89);
+                        cadenaAnalizada.setNombreToken("Nombre de variable no valida");
+                    }   break;
+                case 16:
+                case 17:
+                    if (a.getResAutomata().equals("Cadena valida")) {
+                        cadenaAnalizada.setNumToken(75);
+                        cadenaAnalizada.setNombreToken("Nombre de constante");
+                    } else {
+                        cadenaAnalizada.setNumToken(90);
+                        cadenaAnalizada.setNombreToken("Nombre de constante no valida");
+                    }   break;
+                case 18:
+                case 19:
+                    if (a.getResAutomata().equals("Cadena valida")) {
+                        cadenaAnalizada.setNumToken(76);
+                        cadenaAnalizada.setNombreToken("Nombre de variable de objeto");
+                    } else {
+                        cadenaAnalizada.setNumToken(91);
+                        cadenaAnalizada.setNombreToken("Nombre de variable de objeto no valida");
+                    }   break;
+                case 20:
+                case 23:
+                    if (a.getResAutomata().equals("Cadena valida")) {
+                        cadenaAnalizada.setNumToken(77);
+                        cadenaAnalizada.setNombreToken("Numero entero o byte");
+                    } else {
+                        cadenaAnalizada.setNumToken(92);
+                        cadenaAnalizada.setNombreToken("Numero entero o byte incorrectos");
+                    }   break;
+                case 21:
+                case 22:
+                    if (a.getResAutomata().equals("Cadena valida")) {
+                        cadenaAnalizada.setNumToken(78);
+                        cadenaAnalizada.setNombreToken("Numero flotante o doble o largo o corto");
+                    } else {
+                        cadenaAnalizada.setNumToken(93);
+                        cadenaAnalizada.setNombreToken("Numero de flotante o doble o largo o corto incorrectos");
+                    }   break;
+                case 25:
+                case 24:
+                    if (a.getResAutomata().equals("Cadena valida")) {
+                        cadenaAnalizada.setNumToken(81);
+                        cadenaAnalizada.setNombreToken("Nombre de libreria");
+                    } else {
+                        cadenaAnalizada.setNumToken(96);
+                        cadenaAnalizada.setNombreToken("Nombre de libreria no valida");
+                    }   break;
+                case 26:
+                case 27:
+                case 28:
+                    if (a.getResAutomata().equals("Cadena valida")) {
+                        cadenaAnalizada.setNumToken(80);
+                        cadenaAnalizada.setNombreToken("Caracter");
+                    } else {
+                        cadenaAnalizada.setNumToken(95);
+                        cadenaAnalizada.setNombreToken("Caracter no valido");
+                    }   break;
+                case 29:
+                case 30:
+                    if (a.getResAutomata().equals("Cadena valida")) {
+                        cadenaAnalizada.setNumToken(82);
+                        cadenaAnalizada.setNombreToken("Comentario de linea");
+                    } else {
+                        cadenaAnalizada.setNumToken(96);
+                        cadenaAnalizada.setNombreToken("Comentario de linea no valido");
+                    }   break;
+                case 31:
+                case 32:
+                case 33:
+                    if (a.getResAutomata().equals("Cadena valida")) {
+                        cadenaAnalizada.setNumToken(83);
+                        cadenaAnalizada.setNombreToken("Comentario de bloque");
+                    } else {
+                        cadenaAnalizada.setNumToken(97);
+                        cadenaAnalizada.setNombreToken("Comentario de bloque no valido");
+                    }   break;
+                default:
                     cadenaAnalizada.setNumToken(84);
-                    cadenaAnalizada.setNombreToken("Nombre de clase no valido");
-                }
-            } else if (a.getTransaccionFinal() == 12 || a.getTransaccionFinal() == 13) {
-                if (a.getResAutomata().equals("Cadena valida")) {
-                    cadenaAnalizada.setNumToken(69);
-                    cadenaAnalizada.setNombreToken("Nombre de funcion o procedimiento");
-                } else {
-                    cadenaAnalizada.setNumToken(87);
-                    cadenaAnalizada.setNombreToken("Nombre de funcion o procedimiento no valido");
-                }
-            } else if (a.getTransaccionFinal() == 14 || a.getTransaccionFinal() == 15) {
-                if (a.getResAutomata().equals("Cadena valida")) {
-                    cadenaAnalizada.setNumToken(70);
-                    cadenaAnalizada.setNombreToken("Nombre de variable");
-                } else {
-                    cadenaAnalizada.setNumToken(86);
-                    cadenaAnalizada.setNombreToken("Nombre de variable no valida");
-                }
-            } else if (a.getTransaccionFinal() == 16 || a.getTransaccionFinal() == 17) {
-                if (a.getResAutomata().equals("Cadena valida")) {
-                    cadenaAnalizada.setNumToken(71);
-                    cadenaAnalizada.setNombreToken("Nombre de constante");
-                } else {
-                    cadenaAnalizada.setNumToken(87);
-                    cadenaAnalizada.setNombreToken("Nombre de constante no valida");
-                }
-            } else if (a.getTransaccionFinal() == 18 || a.getTransaccionFinal() == 19) {
-                if (a.getResAutomata().equals("Cadena valida")) {
-                    cadenaAnalizada.setNumToken(72);
-                    cadenaAnalizada.setNombreToken("Nombre de variable de objeto");
-                } else {
-                    cadenaAnalizada.setNumToken(88);
-                    cadenaAnalizada.setNombreToken("Nombre de variable de objeto no valida");
-                }
-            } else if (a.getTransaccionFinal() == 20 || a.getTransaccionFinal() == 23) {
-                if (a.getResAutomata().equals("Cadena valida")) {
-                    cadenaAnalizada.setNumToken(73);
-                    cadenaAnalizada.setNombreToken("Numero entero o byte");
-                } else {
-                    cadenaAnalizada.setNumToken(89);
-                    cadenaAnalizada.setNombreToken("Numero entero o byte incorrectos");
-                }
-            } else if (a.getTransaccionFinal() == 21 || a.getTransaccionFinal() == 22) {
-
-                if (a.getResAutomata().equals("Cadena valida")) {
-                    cadenaAnalizada.setNumToken(74);
-                    cadenaAnalizada.setNombreToken("Numero flotante o doble o largo o corto");
-                } else {
-                    cadenaAnalizada.setNumToken(90);
-                    cadenaAnalizada.setNombreToken("Numero de flotante o doble o largo o corto incorrectos");
-                }
-            } else if (a.getTransaccionFinal() == 25 || a.getTransaccionFinal() == 24) {
-                if (a.getResAutomata().equals("Cadena valida")) {
-                    cadenaAnalizada.setNumToken(77);
-                    cadenaAnalizada.setNombreToken("Nombre de libreria");
-                } else {
-                    cadenaAnalizada.setNumToken(92);
-                    cadenaAnalizada.setNombreToken("Nombre de libreria no valida");
-                }
-            } else if (a.getTransaccionFinal() == 26 || a.getTransaccionFinal() == 27 || a.getTransaccionFinal() == 28) {
-                if (a.getResAutomata().equals("Cadena valida")) {
-                    cadenaAnalizada.setNumToken(76);
-                    cadenaAnalizada.setNombreToken("Caracter");
-                } else {
-                    cadenaAnalizada.setNumToken(91);
-                    cadenaAnalizada.setNombreToken("Caracter no valido");
-                }
-            } else if (a.getTransaccionFinal() == 29 || a.getTransaccionFinal() == 30) {
-                if (a.getResAutomata().equals("Cadena valida")) {
-                    cadenaAnalizada.setNumToken(78);
-                    cadenaAnalizada.setNombreToken("Comentario de linea");
-                } else {
-                    cadenaAnalizada.setNumToken(93);
-                    cadenaAnalizada.setNombreToken("Comentario de linea no valido");
-                }
-
-            } else if (a.getTransaccionFinal() == 31 || a.getTransaccionFinal() == 32 || a.getTransaccionFinal() == 33) {
-                if (a.getResAutomata().equals("Cadena valida")) {
-                    cadenaAnalizada.setNumToken(79);
-                    cadenaAnalizada.setNombreToken("Comentario de bloque");
-                } else {
-                    cadenaAnalizada.setNumToken(94);
-                    cadenaAnalizada.setNombreToken("Comentario de bloque no valido");
-                }
-
-            } else {
-                cadenaAnalizada.setNumToken(80);
-                cadenaAnalizada.setNombreToken("Caracter desconocido");
+                    cadenaAnalizada.setNombreToken("Caracter desconocido");
+                    break;
             }
 
         }

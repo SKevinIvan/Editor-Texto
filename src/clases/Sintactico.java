@@ -521,7 +521,7 @@ public class Sintactico {
     /**
      * Método que imprime la pila en su estado actual
      *
-     * @return
+     * @return una cadena
      */
     public String imprimirPila() {
         String s = "";
@@ -545,7 +545,7 @@ public class Sintactico {
     /**
      * Método que imprime la cola en su estado actual
      *
-     * @return
+     * @return una cadena
      */
     public String imprimirCola() {
         String s = "";

@@ -46,6 +46,8 @@ import java.awt.print.PrinterJob;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 import java.util.StringTokenizer;
+import java.util.Timer;
+import java.util.TimerTask;
 import javax.swing.JScrollPane;
 import javax.swing.JTextPane;
 import javax.swing.border.EmptyBorder;
@@ -1383,10 +1385,7 @@ public final class EditorPlanetProgramming extends javax.swing.JFrame {
     }//GEN-LAST:event_btnAyudarActionPerformed
 
     private void btnEjecutarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEjecutarActionPerformed
-        // ejecutar();
-        crearPestaniaLexico();
-        lexico();
-
+        ejecutar();
     }//GEN-LAST:event_btnEjecutarActionPerformed
 
     private void itemIntermedioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_itemIntermedioActionPerformed
@@ -1538,8 +1537,11 @@ public final class EditorPlanetProgramming extends javax.swing.JFrame {
         setCursor(new Cursor(Cursor.WAIT_CURSOR));
         posicionC = txtPanelEditando.getCaretPosition();
         formato();
+        try {
+            txtPanelEditando.setCaretPosition(posicionC);
+        } catch (Exception e) {
+        }
 
-        txtPanelEditando.setCaretPosition(posicionC);
         setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
     }//GEN-LAST:event_btnFormatoActionPerformed
 
@@ -2245,6 +2247,8 @@ public final class EditorPlanetProgramming extends javax.swing.JFrame {
             scrollPaneSalida = new javax.swing.JScrollPane();
             scrollPaneSalida.setName("scrollPaneSalida");
             txtPanelSalida.setFont(new java.awt.Font("Monospaced", 0, 14)); // NOI18N
+            txtPanelSalida.setBackground(cNegro);
+            TextPaneTest.appendToPane(txtPanelSalida, "run:", cGris);
             txtPanelSalida.setSelectionColor(new java.awt.Color(153, 204, 255));
             txtPanelSalida.addKeyListener(new java.awt.event.KeyAdapter() {
                 @Override
@@ -3045,7 +3049,7 @@ public final class EditorPlanetProgramming extends javax.swing.JFrame {
         tablaLexemas.getColumnModel().getSelectionModel().setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
 
         DefaultTableModel model;
-        String[] columnas = {"Lexema", "Nombre del token", "Numero de token", "Renglon"};
+        String[] columnas = {"Lexema", "Nombre del token", "No. de token", "Renglón"};
         model = new DefaultTableModel(null, columnas);
         String[] filas = new String[4];
 
@@ -3067,21 +3071,21 @@ public final class EditorPlanetProgramming extends javax.swing.JFrame {
 
         for (int p = 0; p < lexemas.size(); p++) {
             //textoMostrar += " " +  + "\t" +  + "\t" + lexemas.get(i).getNumToken() + "\t" + lexemas.get(i).getRenglon() + "\n";
-            if (lexemas.get(p).getNumToken() == 85 ||
-                    lexemas.get(p).getNumToken() == 86 || 
-                    lexemas.get(p).getNumToken() == 87 || 
-                    lexemas.get(p).getNumToken() == 88 ||
-                    lexemas.get(p).getNumToken() == 89 ||
-                    lexemas.get(p).getNumToken() == 90 ||
-                    lexemas.get(p).getNumToken() == 91 ||
-                    lexemas.get(p).getNumToken() == 92 ||
-                    lexemas.get(p).getNumToken() == 93 || 
-                    lexemas.get(p).getNumToken() == 94 ||
-                    lexemas.get(p).getNumToken() == 95 ||
-                    lexemas.get(p).getNumToken() == 96 ||
-                    lexemas.get(p).getNumToken() == 97 ||
-                    lexemas.get(p).getNumToken() == 98||
-                    lexemas.get(p).getNumToken() == 84) {
+            if (lexemas.get(p).getNumToken() == 85
+                    || lexemas.get(p).getNumToken() == 86
+                    || lexemas.get(p).getNumToken() == 87
+                    || lexemas.get(p).getNumToken() == 88
+                    || lexemas.get(p).getNumToken() == 89
+                    || lexemas.get(p).getNumToken() == 90
+                    || lexemas.get(p).getNumToken() == 91
+                    || lexemas.get(p).getNumToken() == 92
+                    || lexemas.get(p).getNumToken() == 93
+                    || lexemas.get(p).getNumToken() == 94
+                    || lexemas.get(p).getNumToken() == 95
+                    || lexemas.get(p).getNumToken() == 96
+                    || lexemas.get(p).getNumToken() == 97
+                    || lexemas.get(p).getNumToken() == 98
+                    || lexemas.get(p).getNumToken() == 84) {
                 errora = p;
                 bError = true;
                 break;
@@ -3141,9 +3145,9 @@ public final class EditorPlanetProgramming extends javax.swing.JFrame {
 
             }
             if (analisisSintactico.getNumError() != 0) {
-                TextPaneTest.appendToPane(txtPanelSalida, "\nSintacticamente incorrecto..." + " error en la línea " + analisisSintactico.getNumError(), cRojo);
+                TextPaneTest.appendToPane(txtPanelSalida, "\nSintacticamente incorrecto..." + " error en la línea " + analisisSintactico.getNumError() + "(tiempo total: " + c.min + " minutos " + c.seg + " segundos)", cRojo);
             } else {
-                TextPaneTest.appendToPane(txtPanelSalida, "\nSintacticamente correcto...", cVerde);
+                TextPaneTest.appendToPane(txtPanelSalida, "\nSintacticamente correcto..." + "  (tiempo total: " + c.min + " minutos " + c.seg + " segundos)", cVerde);
             }
         }
 
@@ -3180,11 +3184,18 @@ public final class EditorPlanetProgramming extends javax.swing.JFrame {
         TextPaneTest.appendToPane(txtPanelSalida, "\nGenerando código objeto...", cVerde);
 
     }
+    int seg = 0;
+    int min = 0;
+    int hor = 0;
+    HiloTemporizador c;
 
     public void compilar() {
+        c = new HiloTemporizador(0, 0, 0);
+        c.start();
         setCursor(new Cursor(Cursor.WAIT_CURSOR));
         crearPestaniaLexico();
         lexico();
+
         setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
         if (!bError) {
 
@@ -3194,19 +3205,21 @@ public final class EditorPlanetProgramming extends javax.swing.JFrame {
             bError = false;
 
             setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
+
         } else {
+            try {
+                c.stop();
+            } catch (Exception e) {
+            }
             Mensaje.advertencia(this, "El analisis sintactico no se puede realizar, debido a que hay un error léxico");
-            TextPaneTest.appendToPane(txtPanelSalida, "\nError al realizar analisis sinctatico...", cRojo);
+            TextPaneTest.appendToPane(txtPanelSalida, "\nError al realizar analisis sinctatico... (tiempo total: " + c.min + " minutos " + c.seg + " segundos)", cRojo);
 
         }
 
     }
 
     public void ejecutar() {
-        VtnEjecutar c = new VtnEjecutar();
-        c.setTexto(txtPanelEditando.getText());
-        c.setePP(this);
-        c.setVisible(true);
+
     }
 
     public void fuente() {

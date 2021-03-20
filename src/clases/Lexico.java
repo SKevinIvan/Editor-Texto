@@ -10,8 +10,7 @@ import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
-
-public class  Lexico {
+public class Lexico {
 
     //Inicio de declaracion de atributos
     private String textoCodigo;
@@ -25,7 +24,7 @@ public class  Lexico {
     private ArrayList<Lexema> listaLexico;
     private int[] numRenglon;
     //Fin de declaración de atributos
-    Sintactico s,j,k=new Sintactico();
+
     public Lexico() {
     }
 
@@ -157,91 +156,91 @@ public class  Lexico {
      */
     public String[][] getConjuntoTokensFijos() {
         String[][] listaTokensFijos = {
-            {"publico", "Modificador de acceso: publico", "1","public"},
-            {"privado", "Modificador de acceso: privado", "2","private"},
-            {"protegido", "Modificador de acceso: protegido", "3","proteted"},
-            {"clase", "Palabra reservada: clase", "4","class"},
-            {"paquete", "Palabra reservada: paquete", "5","package"},
-            {"importar", "Palabra reservada: importar", "6","import"},
-            {"estatico", "Palabra reservada: estatico", "7","static"},
-            {"final", "Palabra reservada: final", "8","final"},
-            {"super", "Palabra reservada: super", "9","super"},
-            {"retorna", "Palabra reservada: retorno", "10","return"},
-            {"procedimiento", "Palabra reservada: procedimiento", "11","procedure"},
-            {"funcion", "Palabra reservada: funcion", "12","funtion"},
-            {"entrada", "Palabra reservada: entrada", "13","in"},
-            {"salida", "Palabra reservada: salida", "14","out"},
-            {"sistema", "Palabra reservada: sistema", "15","system"},
-            {"linea", "Palabra reservada: linea", "16","line"},
-            {"abstracta", "Palabra reservada: abstracta", "17","abstracta"},
-            {"extender", "Palabra reservada: extender", "18","extends"},
-            {"implementar", "Palabra reservada: implementar", "19","implements"},
-            {"interfaz", "Palabra reservada: interfaz", "20","interface"},
-            {"principal", "Palabra reservada: principal", "21","main"},
-            {"nuevo", "Palabra reservada: nuevo", "22","new"},
-            {"este", "Palabra reservada: este", "23","this"},
-            {"nulo", "Palabra reservada: nulo", "24","null"},
-            {"leer", "Palabra reservada: leer", "25","read"},
-            {"escribir", "Palabra reservada: imprimir", "26","write"},
-            {"defecto", "Palabra reservada: defecto", "27","default"},  
-            {"terminar", "Palabra reservada: terminar", "28","break"},
-            {"salir", "Palabra reservada: salir", "29","exit"},
-            {"caso", "Palabra reservada: caso", "30","switch"},
-            {"alternativa", "Palabra reservada: alternativa", "31","case"},
-            {"si", "Estructura de seleccion: si", "32","if"},
-            {"sino", "Estructura de seleccion: sino", "33","else"},
-            {"sinoSi", "Estructura de seleccion: sinoSi", "34","elseIf"},
-            {"mientras", "Cliclo: mientras", "35","while"},
-            {"hacer", "Ciclo: harcerMientras", "36","do"},
-            {"para", "Ciclo: para", "37","for"},
-            {"verdadero", "Palabra reservada: verdadero", "38","true"},
-            {"falso", "Palabra reservada: falso", "39","false"},
-            {"constructor", "Constructor", "40","constructor"},
-            {"intentar", "Intentar", "41","try"},
-            {"captar", "Captar", "42","catch"},
-            {"finalmente", "Finalmente", "43","finally"},
-            {"entero", "Tipo de dato: entero", "44","int"},
-            {"flotante", "Tipo de dato: flotante", "44","float"},
-            {"doble", "Tipo de dato: double", "44","double"},
-            {"cadena", "Tipo de dato: cadena", "44","string"},
-            {"largo", "Tipo de dato: largo", "44","long"},
-            {"objeto", "Tipo de dato: objeto", "44","object"},
-            {"caracter", "Tipo de dato: caracter", "45","char"},
-            {"corto", "Tipo de dato: corto", "45","short"},
-            {"byte", "Tipo de dato: byte", "45","byte"},
-            {"booleano", "Tipo de dato: booleano", "46","boolean"},
-            {"-", "Operador aritmetico resta", "48","-"},
-            {"*", "Operador aritmetico producto", "49","*"},
-            {"/", "Operador artimetico cociente", "49","/"},
-            {"%", "Operador artimetico residuo de cociente", "49","%"},
-            {"^", "Operador aritmetico potencia", "49","^"},
-            {"<", "Opererador relacional: menor que", "50","<"},
-            {">", "Operador relacional: mayor que", "50",">"},
-            {">=", "Operador relacional: mayor igual que", "50",">="},
-            {"<=", "Operador relacional: menor igual que", "50","<="},
-            {"==", "Operador relacional: comparacion igual", "51","=="},
-            {"!=", "Operador relaciona: diferente que", "51","!="},
-            {"+=", "Asignacion matementica: añade a ", "53","+="},
-            {"-=", "Asiganacion matematica: resta a", "53","-="},
-            {"/=", "Asiganción matemetica: divide a", "53","/="},
-            {"*=", "Asiganción matematica: multiplica a", "53","*="},
-            {"=", "Asignacion: Igual", "54","="},
-            {"&&", "Operador lógico: Y ", "55","&&"},
-            {"||", "Operador lógico: O", "55","||"},
-            {"!", "Operador lógico: No", "56","!"},
-            {",", "Caracter especial: Coma", "57",","},
-            {";", "Caracter especial: Punto y coma", "58",";"},
-            {".", "Caracter especial: Punto", "59","."},
-            {":", "Caracter especial: Dos puntos", "60",":"},
-            {"{", "Caracter especial: Llave que abre", "61","{"},
-            {"}", "Caracter especial: Llave que cierra", "62","}"},
-            {"[", "Caracter especial: Corchete que abre", "63","["},
-            {"]", "Caracter especial: Corchete que cierra", "64","]"},
-            {"(", "Caracter especial: Parentesis que abre", "65","("},
-            {")", "Caracter especial: Parenctesis que cierra", "66",")"},
-            {"\\", "Caracter especial: Diagonal invertida", "67","\\"},
-            {"++", "Asignación matematica: incrementa uno", "68","++"},
-            {"--", "Asignación matematica: decrementa uno", "69","--"}};
+            {"publico", "Modificador de acceso: publico", "1", "public"},
+            {"privado", "Modificador de acceso: privado", "2", "private"},
+            {"protegido", "Modificador de acceso: protegido", "3", "proteted"},
+            {"clase", "Palabra reservada: clase", "4", "class"},
+            {"paquete", "Palabra reservada: paquete", "5", "package"},
+            {"importar", "Palabra reservada: importar", "6", "import"},
+            {"estatico", "Palabra reservada: estatico", "7", "static"},
+            {"final", "Palabra reservada: final", "8", "final"},
+            {"super", "Palabra reservada: super", "9", "super"},
+            {"retorna", "Palabra reservada: retorno", "10", "return"},
+            {"procedimiento", "Palabra reservada: procedimiento", "11", "procedure"},
+            {"funcion", "Palabra reservada: funcion", "12", "funtion"},
+            {"entrada", "Palabra reservada: entrada", "13", "in"},
+            {"salida", "Palabra reservada: salida", "14", "out"},
+            {"sistema", "Palabra reservada: sistema", "15", "system"},
+            {"linea", "Palabra reservada: linea", "16", "line"},
+            {"abstracta", "Palabra reservada: abstracta", "17", "abstracta"},
+            {"extender", "Palabra reservada: extender", "18", "extends"},
+            {"implementar", "Palabra reservada: implementar", "19", "implements"},
+            {"interfaz", "Palabra reservada: interfaz", "20", "interface"},
+            {"principal", "Palabra reservada: principal", "21", "main"},
+            {"nuevo", "Palabra reservada: nuevo", "22", "new"},
+            {"este", "Palabra reservada: este", "23", "this"},
+            {"nulo", "Palabra reservada: nulo", "24", "null"},
+            {"leer", "Palabra reservada: leer", "25", "read"},
+            {"escribir", "Palabra reservada: imprimir", "26", "write"},
+            {"defecto", "Palabra reservada: defecto", "27", "default"},
+            {"terminar", "Palabra reservada: terminar", "28", "break"},
+            {"salir", "Palabra reservada: salir", "29", "exit"},
+            {"caso", "Palabra reservada: caso", "30", "switch"},
+            {"alternativa", "Palabra reservada: alternativa", "31", "case"},
+            {"si", "Estructura de seleccion: si", "32", "if"},
+            {"sino", "Estructura de seleccion: sino", "33", "else"},
+            {"sinoSi", "Estructura de seleccion: sinoSi", "34", "elseIf"},
+            {"mientras", "Cliclo: mientras", "35", "while"},
+            {"hacer", "Ciclo: harcerMientras", "36", "do"},
+            {"para", "Ciclo: para", "37", "for"},
+            {"verdadero", "Palabra reservada: verdadero", "38", "true"},
+            {"falso", "Palabra reservada: falso", "39", "false"},
+            {"constructor", "Constructor", "40", "constructor"},
+            {"intentar", "Intentar", "41", "try"},
+            {"captar", "Captar", "42", "catch"},
+            {"finalmente", "Finalmente", "43", "finally"},
+            {"entero", "Tipo de dato: entero", "44", "int"},
+            {"flotante", "Tipo de dato: flotante", "44", "float"},
+            {"doble", "Tipo de dato: double", "44", "double"},
+            {"cadena", "Tipo de dato: cadena", "44", "string"},
+            {"largo", "Tipo de dato: largo", "44", "long"},
+            {"objeto", "Tipo de dato: objeto", "44", "object"},
+            {"caracter", "Tipo de dato: caracter", "45", "char"},
+            {"corto", "Tipo de dato: corto", "45", "short"},
+            {"byte", "Tipo de dato: byte", "45", "byte"},
+            {"booleano", "Tipo de dato: booleano", "46", "boolean"},
+            {"-", "Operador aritmetico resta", "48", "-"},
+            {"*", "Operador aritmetico producto", "49", "*"},
+            {"/", "Operador artimetico cociente", "49", "/"},
+            {"%", "Operador artimetico residuo de cociente", "49", "%"},
+            {"^", "Operador aritmetico potencia", "49", "^"},
+            {"<", "Opererador relacional: menor que", "50", "<"},
+            {">", "Operador relacional: mayor que", "50", ">"},
+            {">=", "Operador relacional: mayor igual que", "50", ">="},
+            {"<=", "Operador relacional: menor igual que", "50", "<="},
+            {"==", "Operador relacional: comparacion igual", "51", "=="},
+            {"!=", "Operador relaciona: diferente que", "51", "!="},
+            {"+=", "Asignacion matementica: añade a ", "53", "+="},
+            {"-=", "Asiganacion matematica: resta a", "53", "-="},
+            {"/=", "Asiganción matemetica: divide a", "53", "/="},
+            {"*=", "Asiganción matematica: multiplica a", "53", "*="},
+            {"=", "Asignacion: Igual", "54", "="},
+            {"&&", "Operador lógico: Y ", "55", "&&"},
+            {"||", "Operador lógico: O", "55", "||"},
+            {"!", "Operador lógico: No", "56", "!"},
+            {",", "Caracter especial: Coma", "57", ","},
+            {";", "Caracter especial: Punto y coma", "58", ";"},
+            {".", "Caracter especial: Punto", "59", "."},
+            {":", "Caracter especial: Dos puntos", "60", ":"},
+            {"{", "Caracter especial: Llave que abre", "61", "{"},
+            {"}", "Caracter especial: Llave que cierra", "62", "}"},
+            {"[", "Caracter especial: Corchete que abre", "63", "["},
+            {"]", "Caracter especial: Corchete que cierra", "64", "]"},
+            {"(", "Caracter especial: Parentesis que abre", "65", "("},
+            {")", "Caracter especial: Parenctesis que cierra", "66", ")"},
+            {"\\", "Caracter especial: Diagonal invertida", "67", "\\"},
+            {"++", "Asignación matematica: incrementa uno", "68", "++"},
+            {"--", "Asignación matematica: decrementa uno", "69", "--"}};
         this.conjuntoTokensFijos = listaTokensFijos;
         return listaTokensFijos;
     }
@@ -396,7 +395,7 @@ public class  Lexico {
                     contRenglon++;
                 }
             } else {
-                
+
                 if (cadena.equals("+")) {
 
                     if (st.hasMoreElements()) {
@@ -503,7 +502,7 @@ public class  Lexico {
                         auxRe = true;
                         contRenglon2 = contRenglon;
                         aux = st.nextToken();
-                        
+
                         if (aux.equals("*")) {
                             cadena += aux;
 
@@ -547,7 +546,7 @@ public class  Lexico {
                             cadena += aux;
                         } else if (aux.equals(" ")) {
                             auxRe = false;
-                        }else if(aux.equals("\n")){
+                        } else if (aux.equals("\n")) {
                             contRenglon++;
                         } else {
                             aux1 = true;
@@ -659,7 +658,7 @@ public class  Lexico {
             boolean automata = true;
             while (token < getConjuntoTokensFijos().length) {
 
-                if (lstPalabras.get(i).equals(getConjuntoTokensFijos()[token][0])||lstPalabras.get(i).equals(getConjuntoTokensFijos()[token][3])) {
+                if (lstPalabras.get(i).equals(getConjuntoTokensFijos()[token][0]) || lstPalabras.get(i).equals(getConjuntoTokensFijos()[token][3])) {
 
                     cadenaAnalizada.setLexema(lstPalabras.get(i));
                     cadenaAnalizada.setNombreToken(getConjuntoTokensFijos()[token][1]);
@@ -756,7 +755,8 @@ public class  Lexico {
                     } else {
                         cadenaAnalizada.setNumToken(94);
                         cadenaAnalizada.setNombreToken("Cadena no valida");
-                    }   break;
+                    }
+                    break;
                 case 3:
                 case 4:
                 case 5:
@@ -766,7 +766,8 @@ public class  Lexico {
                     } else {
                         cadenaAnalizada.setNumToken(85);
                         cadenaAnalizada.setNombreToken("Nombre de proyecto no valido");
-                    }   break;
+                    }
+                    break;
                 case 6:
                 case 7:
                 case 8:
@@ -776,7 +777,8 @@ public class  Lexico {
                     } else {
                         cadenaAnalizada.setNumToken(86);
                         cadenaAnalizada.setNombreToken("Nombre de paquete no valido");
-                    }   break;
+                    }
+                    break;
                 case 9:
                 case 10:
                 case 11:
@@ -786,7 +788,8 @@ public class  Lexico {
                     } else {
                         cadenaAnalizada.setNumToken(87);
                         cadenaAnalizada.setNombreToken("Nombre de clase no valido");
-                    }   break;
+                    }
+                    break;
                 case 12:
                 case 13:
                     if (a.getResAutomata().equals("Cadena valida")) {
@@ -795,7 +798,8 @@ public class  Lexico {
                     } else {
                         cadenaAnalizada.setNumToken(88);
                         cadenaAnalizada.setNombreToken("Nombre de funcion o procedimiento no valido");
-                    }   break;
+                    }
+                    break;
                 case 14:
                 case 15:
                     if (a.getResAutomata().equals("Cadena valida")) {
@@ -804,7 +808,8 @@ public class  Lexico {
                     } else {
                         cadenaAnalizada.setNumToken(89);
                         cadenaAnalizada.setNombreToken("Nombre de variable no valida");
-                    }   break;
+                    }
+                    break;
                 case 16:
                 case 17:
                     if (a.getResAutomata().equals("Cadena valida")) {
@@ -813,7 +818,8 @@ public class  Lexico {
                     } else {
                         cadenaAnalizada.setNumToken(90);
                         cadenaAnalizada.setNombreToken("Nombre de constante no valida");
-                    }   break;
+                    }
+                    break;
                 case 18:
                 case 19:
                     if (a.getResAutomata().equals("Cadena valida")) {
@@ -822,7 +828,8 @@ public class  Lexico {
                     } else {
                         cadenaAnalizada.setNumToken(91);
                         cadenaAnalizada.setNombreToken("Nombre de variable de objeto no valida");
-                    }   break;
+                    }
+                    break;
                 case 20:
                 case 23:
                     if (a.getResAutomata().equals("Cadena valida")) {
@@ -831,7 +838,8 @@ public class  Lexico {
                     } else {
                         cadenaAnalizada.setNumToken(92);
                         cadenaAnalizada.setNombreToken("Numero entero o byte incorrectos");
-                    }   break;
+                    }
+                    break;
                 case 21:
                 case 22:
                     if (a.getResAutomata().equals("Cadena valida")) {
@@ -840,7 +848,8 @@ public class  Lexico {
                     } else {
                         cadenaAnalizada.setNumToken(93);
                         cadenaAnalizada.setNombreToken("Numero de flotante o doble o largo o corto incorrectos");
-                    }   break;
+                    }
+                    break;
                 case 25:
                 case 24:
                     if (a.getResAutomata().equals("Cadena valida")) {
@@ -849,7 +858,8 @@ public class  Lexico {
                     } else {
                         cadenaAnalizada.setNumToken(96);
                         cadenaAnalizada.setNombreToken("Nombre de libreria no valida");
-                    }   break;
+                    }
+                    break;
                 case 26:
                 case 27:
                 case 28:
@@ -859,7 +869,8 @@ public class  Lexico {
                     } else {
                         cadenaAnalizada.setNumToken(95);
                         cadenaAnalizada.setNombreToken("Caracter no valido");
-                    }   break;
+                    }
+                    break;
                 case 29:
                 case 30:
                     if (a.getResAutomata().equals("Cadena valida")) {
@@ -868,7 +879,8 @@ public class  Lexico {
                     } else {
                         cadenaAnalizada.setNumToken(96);
                         cadenaAnalizada.setNombreToken("Comentario de linea no valido");
-                    }   break;
+                    }
+                    break;
                 case 31:
                 case 32:
                 case 33:
@@ -878,7 +890,8 @@ public class  Lexico {
                     } else {
                         cadenaAnalizada.setNumToken(97);
                         cadenaAnalizada.setNombreToken("Comentario de bloque no valido");
-                    }   break;
+                    }
+                    break;
                 default:
                     cadenaAnalizada.setNumToken(84);
                     cadenaAnalizada.setNombreToken("Caracter desconocido");

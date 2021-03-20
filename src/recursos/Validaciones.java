@@ -482,8 +482,27 @@ public class Validaciones {
                             cadena += aux;
                         } else if (aux.equals(" ")) {
                             cadena += aux;
+                        } else if (aux.equals(".")) {
+                            if (st.hasMoreElements()) {
+                                String aux33=st.nextToken();
+                                try {
+                                    int aux321=Integer.parseInt(aux33);
+                                    cadena+=aux+aux33;
+                                    palabras.add(cadena);
+                                } catch (Exception e) {
+                                    palabras.add(cadena);
+                                    palabras.add(aux);
+                                    palabras.add(aux33);
+                                           
+                                }
+                                
+                            } else {
+                                palabras.add(cadena);
+                                palabras.add(aux);
+                            }
                         } else {
-                            aux1 = true;
+                            palabras.add(cadena);
+                            palabras.add(aux);
                         }
 
                     }

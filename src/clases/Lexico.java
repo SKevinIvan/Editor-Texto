@@ -365,7 +365,30 @@ public class Lexico {
         for (int i = 0; i < getListaLexico().size(); i++) {
             getListaLexico().get(i).setRenglon(numRenglon[i]);
         }
+        //Corrgige el punto decimal si es un numero
+        for (int i = 0; i < getListaLexico().size(); i++) {
 
+            if (getListaLexico().get(i).getNumToken() == 77) {
+                if (i + 1 < getListaLexico().size()) {
+                    if ((getListaLexico().get(i + 1).getNumToken() == 59) && (getListaLexico().get(i).getRenglon() == getListaLexico().get(i + 1).getRenglon())) {
+                        if (i + 2 < getListaLexico().size()) {
+                            if ((getListaLexico().get(i + 2).getNumToken() == 77)
+                                    && (getListaLexico().get(i).getRenglon() == getListaLexico().get(i + 2).getRenglon())) {
+                                Lexema num2 = getListaLexico().remove(i + 2);
+                                Lexema pun = getListaLexico().remove(i + 1);
+
+                                String s = getListaLexico().get(i).getLexema() + pun.getLexema() + num2.getLexema();
+                                getListaLexico().get(i).setLexema(s);
+                                getListaLexico().get(i).setNumToken(78);
+                                getListaLexico().get(i).setNombreToken("Numero flotante o doble o largo o corto");
+                            }
+                        }
+                    }
+                }
+
+            }
+        }
+        //Quita los comentarios para el sintactico y agrega los identificadores a al tabla de tokens
         return getListaLexico();
     }
 
@@ -400,9 +423,9 @@ public class Lexico {
 
                     if (st.hasMoreElements()) {
                         aux = st.nextToken();
-                        if (aux.equals("=")) {
+                        if (aux.equals("+")) {
                             cadena += aux;
-                        } else if (aux.equals("+")) {
+                        } else if (aux.equals("=")) {
                             cadena += aux;
                         } else if (aux.equals(" ")) {
 
@@ -505,39 +528,44 @@ public class Lexico {
 
                         if (aux.equals("*")) {
                             cadena += aux;
-
+                            aux = "";
                             while (st.hasMoreElements()) {
-
-                                cadena += aux;
                                 aux = st.nextToken();
                                 if (aux.equals("*")) {
 
-                                    String aux2 = st.nextToken();
-                                    aux += aux2;
-                                    if (aux2.equals("/")) {
-
-                                        cadena += aux;
-
-                                        break;
-                                    } else {
-                                        if (aux.equals("\n")) {
-                                            contRenglon++;
+                                    cadena += aux;
+                                    aux = "";
+                                    if (st.hasMoreElements()) {
+                                        aux = st.nextToken();
+                                        if (aux.equals("/")) {
+                                            cadena += aux;
+                                            aux = "";
+                                            break;
+                                        } else {
+                                            if (aux.equals("\n")) {
+                                                contRenglon++;
+                                            }
                                         }
+
+                                    } else {
+                                        break;
                                     }
-                                } else {
-                                    if (aux.equals("\n")) {
-                                        contRenglon++;
-                                    }
+
+                                } else if (aux.equals("\n")) {
+                                    contRenglon++;
+                                    cadena += aux;
                                 }
                             }
                         } else if (aux.equals("/")) {
-
+                            cadena += aux;
+                            aux = "";
                             while (st.hasMoreElements()) {
-                                cadena += aux;
                                 aux = st.nextToken();
                                 if (aux.equals("\n")) {
                                     contRenglon++;
                                     break;
+                                } else {
+                                    cadena += aux;
                                 }
                             }
 

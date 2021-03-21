@@ -260,3 +260,5 @@
 <OperacionMat>    → λ
 <Operacion>   →   38 <OperacionLog>
 <Operacion>   →   39 <OperacionLog>
+<Condicion>   →   38 <CondicionLog> 
+<Condicion>   →   39 <CondicionLog> 

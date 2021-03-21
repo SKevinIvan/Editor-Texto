@@ -1460,7 +1460,7 @@ public final class EditorPlanetProgramming extends javax.swing.JFrame {
 
     private void itemSemanticoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_itemSemanticoActionPerformed
         crearPestaniaSemantico();
-        //   semantico();
+         semantico();
     }//GEN-LAST:event_itemSemanticoActionPerformed
 
     private void itemOptmizacionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_itemOptmizacionActionPerformed
@@ -1720,7 +1720,7 @@ public final class EditorPlanetProgramming extends javax.swing.JFrame {
 
     private void btnTraducirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTraducirActionPerformed
         posicionC = txtPanelEditando.getCaretPosition();
-        formatoIngles();
+        new VtnTraducirA().setVisible(true);
         txtPanelEditando.setCaretPosition(posicionC);
     }//GEN-LAST:event_btnTraducirActionPerformed
 
@@ -2184,7 +2184,7 @@ public final class EditorPlanetProgramming extends javax.swing.JFrame {
 
             numLineEditor = new NumeroLinea(txtPanelEditando);
             scrollPaneEditando.setRowHeaderView(numLineEditor);
-            panelTab[0] = new CmpntTabPane(pestaniasEntradaSalidas, 0, imageEditar);
+            panelTab[0] = new CmpntTabPane(pestaniasEntradaSalidas, 0, imageLenguaje);
             int indexTab = 0;
             for (int p = 0; p < pestaniasEntradaSalidas.getTabCount(); p++) {
                 if (pestaniasEntradaSalidas.getTitleAt(p).equals("Editando")) {
@@ -3154,6 +3154,10 @@ public final class EditorPlanetProgramming extends javax.swing.JFrame {
     }
 
     public void semantico() {
+        
+        
+        
+        
         CtrlInterfaz.habilita(true, itemGuardar, itemLexico, itemSintactico, itemSemantico, itemIntermedio);
         CtrlInterfaz.habilita(false, itemOptmizacion, itemObjeto);
         CtrlInterfaz.habilita(true, checkEditando, checkCompilando, checkSalida, checkLexico, checkSintactico, checkSemantico, checkIntermedio);
@@ -3541,6 +3545,7 @@ public final class EditorPlanetProgramming extends javax.swing.JFrame {
 
     //Fin de la eclaracion de variables estáticas de la clase 
     //Declaracion de constantes de la clase 
+    private final ImageIcon imageLenguaje = new ImageIcon(ClassLoader.getSystemResource("imagenes/coffeCode.png"));
     private final ImageIcon imageEditar = new ImageIcon(ClassLoader.getSystemResource("iconos/18171 - editors package.png"));
     private final ImageIcon imageCompilar = new ImageIcon(ClassLoader.getSystemResource("iconos/118830 - terminal utilities_1.png"));
     private final ImageIcon imageSalida = new ImageIcon(ClassLoader.getSystemResource("iconos/18046 - konsole.png"));

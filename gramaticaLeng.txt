@@ -93,7 +93,7 @@
 <ArregloVar3> →  λ
 <Posicion>   →    77 
 <Posicion> →  <ClaseInstancia>
-<PosicionAux> → <Posicion> 64 <ArregloVar2>
+<PosicionAux> → <Posicion> 64 <ArregloVar22>
 <PosicionAux> → 64 <ArregloVar3>
 <ArregloVar4>   →   63 <Posicion> 64 <ArregloVar4>
 <ArregloVar4> →  λ
@@ -142,7 +142,7 @@
 <Boleano> →   38 
 <Boleano> →   39  
 <Constructor> →   40  72  65 <Argumento> 66 61 <Sentencia> 62    
-<Argumento>   →   <TipoDato> 74 <Argumento1>  
+<Argumento>   →   <TipoDato> <ArregloVar22> 74 <Argumento1> 
 <Argumento>   →    λ   
 <Argumento1>  →    57 <Argumento>  
 <Argumento1>  →   λ  
@@ -203,18 +203,18 @@
 <CaptarExtendido>    →   λ 
 <Finalmente>   →    43 61  <Sentencia> 62 
 <Finalmente>   →    λ
-<Concatenacion>   →   44 <Operacion> 
+<Concatenacion>   →   47 <Operacion> 
 <Concatenacion>   →   λ
 <OperacionAritmetica>   →   <Numero> <OperacionAritmetica2>
 <OperacionAritmetica>   →    48  <OperacionAritmetica>
 <OperacionAritmetica>   →   52 <OperacionAritmetica>
-<OperacionAritmetica>   →   <ClaseInstancia> <OperacionAritmetica>
+<OperacionAritmetica>   →   <ClaseInstancia> <OperacionAritmetica2>
 <OperacionAritmetica>   →    65 <OperacionAritmetica> 66 <OperacionAritmetica2>  
 <OperacionAritmetica2>   →   49 <OperacionAritmetica>
 <Condicion>   →   <ClaseInstancia> <OperadorCondicion>
 <Condicion>   →   <Numero>  <CondicionMat> <CondicionLog>
 <Condicion>   →    48  <OperacionAritmetica>  <CondicionRelComp> <CondicionLog>    
-<Condicion>   →   79 <CondicionSum> <CondicionComp> <CondicionLog>    
+<Condicion>   →   79 <CondicionMat> <CondicionLog>    
 <Condicion>   →   80 <CondicionRelComp>
 <Condicion>   →   24 <CondicionComp>
 <Condicion>   →   46 <CondicionLog> 
@@ -231,9 +231,9 @@
 <CondicionLog>     →   55 <Condicion> 
 <CondicionLog>    →   λ
 <Operacion>   →   <ClaseInstancia> <Operador>
-<Operacion>   →   <Numero> <OperacionMat>   <OperacionRelComp> 
+<Operacion>   →   <Numero> <OperacionMat>   
 <Operacion>   →   48  <OperacionAritmetica> <OperacionRelComp> 
-<Operacion>   →   79 <OperacionSum> <CondicionComp> 
+<Operacion>   →   79 <OperacionSum> 
 <Operacion>   →   80 <OperacionRelComp> 
 <Operacion>   →   24 <OperacionComp> 
 <Operacion>   →   46 <OperacionLog>   
@@ -242,16 +242,21 @@
 <Operador>   →   <OperacionMat> <OperacionRelComp> <OperacionLog>
 <Operador>   →   <OperacionComp> <OperacionLog>
 <Operador>   →   <OperacionLog>
-<OperacionMat>   →   <OperacionMat2> 
-<OperacionMat>   →   <OperacionSum> 
-<OperacionMat2>   →   49  <OperacionAritmetica> 
-<OperacionSum>    →     52 <Operacion>
-<OperacionMat>    →   λ 
-<OperacionSum>    →   λ 
+<OperacionMat>   →  52 <Operacion>
+<OperacionMat>   →  49  <OperacionAritmetica>   
+<OperacionMat>   →  48  <OperacionAritmetica>     
+<OperacionMat>    →  <OperacionRelComp>  
 <OperacionRelComp>    →   50 <Condicion> <OperacionLog>
-<OperacionRelComp>    →   51 <Condicion>  <OperacionLog>
+<OperacionRelComp>    →   51 <Condicion> <OperacionLog>
 <OperacionRelComp>    →   λ
 <OperacionComp>    →   51 <Condicion> <OperacionLog>
 <OperacionComp>   →   λ
 <OperacionLog>     →   55 <Condicion> 
 <OperacionLog>    →   λ
+<Argumento>   →    72   76 <Argumento1>
+<OperacionAritmetica2>   →   48 <OperacionAritmetica>
+<OperacionAritmetica2>   →   52 <OperacionAritmetica>
+<OperacionAritmetica2>   →   λ
+<OperacionMat>    → λ
+<Operacion>   →   38 <OperacionLog>
+<Operacion>   →   39 <OperacionLog>

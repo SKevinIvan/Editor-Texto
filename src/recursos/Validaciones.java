@@ -226,7 +226,7 @@ public class Validaciones {
 
         Color colorPalabra;
         Color cAzul = new Color(0, 0, 204);
-        Color cVerde = new Color(0, 204, 0);
+        Color cVerde = new Color(0, 153, 0);
         Color cRojo = new Color(255, 0, 0);
         Color cNaranja = new Color(255, 102, 0);
         Color cRosa = new Color(255, 0, 255);

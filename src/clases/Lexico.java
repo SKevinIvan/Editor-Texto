@@ -209,6 +209,7 @@ public class Lexico {
             {"corto", "Tipo de dato: corto", "45", "short"},
             {"byte", "Tipo de dato: byte", "45", "byte"},
             {"booleano", "Tipo de dato: booleano", "46", "boolean"},
+              {"+", "Operador aritmetico suma", "52", "+"},
             {"-", "Operador aritmetico resta", "48", "-"},
             {"*", "Operador aritmetico producto", "49", "*"},
             {"/", "Operador artimetico cociente", "49", "/"},

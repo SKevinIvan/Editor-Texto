@@ -5,18 +5,20 @@
  */
 package clases;
 
+import java.util.ArrayList;
+
 /**
  *
  * @author por_s
  */
 public class Errores {
-    
+
     private String idError;
     private String error;
     private String descripcion;
     private String tipo;
     private int lineaCodigo;
-    
+
     /**
      * Get the value of lineaCodigo
      *
@@ -107,4 +109,13 @@ public class Errores {
         this.idError = idError;
     }
 
+    public static void insertaError(ArrayList<Errores> tablaErrores, String idError, String error, String descripcion, String tipo, int lineaCodigo) {
+        Errores e = new Errores();
+        e.setIdError(idError);
+        e.setError(error);
+        e.setDescripcion(descripcion);
+        e.setTipo(tipo);
+        e.setLineaCodigo(lineaCodigo);
+        tablaErrores.add(e);
+    }
 }

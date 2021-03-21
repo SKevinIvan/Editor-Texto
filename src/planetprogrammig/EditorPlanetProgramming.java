@@ -1309,7 +1309,7 @@ public final class EditorPlanetProgramming extends javax.swing.JFrame {
         abrir();
         if (archivo) {
             posicionC = txtPanelEditando.getCaretPosition();
-            //  formato();
+             formato();
             try {
                 txtPanelEditando.setCaretPosition(posicionC);
             } catch (Exception e) {
@@ -1324,7 +1324,7 @@ public final class EditorPlanetProgramming extends javax.swing.JFrame {
     private void btnGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarActionPerformed
         setCursor(new Cursor(Cursor.WAIT_CURSOR));
         int ints = txtPanelEditando.getCaretPosition();
-
+        formato();
         guardar();
         if (ints != -1) {
             txtPanelEditando.setCaretPosition(ints);
@@ -3508,7 +3508,7 @@ public final class EditorPlanetProgramming extends javax.swing.JFrame {
     public static int precaución = 0;
     public static int espacio_vacio = 0;
 
-    public static Color cVerde = new Color(0, 153, 0);
+    public static Color cVerde = new Color(0, 204, 0);
     public static Color cRojo = new Color(255, 0, 0);
     public static Color cNegro = new Color(0, 0, 0);
     public static Color cGris = new Color(192, 192, 192);

@@ -5,10 +5,19 @@
  */
 package clases;
 
+import java.util.ArrayList;
+
 /**
  *
  * @author por_s
  */
-public class TablaReferencias {
+public class Semantico {
+
+    public static ArrayList<TablaSimbolos> tablaSimboloses;
+    
+    public void proyecto(){
+        
+    }
+    
     
 }

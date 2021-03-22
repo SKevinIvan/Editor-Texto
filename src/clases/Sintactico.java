@@ -10,6 +10,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.StringTokenizer;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Row;
@@ -303,6 +304,13 @@ public class Sintactico {
      *
      */
     private void extraerGramatica() {
+        Date d = new Date();
+        Informacion info = new Informacion();
+        info.setAccion("Extracción de la gramatica ");
+        info.setFechaTransaccion(d.toString());
+        info.setIdInfo("1012");
+        info.setNoTransaccion("URL: " + getPathGramatica());
+
         String s = ManipulaArchivos.cargarArchivo(getPathGramatica());
         StringTokenizer st = new StringTokenizer(s, " \n\t\r", true);
         String cadena;
@@ -344,6 +352,8 @@ public class Sintactico {
             i++;
         } while (i < palabras.size());
         setListaGramatica(lisaGramatica);
+        info.setEstado("Aceptada");
+        EditorPlanetProgramming.lstInfo.add(info);
 //     IMPRIME LA GRAMATICA
 //        String s2 = "Gramatica \n";
 //        Nodo aux = lisaGramatica.getR();
@@ -383,7 +393,14 @@ public class Sintactico {
         String ttablaPredictiva[][];
         ArrayList<String> datos = new ArrayList<>();                //Matriz predictiva
         int numF, numC = 0, conArray = 0;
-
+        
+        Date date=new Date();
+        Informacion info=new Informacion();
+        info.setAccion("Extracción de la tabla de la tabla predictiva");
+        info.setFechaTransaccion(date.toString());
+        info.setIdInfo("5012");
+        info.setNoTransaccion("URL: "+getPathTablaExcel());
+        
         try {
             FileInputStream file = new FileInputStream(new File(getPathTablaExcel()));
             XSSFWorkbook book = new XSSFWorkbook(file);
@@ -425,8 +442,12 @@ public class Sintactico {
             }
 
             setTablaPredictiva(ttablaPredictiva);
+            info.setEstado("Aceptada");
         } catch (IOException e) {
             System.out.println("" + e);
+            info.setEstado("Rechazada");
+        }finally{
+            EditorPlanetProgramming.lstInfo.add(info);
         }
 //        String s = "Tabla\n";
 //        for (int i = 0; i < getTablaPredictiva().length; i++) {

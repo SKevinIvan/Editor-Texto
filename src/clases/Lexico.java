@@ -5,10 +5,12 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Date;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+import planetprogrammig.EditorPlanetProgramming;
 
 public class Lexico {
 
@@ -937,10 +939,15 @@ public class Lexico {
      * vector del alfabeto
      */
     private void extraerTabla() {
+        Date d=new Date();
+        Informacion info=new Informacion();
+        info.setAccion("Extracción de la tabla de automatas general ");
+        info.setFechaTransaccion(d.toString());
+        info.setIdInfo("5012");
+        info.setNoTransaccion("URL: "+getPathTablaExcel());
 
         int tablaTransiccion[][];
         char vectorAlfabeto[];
-
         ArrayList<Integer> datos = new ArrayList<>();  //Matriz de transaccion
         ArrayList<Character> alfabeto = new ArrayList<>(); //Vector alfabeto
         int numF, numC = 0, conArray = 0;  //Matriz de transaccion
@@ -991,9 +998,12 @@ public class Lexico {
             }
             setVecAlfabeto(vectorAlfabeto);
             setMatrizTransaccionGeneral(tablaTransiccion);
+            info.setEstado("Aceptado");
         } catch (IOException e) {
             System.out.println("" + e);
+            info.setEstado("Rechazado");
         }
+           EditorPlanetProgramming.lstInfo.add(info);
 
     }
 

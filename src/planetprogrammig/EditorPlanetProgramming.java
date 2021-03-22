@@ -1304,7 +1304,7 @@ public final class EditorPlanetProgramming extends javax.swing.JFrame {
         nuevo();
     }//GEN-LAST:event_btnNuevoActionPerformed
 
-    public static ArrayList<Errores> lstError;
+
     private void btnAbrirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAbrirActionPerformed
         setCursor(new Cursor(Cursor.WAIT_CURSOR));
         abrir();
@@ -3233,17 +3233,25 @@ public final class EditorPlanetProgramming extends javax.swing.JFrame {
             TextPaneTest.appendToPane(txtPanelSalida, "\nError al realizar analisis sinctatico... (tiempo total: " + c.min + " minutos " + c.seg + " segundos)", cRojo);
 
         }
+        txtPanelCompilando.setText("");
+        String inf = "";
+        for (int j = 0; j < lstInfo.size(); j++) {
+            inf += lstInfo.get(j).getAccion() + " ::\t Transacción: " + lstInfo.get(j).getNoTransaccion() + " ::\t Fecha: " + lstInfo.get(j).getFechaTransaccion() + " ::\t Estado: " + lstInfo.get(j).getEstado() + "\n";
+        }
+        TextPaneTest.ponerEstilo(txtPanelCompilando, "NEGRITAS", "------------------------------------------------------------------------------------------------------------------------------------------\n"
+                + "EXTRAYENDO ARCHIVOS NECESARIOS");
+        TextPaneTest.appendToPane(txtPanelCompilando, "\n" + inf, cNegro);
+
         String errores = "";
         for (int j = 0; j < EditorPlanetProgramming.lstError.size(); j++) {
             errores += EditorPlanetProgramming.lstError.get(j).getIdError() + " ::\t" + EditorPlanetProgramming.lstError.get(j).getTipo() + " ::\t" + EditorPlanetProgramming.lstError.get(j).getDescripcion() + " ::\tEn la línea " + EditorPlanetProgramming.lstError.get(j).getLineaCodigo() + "\n";
         }
         if (errores.isEmpty()) {
-            TextPaneTest.appendToPane(txtPanelCompilando, "\n" + errores, cPalabrasReservadas);
-            TextPaneTest.ponerEstilo(txtPanelCompilando, "NEGRITAS", "-----------------------------------------------------------------------------------------------------------------\n"
+            TextPaneTest.ponerEstilo(txtPanelCompilando, "NEGRITAS", "------------------------------------------------------------------------------------------------------------------------------------------\n"
                     + "COMPILACIÓN EXITOSA ");
 
         } else {
-            TextPaneTest.ponerEstilo(txtPanelCompilando, "NEGRITAS", "-----------------------------------------------------------------------------------------------------------------\n"
+            TextPaneTest.ponerEstilo(txtPanelCompilando, "NEGRITAS", "------------------------------------------------------------------------------------------------------------------------------------------\n"
                     + "HAY ERRORES DE COMPILACION ");
             TextPaneTest.appendToPane(txtPanelCompilando, "\n" + errores, cNegro);
         }
@@ -3539,7 +3547,8 @@ public final class EditorPlanetProgramming extends javax.swing.JFrame {
     public static int URL = 0;
     public static int precaución = 0;
     public static int espacio_vacio = 0;
-
+    public static ArrayList<Errores> lstError;
+    public static ArrayList<Informacion> lstInfo=new ArrayList<>();
     public static Color cVerde = new Color(0, 204, 0);
     public static Color cRojo = new Color(255, 0, 0);
     public static Color cNegro = new Color(0, 0, 0);

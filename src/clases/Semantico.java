@@ -98,7 +98,7 @@ public class Semantico {
                 String op1 = pOperacion.elimina(null).getS();
                 String res[];
                 res = expresionFinal(op1, op2, s);
-                if (res[0] == "TRUE") {
+                if ("TRUE".equals(res[0])) {
                     pOperacion.inserta(new Nodo(String.valueOf(res[1]), -1), null);
                 } else {
                     break;
@@ -157,7 +157,7 @@ public class Semantico {
 
     public static Object tablaResultados(Object obj1, Object obj2) {
         boolean bandera = false;
-      
+
         return bandera;
     }
 
@@ -248,10 +248,12 @@ public class Semantico {
 
     public boolean isOperador(String s) {
 
-        if (s.equals("*") || s.equals("^") || s.equals("/") || s.equals("+") || s.equals("-") || s.equals("!") || s.equals("&&") || s.equals("||") || s.equals("<") || s.equals(">") || s.equals(">=") || s.equals("<=") || s.equals("==") || s.equals("!=")) {
+        if (s.equals("%") || s.equals("*") || s.equals("^") || s.equals("/") || s.equals("+") || s.equals("-") || s.equals("!") || s.equals("&&") || s.equals("||") || s.equals("<") || s.equals(">") || s.equals(">=") || s.equals("<=") || s.equals("==") || s.equals("!=")) {
             return true;
         }
 
         return false;
     }
+    //Lexema
+
 }

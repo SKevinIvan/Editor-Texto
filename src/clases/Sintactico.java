@@ -15,6 +15,7 @@ import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+import planetprogrammig.EditorPlanetProgramming;
 
 /**
  *
@@ -99,7 +100,7 @@ public class Sintactico {
         this.pilaSintactico.inserta(new Nodo(nI, 0), null);
         impresionPilaSintactico.add(imprimirPila());
         impresionColaSalida.add(imprimirCola());
-       while (pilaSintactico.getTope() != null || colaSalida.getF() != null) {
+        while (pilaSintactico.getTope() != null || colaSalida.getF() != null) {
             if (pilaSintactico.getTope().getS().equals(colaSalida.getF().getS())) {
                 agregaNodos();
                 impresionPilaSintactico.add(imprimirPila());
@@ -114,14 +115,26 @@ public class Sintactico {
                             PilaD p = obtenerPilaGramatica(num1);
                             if (p == null) {
                                 error = "¿Pila vacia?";
+                                Errores e = new Errores();
+                                e.setIdError("E19");
+                                e.setDescripcion(error);
+                                e.setLineaCodigo((int) colaSalida.getF().getObj());
+                                e.setTipo("ERROR DESCONOCIDO");
+                                EditorPlanetProgramming.lstError.add(e);
                                 break;
                             } else {
                                 reemplazaNodoSintactico(p);
                                 impresionPilaSintactico.add(imprimirPila());
                                 impresionColaSalida.add(imprimirCola());
                             }
-                        } catch (Exception e) {
+                        } catch (Exception ex) {
                             error = "Error desconocido ";
+                            Errores e = new Errores();
+                            e.setIdError("E18");
+                            e.setDescripcion(error);
+                            e.setLineaCodigo((int) colaSalida.getF().getObj());
+                            e.setTipo("ERROR DESCONOCIDO");
+                            EditorPlanetProgramming.lstError.add(e);
                             break;
                         }
 
@@ -132,10 +145,22 @@ public class Sintactico {
                             s = buscaLoQueSeEspera(colaSalida.getF().getS());
                             error = "Error sintactico al recibir " + s;
                             numError = (int) colaSalida.getF().getObj();
+                            Errores e = new Errores();
+                            e.setIdError("E18");
+                            e.setDescripcion(error);
+                            e.setLineaCodigo((int) colaSalida.getF().getObj());
+                            e.setTipo("ERROR SINTACTICO");
+                            EditorPlanetProgramming.lstError.add(e);
                         } else {
 
                             error = "Error sintactico... se esperaba un " + s;
                             numError = (int) colaSalida.getF().getObj();
+                            Errores e = new Errores();
+                            e.setIdError("E17");
+                            e.setDescripcion("Se esperaba un " + s);
+                            e.setLineaCodigo((int) colaSalida.getF().getObj());
+                            e.setTipo("ERROR SINTACTICO");
+                            EditorPlanetProgramming.lstError.add(e);
                         }
                         break;
                     }
@@ -146,6 +171,12 @@ public class Sintactico {
                 } else {
                     String s = buscaLoQueSeEspera(pilaSintactico.getTope().getS());
                     error = "Error sintactico... se esperaba " + s + " en la linea " + colaSalida.getF().getObj();
+                    Errores e = new Errores();
+                    e.setIdError("E16");
+                    e.setDescripcion("Se esperaba " + s);
+                    e.setLineaCodigo((int) colaSalida.getF().getObj());
+                    e.setTipo("ERROR SINTACTICO");
+                    EditorPlanetProgramming.lstError.add(e);
                     numError = (int) colaSalida.getF().getObj();
                     break;
                 }
@@ -397,14 +428,14 @@ public class Sintactico {
         } catch (IOException e) {
             System.out.println("" + e);
         }
-        String s = "Tabla\n";
-        for (int i = 0; i < getTablaPredictiva().length; i++) {
-            for (int j = 0; j < getTablaPredictiva()[i].length; j++) {
-                s += getTablaPredictiva()[i][j] + "\t";
-            }
-            s += "\n";
-        }
-      System.out.println(s);
+//        String s = "Tabla\n";
+//        for (int i = 0; i < getTablaPredictiva().length; i++) {
+//            for (int j = 0; j < getTablaPredictiva()[i].length; j++) {
+//                s += getTablaPredictiva()[i][j] + "\t";
+//            }
+//            s += "\n";
+//        }
+//        System.out.println(s);
     }
 
     /**
@@ -601,6 +632,7 @@ public class Sintactico {
         }
         return num;
     }
+
     private String buscaLoQueSeEspera(String s) {
         String espera = "";
         StringTokenizer st = new StringTokenizer(s, " ", false);
@@ -643,7 +675,7 @@ public class Sintactico {
 
                     if (tokenSalida.equals(tokensFijos[token][2])) {
 
-                        tokenS = tokensFijos[token][1]+"("+tokensFijos[token][0]+")";
+                        tokenS = tokensFijos[token][1] + "(" + tokensFijos[token][0] + ")";
                         fijos = true;
 
                     }
@@ -664,5 +696,15 @@ public class Sintactico {
         return espera;
     }
 
+    /**
+     * Get the value of conjuntoErrores
+     *
+     * @return the value of conjuntoErrores
+     */
+    public String[][] getConjuntoErrores() {
+        String listaErrores[][] = {
+            {"Caracter desconocido", "84", "E16"}};
 
+        return listaErrores;
+    }
 }

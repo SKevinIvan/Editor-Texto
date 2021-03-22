@@ -51,14 +51,14 @@
 <AsignacionAtributo>  →   <Constante>
 <Variable>   →   74 <InicializacionVariable>   
 <Constante>  →   75   <InicializacionConstante>   
-<InicializacionVariable>   →   <DeclaracionArregloVariable>
+<InicializacionVariable>   →  <ArregloVar3> <DeclaracionArregloVariable>
 <InicializacionVariable>   →    <InicializacionAtributo>
 <InicializacionVariable>   →    λ
-<DeclaracionArregloVariable>   →   <ArregloVar1> <DeclaracionArregloVariable2> 
+<DeclaracionArregloVariable>   →   <DeclaracionArregloVariable2> 
 <DeclaracionArregloVariable2>  →   54 22 <TipoDato> <ArregloVar2> 
 <DeclaracionArregloVariable2>  →    λ 
 <InicializacionConstante>   →   <InicializacionAtributo>
-<InicializacionConstante>   →   <DeclaracionArregloConstante>
+<InicializacionConstante>   →  <ArregloVar3> <DeclaracionArregloConstante>
 <DeclaracionArregloConstante>   →   <Arreglo1>  <DeclaracionArregloConstante2> <Arreglo2> 
 <DeclaracionArregloConstante2>  →   <Arreglo1>  <DeclaracionArregloConstante2> <Arreglo2>
 <DeclaracionArregloConstante2>  →   54 22 <TipoDato> 
@@ -111,11 +111,11 @@
 <ClaseInstancia22> → <ArregloVar22>
 <ArregloVar22> → <ArregloVar2>
 <ArregloVar22> → λ
-<AtributoSentencia>   →    <DeclaracionAtributo>   
-<AtributoSentencia>   →    72 <RefDeclaracionObjeto>  
-<AtributoSentencia>   →   <ReferenciaAtributo>
+<AtributoSentencia>   →    <DeclaracionAtributo>  
+<AtributoSentencia>   →    72 <RefDeclaracionObjeto>  58
+<AtributoSentencia>   →   <ReferenciaAtributo> 58
 <RefDeclaracionObjeto> → 59 <ReferenciaAtributo2>
-<RefDeclaracionObjeto> → 76   <InicializacionObjeto>  <ConjuntoObjetos> 58
+<RefDeclaracionObjeto> → 76   <InicializacionObjeto>  <ConjuntoObjetos> 
 <ReferenciaAtributo>   →   23 59  <ReferenciaAtributo2>
 <ReferenciaAtributo>   →   76 <ReferenciaAtributo22> 
 <ReferenciaAtributo>  →   74 <ArregloVar4> <AsignacionAtributoVar> 
@@ -124,11 +124,11 @@
 <ReferenciaAtributo22> → 59 <ReferenciaAtributo2>
 <ReferenciaAtributo22> → <ArregloVar2Obj>
 <ArregloVar2Obj> → <AsignacionObjeto>
-<AsignacionAtributoVar>  →   54  <AsignacionAtributoVar2>
-<AsignacionAtributoVar>  →   53 <OperacionAritmetica>
-<AsignacionAtributoVar2> →  <Operacion> 
-<AsignacionAtributoVar2> →   <Iteracion> 
-<AsignacionAtributoVar2> →   15 59  <Lectura> 
+<AsignacionAtributoVar>  →   54  <AsignacionAtributoVar2> 
+<AsignacionAtributoVar>  →   53 <OperacionAritmetica> 
+<AsignacionAtributoVar2> →  <Operacion>
+<AsignacionAtributoVar2> →   <Iteracion>
+<AsignacionAtributoVar2> →   15 59  <Lectura>
 <TipoDato>   →   44   
 <TipoDato>   →    45
 <TipoDato>   →    46 
@@ -170,8 +170,8 @@
 <Sentencia2>  →   <SentenciaHacerMientras> 
 <Sentencia2>  →   <SentenciaPara> 
 <Sentencia2>  →   <SentenciaCaso>  
-<Sentencia2>  →   <AtributoSentencia> 58 
-<Sentencia2>  →   <OperacionSistema>  
+<Sentencia2>  →   <AtributoSentencia> 
+<Sentencia2>  →   <OperacionSistema> 58 
 <SentenciaSi>  →   32 65 <Condicion> 66 61 <Sentencia> 62 <SentenciaSi1>   
 <SentenciaSi1>  →   <SentenciaSino> 
 <SentenciaSi1>  →    <SentenciaSinoSi>  
@@ -233,7 +233,7 @@
 <Operacion>   →   <ClaseInstancia> <Operador>
 <Operacion>   →   <Numero> <OperacionMat>   
 <Operacion>   →   48  <OperacionAritmetica> <OperacionRelComp> 
-<Operacion>   →   79 <OperacionSum> 
+<Operacion>   →   79 <OperacionMat> 
 <Operacion>   →   80 <OperacionRelComp> 
 <Operacion>   →   24 <OperacionComp> 
 <Operacion>   →   46 <OperacionLog>   
@@ -262,3 +262,5 @@
 <Operacion>   →   39 <OperacionLog>
 <Condicion>   →   38 <CondicionLog> 
 <Condicion>   →   39 <CondicionLog> 
+<ReferenciaAtributo>   → 73  65 <Parametro> 66
+<ReferenciaAtributo2> → 73  65 <Parametro> 66

@@ -19,7 +19,7 @@ public class TablaSimbolos {
     private String estado;
     private String tipo;
     private int tamanio;
-    private String indice;
+    private int index;
     private String alcance;
 
     /**
@@ -40,23 +40,15 @@ public class TablaSimbolos {
         this.alcance = alcance;
     }
 
-    /**
-     * Get the value of indice
-     *
-     * @return the value of indice
-     */
-    public String getIndice() {
-        return indice;
+    public int getIndex() {
+        return index;
     }
 
-    /**
-     * Set the value of indice
-     *
-     * @param indice new value of indice
-     */
-    public void setIndice(String indice) {
-        this.indice = indice;
+    public void setIndex(int index) {
+        this.index = index;
     }
+
+   
 
     /**
      * Get the value of tamanio

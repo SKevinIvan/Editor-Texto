@@ -85,21 +85,21 @@ public class Lexico {
      */
     public String[][] getConjuntoErrores() {
         String listaErrores[][] = {
-            {"Caracter desconocido", "84"},
-            {"Nombre de proyecto no valido", "85"},
-            {"Nombre de paquete no valido", "86"},
-            {"Nombre de clase no valido", "87"},
-            {"Nombre de funcion o procedimiento no valido", "88"},
-            {"Nombre de variable no valida", "89"},
-            {"Nombre de constante no valida", "90"},
-            {"Nombre de variable de objeto no valida", "91"},
-            {"Numero entero o byte incorrectos", "92"},
-            {"Numero de flotante o doble o largo o corto incorrectos", "93"},
-            {"Cadena no valida", "94"},
-            {"Caracter no valido", "95"},
-            {"Nombre de libreria no valida", "96"},
-            {"Comentario de linea no valida", "97"},
-            {"Comentario de bloque no valida", "98"},};
+            {"Caracter desconocido", "84", "E1"},
+            {"Nombre de proyecto no valido", "85","E2"},
+            {"Nombre de paquete no valido", "86","E3"},
+            {"Nombre de clase no valido", "87","E4"},
+            {"Nombre de funcion o procedimiento no valido", "88","E5"},
+            {"Nombre de variable no valida", "89","E6"},
+            {"Nombre de constante no valida", "90","E7"},
+            {"Nombre de variable de objeto no valida", "91","E8"},
+            {"Numero entero o byte incorrectos", "92","E9"},
+            {"Numero de flotante o doble o largo o corto incorrectos", "93","E10"},
+            {"Cadena no valida", "94","E11"},
+            {"Caracter no valido", "95","E12"},
+            {"Nombre de libreria no valida", "96","E13"},
+            {"Comentario de linea no valida", "97","E4"},
+            {"Comentario de bloque no valida", "98","E15"},};
 
         this.conjuntoErrores = listaErrores;
         return conjuntoErrores;
@@ -209,7 +209,7 @@ public class Lexico {
             {"corto", "Tipo de dato: corto", "45", "short"},
             {"byte", "Tipo de dato: byte", "45", "byte"},
             {"booleano", "Tipo de dato: booleano", "46", "boolean"},
-              {"+", "Operador aritmetico suma", "52", "+"},
+            {"+", "Operador aritmetico suma", "52", "+"},
             {"-", "Operador aritmetico resta", "48", "-"},
             {"*", "Operador aritmetico producto", "49", "*"},
             {"/", "Operador artimetico cociente", "49", "/"},
@@ -692,7 +692,6 @@ public class Lexico {
                     cadenaAnalizada.setLexema(lstPalabras.get(i));
                     cadenaAnalizada.setNombreToken(getConjuntoTokensFijos()[token][1]);
                     cadenaAnalizada.setNumToken(Integer.parseInt(getConjuntoTokensFijos()[token][2]));
-
                     automata = false;
                     break;
 

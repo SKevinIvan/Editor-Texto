@@ -1304,12 +1304,15 @@ public final class EditorPlanetProgramming extends javax.swing.JFrame {
         nuevo();
     }//GEN-LAST:event_btnNuevoActionPerformed
 
+    public static ArrayList<Errores> lstError;
     private void btnAbrirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAbrirActionPerformed
         setCursor(new Cursor(Cursor.WAIT_CURSOR));
         abrir();
         if (archivo) {
+            ArrayList<Errores> lsrror = new ArrayList<>();
+            lstError = lsrror;
             posicionC = txtPanelEditando.getCaretPosition();
-             formato();
+            formato();
             try {
                 txtPanelEditando.setCaretPosition(posicionC);
             } catch (Exception e) {
@@ -1460,7 +1463,7 @@ public final class EditorPlanetProgramming extends javax.swing.JFrame {
 
     private void itemSemanticoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_itemSemanticoActionPerformed
         crearPestaniaSemantico();
-         semantico();
+        semantico();
     }//GEN-LAST:event_itemSemanticoActionPerformed
 
     private void itemOptmizacionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_itemOptmizacionActionPerformed
@@ -2985,7 +2988,7 @@ public final class EditorPlanetProgramming extends javax.swing.JFrame {
             setTitle("Editor Planet");
             archivo = false;
             rutaArchivo = "";
-
+            lstError = null;
             //habilita MenuOpciones
             CtrlInterfaz.habilita(true, btnAbrir, btnNuevo);
             //Deshabilita MenuOpciones
@@ -3088,12 +3091,24 @@ public final class EditorPlanetProgramming extends javax.swing.JFrame {
                     || lexemas.get(p).getNumToken() == 84) {
                 errora = p;
                 bError = true;
-                break;
+                Errores e = new Errores();
+                for (int j = 0; j < analisisLexico.getConjuntoErrores().length; j++) {
+
+                    if (String.valueOf(lexemas.get(p).getNumToken()).equals(analisisLexico.getConjuntoErrores()[j][1])) {
+                        e.setError("Error de lexemas");
+                        e.setIdError(analisisLexico.getConjuntoErrores()[j][2]);
+                        e.setDescripcion(analisisLexico.getConjuntoErrores()[j][0]);
+                    }
+                }
+                e.setLineaCodigo(lexemas.get(errora).getRenglon());
+                e.setTipo("ERROR LEXICO");
+                lstError.add(e);
             }
         }
         if (bError) {
             TextPaneTest.appendToPane(txtPanelSalida, "\nLexicamente incorrecto... " + lexemas.get(errora).getNombreToken()
                     + " por " + lexemas.get(errora).getLexema() + " en la linea " + lexemas.get(errora).getRenglon(), cRojo);
+
         } else {
             TextPaneTest.appendToPane(txtPanelSalida, "\nLexicamente correcto...", cVerde);
         }
@@ -3154,10 +3169,7 @@ public final class EditorPlanetProgramming extends javax.swing.JFrame {
     }
 
     public void semantico() {
-        
-        
-        
-        
+
         CtrlInterfaz.habilita(true, itemGuardar, itemLexico, itemSintactico, itemSemantico, itemIntermedio);
         CtrlInterfaz.habilita(false, itemOptmizacion, itemObjeto);
         CtrlInterfaz.habilita(true, checkEditando, checkCompilando, checkSalida, checkLexico, checkSintactico, checkSemantico, checkIntermedio);
@@ -3194,6 +3206,8 @@ public final class EditorPlanetProgramming extends javax.swing.JFrame {
     HiloTemporizador c;
 
     public void compilar() {
+        ArrayList<Errores> lsErr = new ArrayList<>();
+        lstError = lsErr;
         c = new HiloTemporizador(0, 0, 0);
         c.start();
         setCursor(new Cursor(Cursor.WAIT_CURSOR));
@@ -3218,6 +3232,20 @@ public final class EditorPlanetProgramming extends javax.swing.JFrame {
             Mensaje.advertencia(this, "El analisis sintactico no se puede realizar, debido a que hay un error léxico");
             TextPaneTest.appendToPane(txtPanelSalida, "\nError al realizar analisis sinctatico... (tiempo total: " + c.min + " minutos " + c.seg + " segundos)", cRojo);
 
+        }
+        String errores = "";
+        for (int j = 0; j < EditorPlanetProgramming.lstError.size(); j++) {
+            errores += EditorPlanetProgramming.lstError.get(j).getIdError() + " ::\t" + EditorPlanetProgramming.lstError.get(j).getTipo() + " ::\t" + EditorPlanetProgramming.lstError.get(j).getDescripcion() + " ::\tEn la línea " + EditorPlanetProgramming.lstError.get(j).getLineaCodigo() + "\n";
+        }
+        if (errores.isEmpty()) {
+            TextPaneTest.appendToPane(txtPanelCompilando, "\n" + errores, cPalabrasReservadas);
+            TextPaneTest.ponerEstilo(txtPanelCompilando, "NEGRITAS", "-----------------------------------------------------------------------------------------------------------------\n"
+                    + "COMPILACIÓN EXITOSA ");
+
+        } else {
+            TextPaneTest.ponerEstilo(txtPanelCompilando, "NEGRITAS", "-----------------------------------------------------------------------------------------------------------------\n"
+                    + "HAY ERRORES DE COMPILACION ");
+            TextPaneTest.appendToPane(txtPanelCompilando, "\n" + errores, cNegro);
         }
 
     }

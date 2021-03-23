@@ -32,7 +32,7 @@ public class Semantico {
                 int num = Integer.parseInt(s);
                 //Es un operando, por lo tanto se inserta en la cola Resultado
                 pResultado.inserta(new Nodo(s, -1), null);
-            } catch (Exception e) {
+            } catch (NumberFormatException e) {
                 //Es un operador
                 if (s.equals(")")) {
 
@@ -88,77 +88,1537 @@ public class Semantico {
         return pResultado;
     }
 
-    public int operaciones(ColaD pResultado) {
+    public Object operaciones(ColaD pResultado) {
         PilaD pOperacion = new PilaD();
-        int resultado = 0;
+        Object resultado = 0;
+        String res[];
         while (pResultado.getF() != null) {
             String s = pResultado.elimina(null).getS();
             if (isOperador(s)) {
                 String op2 = pOperacion.elimina(null).getS();
                 String op1 = pOperacion.elimina(null).getS();
-                String res[];
-                res = expresionFinal(op1, op2, s);
-                if ("TRUE".equals(res[0])) {
-                    pOperacion.inserta(new Nodo(String.valueOf(res[1]), -1), null);
+
+                String tipoOp1 = tipoDato(op1);
+                String tipoOp2 = tipoDato(op2);
+
+                if (!"NOT".equals(tablaResultados(tipoOp1, tipoOp2, s))) {
+
+                    res = expresionFinal(op1, op2, s, tipoOp1, tipoOp2);
+                    if ("TRUE".equals(res[0])) {
+                        pOperacion.inserta(new Nodo(String.valueOf(res[1]), -1), null);
+
+                        resultado = res[1];
+                    } else {
+                        //ERROR NO SE PUEDE REALIZAR LA OPERACION
+                        System.out.println("Error de operacion");
+                        break;
+                    }
+
                 } else {
+                    //MARCAR UN ERROR DE INCOMPATIBILIDAD DE OPERACIONES
+                    System.out.println("Compatilibidad de operaciones err");
                     break;
-                    //No se pudo realizar la operacion
-                    //s[3];
                 }
             } else {
                 pOperacion.inserta(new Nodo(s, -1), null);
             }
         }
+
         return resultado;
 
     }
 
     public String tipoDato(String s) {
-        String tipoDato;
 
         try {
-            byte S0 = Byte.parseByte(s);
-            return "BYTE";
-        } catch (Exception e) {
+            int S1 = Integer.parseInt(s);
+            return "ENTERO";
+        } catch (NumberFormatException e2) {
             try {
-                short S01 = Short.parseShort(s);
-                return "SHORT";
-            } catch (Exception e9) {
-                try {
-                    int S1 = Integer.parseInt(s);
-                    return "ENTERO";
-                } catch (NumberFormatException e2) {
-                    try {
-                        float S2 = Float.parseFloat(s);
-                        return "FLOTANTE";
-                    } catch (Exception e3) {
-                        try {
-                            double S3 = Double.parseDouble(s);
-                            return "DOUBLE";
-                        } catch (Exception e4) {
-                            try {
-                                long S4 = Long.parseLong(s);
-                                return "LONG";
-                            } catch (Exception e5) {
-                                try {
-                                    s.length();
-                                } catch (Exception e6) {
-
-                                }
-                            }
-                        }
-                    }
+                float S2 = Float.parseFloat(s);
+                return "FLOTANTE";
+            } catch (NumberFormatException e3) {
+                if (s.equals("true") || s.equals("false")) {
+                    return "BOOLEANO";
+                } else {
+                    return "STRING";
                 }
             }
-
         }
-        return s;
     }
 
-    public static Object tablaResultados(Object obj1, Object obj2) {
-        boolean bandera = false;
+    public static String tablaResultados(String tipoDato1, String tipoDato2, String operador) {
+        String bandera = "BOOLEANO";
+        if (tipoDato1.equals("ENTERO") && tipoDato2.equals("ENTERO")) {
+            switch (operador) {
+                case "+":
+                    return "ENTERO";
+                case "-":
+                    return "ENTERO";
+                case "*":
+                    return "ENTERO";
+                case "/":
+                    return "FLOTANTE";
+                case "%":
+                    return "ENTERO";
+                case "^":
+                    return "FLOTANTE";
+                case ">":
+                case "<":
+                case ">=":
+                case "<=":
+                case "!=":
+                case "==":
+                    return "BOOLEANO";
+                case "&&":
+                case "||":
+                    return "NOT";
+                default:
+                    return "NOT";
+            }
+
+        } else if (tipoDato1.equals("ENTERO") && tipoDato2.equals("FLOTANTE")) {
+            switch (operador) {
+                case "+":
+                    return "FLOTANTE";
+                case "-":
+                    return "FLOTANTE";
+                case "*":
+                    return "FLOTANTE";
+                case "/":
+                    return "FLOTANTE";
+                case "%":
+                    return "FLOTANTE";
+                case "^":
+                    return "FLOTANTE";
+                case ">":
+                case "<":
+                case ">=":
+                case "<=":
+                case "!=":
+                case "==":
+                    return "BOOLEANO";
+                case "&&":
+                case "||":
+                    return "NOT";
+                default:
+                    return "NOT";
+            }
+
+        } else if (tipoDato1.equals("ENTERO") && tipoDato2.equals("STRING")) {
+            switch (operador) {
+                case "+":
+                    return "NOT";
+                case "-":
+                    return "NOT";
+                case "*":
+                    return "NOT";
+                case "/":
+                    return "NOT";
+                case "%":
+                    return "NOT";
+                case "^":
+                    return "NOT";
+                case ">":
+                case "<":
+                case ">=":
+                case "<=":
+                case "!=":
+                case "==":
+                    return "NOT";
+                case "&&":
+                case "||":
+                    return "NOT";
+                default:
+                    return "NOT";
+            }
+
+        } else if (tipoDato1.equals("ENTERO") && tipoDato2.equals("BOOLEANO")) {
+            switch (operador) {
+                case "+":
+                    return "NOT";
+                case "-":
+                    return "NOT";
+                case "*":
+                    return "NOT";
+                case "/":
+                    return "NOT";
+                case "%":
+                    return "NOT";
+                case "^":
+                    return "NOT";
+                case ">":
+                case "<":
+                case ">=":
+                case "<=":
+                case "!=":
+                case "==":
+                    return "NOT";
+                case "&&":
+                case "||":
+                    return "NOT";
+                default:
+                    return "NOT";
+            }
+        } else if (tipoDato1.equals("FLOTANTE") && tipoDato2.equals("ENTERO")) {
+            switch (operador) {
+                case "+":
+                    return "FLOTANTE";
+                case "-":
+                    return "FLOTANTE";
+                case "*":
+                    return "FLOTANTE";
+                case "/":
+                    return "FLOTANTE";
+                case "%":
+                    return "FLOTANTE";
+                case "^":
+                    return "FLOTANTE";
+                case ">":
+                case "<":
+                case ">=":
+                case "<=":
+                case "!=":
+                case "==":
+                    return "BOOLEANO";
+                case "&&":
+                case "||":
+                    return "NOT";
+                default:
+                    return "NOT";
+            }
+        } else if (tipoDato1.equals("FLOTANTE") && tipoDato2.equals("FLOTANTE")) {
+            switch (operador) {
+                case "+":
+                    return "FLOTANTE";
+                case "-":
+                    return "FLOTANTE";
+                case "*":
+                    return "FLOTANTE";
+                case "/":
+                    return "FLOTANTE";
+                case "%":
+                    return "FLOTANTE";
+                case "^":
+                    return "FLOTANTE";
+                case ">":
+                case "<":
+                case ">=":
+                case "<=":
+                case "!=":
+                case "==":
+                    return "BOOLEANO";
+                case "&&":
+                case "||":
+                    return "NOT";
+                default:
+                    return "NOT";
+            }
+
+        } else if (tipoDato1.equals("FLOTANTE") && tipoDato2.equals("STRING")) {
+            switch (operador) {
+                case "+":
+                    return "NOT";
+                case "-":
+                    return "NOT";
+                case "*":
+                    return "NOT";
+                case "/":
+                    return "NOT";
+                case "%":
+                    return "NOT";
+                case "^":
+                    return "NOT";
+                case ">":
+                case "<":
+                case ">=":
+                case "<=":
+                case "!=":
+                case "==":
+                    return "NOT";
+                case "&&":
+                case "||":
+                    return "NOT";
+                default:
+                    return "NOT";
+            }
+        } else if (tipoDato1.equals("FLOTANTE") && tipoDato2.equals("BOOLEAN")) {
+            switch (operador) {
+                case "+":
+                    return "NOT";
+                case "-":
+                    return "NOT";
+                case "*":
+                    return "NOT";
+                case "/":
+                    return "NOT";
+                case "%":
+                    return "NOT";
+                case "^":
+                    return "NOT";
+                case ">":
+                case "<":
+                case ">=":
+                case "<=":
+                case "!=":
+                case "==":
+                    return "NOT";
+                case "&&":
+                case "||":
+                    return "NOT";
+                default:
+                    return "NOT";
+            }
+        } else if (tipoDato1.equals("STRING") && tipoDato2.equals("ENTERO")) {
+            switch (operador) {
+                case "+":
+                    return "STRING";
+                case "-":
+                    return "NOT";
+                case "*":
+                    return "NOT";
+                case "/":
+                    return "NOT";
+                case "%":
+                    return "NOT";
+                case "^":
+                    return "NOT";
+                case ">":
+                case "<":
+                case ">=":
+                case "<=":
+                case "!=":
+                case "==":
+                    return "NOT";
+                case "&&":
+                case "||":
+                    return "NOT";
+                default:
+                    return "NOT";
+            }
+        } else if (tipoDato1.equals("STRING") && tipoDato2.equals("FLOTANTE")) {
+            switch (operador) {
+                case "+":
+                    return "STRING";
+                case "-":
+                    return "NOT";
+                case "*":
+                    return "NOT";
+                case "/":
+                    return "NOT";
+                case "%":
+                    return "NOT";
+                case "^":
+                    return "NOT";
+                case ">":
+                case "<":
+                case ">=":
+                case "<=":
+                case "!=":
+                case "==":
+                    return "NOT";
+                case "&&":
+                case "||":
+                    return "NOT";
+                default:
+                    return "NOT";
+            }
+        } else if (tipoDato1.equals("STRING") && tipoDato2.equals("STRING")) {
+            switch (operador) {
+                case "+":
+                    return "STRING";
+                case "-":
+                    return "NOT";
+                case "*":
+                    return "NOT";
+                case "/":
+                    return "NOT";
+                case "%":
+                    return "NOT";
+                case "^":
+                    return "NOT";
+                case ">":
+                case "<":
+                case ">=":
+                case "<=":
+                case "!=":
+                case "==":
+                    return "BOOLEANO";
+                case "&&":
+                case "||":
+                    return "NOT";
+                default:
+                    return "NOT";
+            }
+        } else if (tipoDato1.equals("STRING") && tipoDato2.equals("BOOLEANO")) {
+            switch (operador) {
+                case "+":
+                    return "STRING";
+                case "-":
+                    return "NOT";
+                case "*":
+                    return "NOT";
+                case "/":
+                    return "NOT";
+                case "%":
+                    return "NOT";
+                case "^":
+                    return "NOT";
+                case ">":
+                case "<":
+                case ">=":
+                case "<=":
+                case "!=":
+                case "==":
+                    return "NOT";
+                case "&&":
+                case "||":
+                    return "NOT";
+                default:
+                    return "NOT";
+            }
+        } else if (tipoDato1.equals("BOOLEANO") && tipoDato2.equals("ENTERO")) {
+            switch (operador) {
+                case "+":
+                    return "NOT";
+                case "-":
+                    return "NOT";
+                case "*":
+                    return "NOT";
+                case "/":
+                    return "NOT";
+                case "%":
+                    return "NOT";
+                case "^":
+                    return "NOT";
+                case ">":
+                case "<":
+                case ">=":
+                case "<=":
+                case "!=":
+                case "==":
+                    return "NOT";
+                case "&&":
+                case "||":
+                    return "NOT";
+                default:
+                    return "NOT";
+            }
+        } else if (tipoDato1.equals("BOOLEANO") && tipoDato2.equals("FLOTANTE")) {
+            switch (operador) {
+                case "+":
+                    return "NOT";
+                case "-":
+                    return "NOT";
+                case "*":
+                    return "NOT";
+                case "/":
+                    return "NOT";
+                case "%":
+                    return "NOT";
+                case "^":
+                    return "NOT";
+                case ">":
+                case "<":
+                case ">=":
+                case "<=":
+                case "!=":
+                case "==":
+                    return "NOT";
+                case "&&":
+                case "||":
+                    return "NOT";
+                default:
+                    return "NOT";
+            }
+        } else if (tipoDato1.equals("BOOLEANO") && tipoDato2.equals("STRING")) {
+            switch (operador) {
+                case "+":
+                    return "NOT";
+                case "-":
+                    return "NOT";
+                case "*":
+                    return "NOT";
+                case "/":
+                    return "NOT";
+                case "%":
+                    return "NOT";
+                case "^":
+                    return "NOT";
+                case ">":
+                case "<":
+                case ">=":
+                case "<=":
+                case "!=":
+                case "==":
+                    return "NOT";
+                case "&&":
+                case "||":
+                    return "NOT";
+                default:
+                    return "NOT";
+            }
+        } else if (tipoDato1.equals("BOOLEANO") && tipoDato2.equals("BOOLEANO")) {
+            switch (operador) {
+                case "+":
+                    return "NOT";
+                case "-":
+                    return "NOT";
+                case "*":
+                    return "NOT";
+                case "/":
+                    return "NOT";
+                case "%":
+                    return "NOT";
+                case "^":
+                    return "NOT";
+                case ">":
+                case "<":
+                case ">=":
+                case "<=":
+                case "!=":
+                case "==":
+                    return "BOOLEANO";
+                case "&&":
+                case "||":
+                    return "NOT";
+                default:
+                    return "NOT";
+            }
+        }
 
         return bandera;
+    }
+
+    public String[] expresionFinal(String op1, String op2, String operador, String tipoDato1, String tipoDato2) {
+        String resultados[] = new String[3];
+
+        if (tipoDato1.equals("ENTERO") && tipoDato2.equals("ENTERO")) {
+            switch (operador) {
+                case "+":
+                    try {
+                        int var1 = Integer.parseInt(op1);
+                        int var2 = Integer.parseInt(op2);
+
+                        resultados[1] = (var1 + var2) + "";
+                        resultados[0] = "TRUE";
+                    } catch (NumberFormatException e) {
+                        resultados[0] = "FALSE";
+                    }
+                    break;
+                case "-":
+                    try {
+                        int var1 = Integer.parseInt(op1);
+                        int var2 = Integer.parseInt(op2);
+
+                        resultados[1] = (var1 - var2) + "";
+                        resultados[0] = "TRUE";
+                    } catch (NumberFormatException e) {
+                        resultados[0] = "FALSE";
+                    }
+                    break;
+                case "*":
+                    try {
+                        int var1 = Integer.parseInt(op1);
+                        int var2 = Integer.parseInt(op2);
+
+                        resultados[1] = (var1 * var2) + "";
+                        resultados[0] = "TRUE";
+                    } catch (NumberFormatException e) {
+                        resultados[0] = "FALSE";
+                    }
+                    break;
+                case "/":
+                    try {
+                        int var1 = Integer.parseInt(op1);
+                        int var2 = Integer.parseInt(op2);
+
+                        resultados[1] = (var1 / var2) + "";
+                        resultados[0] = "TRUE";
+                    } catch (NumberFormatException e) {
+                        resultados[0] = "FALSE";
+                    }
+                    break;
+                case "^":
+                    try {
+                        int var1 = Integer.parseInt(op1);
+                        int var2 = Integer.parseInt(op2);
+
+                        resultados[1] = Math.pow(var2, var1) + "";
+                        resultados[0] = "TRUE";
+                    } catch (NumberFormatException e) {
+                        resultados[0] = "FALSE";
+                    }
+                    break;
+                case "%":
+                    try {
+                        int var1 = Integer.parseInt(op1);
+                        int var2 = Integer.parseInt(op2);
+
+                        resultados[1] = (var1 % var2) + "";
+                        resultados[0] = "TRUE";
+                    } catch (NumberFormatException e) {
+                        resultados[0] = "FALSE";
+                    }
+                    break;
+                case ">":
+                    try {
+                        int var1 = Integer.parseInt(op1);
+                        int var2 = Integer.parseInt(op2);
+
+                        resultados[1] = (var1 > var2) + "";
+                        resultados[0] = "TRUE";
+                    } catch (NumberFormatException e) {
+                        resultados[0] = "FALSE";
+                    }
+                    break;
+                case ">=":
+                    try {
+                        int var1 = Integer.parseInt(op1);
+                        int var2 = Integer.parseInt(op2);
+
+                        resultados[1] = (var1 >= var2) + "";
+                        resultados[0] = "TRUE";
+                    } catch (NumberFormatException e) {
+                        resultados[0] = "FALSE";
+                    }
+                    break;
+                case "<":
+                    try {
+                        int var1 = Integer.parseInt(op1);
+                        int var2 = Integer.parseInt(op2);
+
+                        resultados[1] = (var1 < var2) + "";
+                        resultados[0] = "TRUE";
+                    } catch (NumberFormatException e) {
+                        resultados[0] = "FALSE";
+                    }
+                    break;
+                case "<=":
+                    try {
+                        int var1 = Integer.parseInt(op1);
+                        int var2 = Integer.parseInt(op2);
+
+                        resultados[1] = (var1 <= var2) + "";
+                        resultados[0] = "TRUE";
+                    } catch (NumberFormatException e) {
+                        resultados[0] = "FALSE";
+                    }
+                    break;
+                case "==":
+                    try {
+                        int var1 = Integer.parseInt(op1);
+                        int var2 = Integer.parseInt(op2);
+
+                        resultados[1] = (var1 == var2) + "";
+                        resultados[0] = "TRUE";
+                    } catch (NumberFormatException e) {
+                        resultados[0] = "FALSE";
+                    }
+                    break;
+                case "!=":
+                    try {
+                        int var1 = Integer.parseInt(op1);
+                        int var2 = Integer.parseInt(op2);
+
+                        resultados[1] = (var1 != var2) + "";
+                        resultados[0] = "TRUE";
+                    } catch (NumberFormatException e) {
+                        resultados[0] = "FALSE";
+                    }
+                    break;
+                case "&&":
+                case "||":
+                    resultados[0] = "FALSE";
+                    break;
+                default:
+                    resultados[0] = "FALSE";
+                    break;
+            }
+        } else if (tipoDato1.equals("ENTERO") && tipoDato2.equals("FLOTANTE")) {
+            switch (operador) {
+                case "+":
+                    try {
+                        int var1 = Integer.parseInt(op1);
+                        float var2 = Float.parseFloat(op2);
+
+                        resultados[1] = (var1 + var2) + "";
+                        resultados[0] = "TRUE";
+                    } catch (NumberFormatException e) {
+                        resultados[0] = "FALSE";
+                    }
+                    break;
+                case "-":
+                    try {
+                        int var1 = Integer.parseInt(op1);
+                        float var2 = Float.parseFloat(op2);
+
+                        resultados[1] = (var1 - var2) + "";
+                        resultados[0] = "TRUE";
+                    } catch (NumberFormatException e) {
+                        resultados[0] = "FALSE";
+                    }
+                    break;
+                case "*":
+                    try {
+                        int var1 = Integer.parseInt(op1);
+                        float var2 = Float.parseFloat(op2);
+
+                        resultados[1] = (var1 * var2) + "";
+                        resultados[0] = "TRUE";
+                    } catch (NumberFormatException e) {
+                        resultados[0] = "FALSE";
+                    }
+                    break;
+                case "/":
+                    try {
+                        int var1 = Integer.parseInt(op1);
+                        float var2 = Float.parseFloat(op2);
+
+                        resultados[1] = (var1 / var2) + "";
+                        resultados[0] = "TRUE";
+                    } catch (NumberFormatException e) {
+                        resultados[0] = "FALSE";
+                    }
+                    break;
+                case "^":
+                    try {
+                        int var1 = Integer.parseInt(op1);
+                        float var2 = Float.parseFloat(op2);
+
+                        resultados[1] = Math.pow(var2, var1) + "";
+                        resultados[0] = "TRUE";
+                    } catch (NumberFormatException e) {
+                        resultados[0] = "FALSE";
+                    }
+                    break;
+                case "%":
+                    try {
+                        int var1 = Integer.parseInt(op1);
+                        float var2 = Float.parseFloat(op2);
+
+                        resultados[1] = var1 % var2 + "";
+                        resultados[0] = "TRUE";
+                    } catch (NumberFormatException e) {
+                        resultados[0] = "FALSE";
+                    }
+                    break;
+                case ">":
+                    try {
+                        int var1 = Integer.parseInt(op1);
+                        float var2 = Float.parseFloat(op2);
+
+                        resultados[1] = (var1 > var2) + "";
+                        resultados[0] = "TRUE";
+                    } catch (NumberFormatException e) {
+                        resultados[0] = "FALSE";
+                    }
+                    break;
+                case ">=":
+                    try {
+                        int var1 = Integer.parseInt(op1);
+                        float var2 = Float.parseFloat(op2);
+
+                        resultados[1] = (var1 >= var2) + "";
+                        resultados[0] = "TRUE";
+                    } catch (NumberFormatException e) {
+                        resultados[0] = "FALSE";
+                    }
+                    break;
+                case "<":
+                    try {
+                        int var1 = Integer.parseInt(op1);
+                        float var2 = Float.parseFloat(op2);
+
+                        resultados[1] = (var1 < var2) + "";
+                        resultados[0] = "TRUE";
+                    } catch (NumberFormatException e) {
+                        resultados[0] = "FALSE";
+                    }
+                    break;
+                case "<=":
+                    try {
+                        int var1 = Integer.parseInt(op1);
+                        float var2 = Float.parseFloat(op2);
+
+                        resultados[1] = (var1 <= var2) + "";
+                        resultados[0] = "TRUE";
+                    } catch (NumberFormatException e) {
+                        resultados[0] = "FALSE";
+                    }
+                    break;
+                case "==":
+                    try {
+                        int var1 = Integer.parseInt(op1);
+                        float var2 = Float.parseFloat(op2);
+
+                        resultados[1] = (var1 == var2) + "";
+                        resultados[0] = "TRUE";
+                    } catch (NumberFormatException e) {
+                        resultados[0] = "FALSE";
+                    }
+                    break;
+                case "!=":
+                    try {
+                        int var1 = Integer.parseInt(op1);
+                        float var2 = Float.parseFloat(op2);
+
+                        resultados[1] = (var1 != var2) + "";
+                        resultados[0] = "TRUE";
+                    } catch (NumberFormatException e) {
+                        resultados[0] = "FALSE";
+                    }
+                    break;
+                case "&&":
+                case "||":
+                    resultados[0] = "FALSE";
+                    break;
+                default:
+                    resultados[0] = "FALSE";
+                    break;
+            }
+
+        } else if (tipoDato1.equals("ENTERO") && tipoDato2.equals("STRING")) {
+            switch (operador) {
+                case "+":
+                case "-":
+                case "*":
+                case "/":
+                case "^":
+                case "%":
+                case ">":
+                case ">=":
+                case "<":
+                case "<=":
+                case "==":
+                case "!=":
+                case "&&":
+                case "||":
+                    resultados[0] = "FALSE";
+                    break;
+                default:
+                    resultados[0] = "FALSE";
+                    break;
+            }
+
+        } else if (tipoDato1.equals("ENTERO") && tipoDato2.equals("BOOLEANO")) {
+            switch (operador) {
+                case "+":
+                case "-":
+                case "*":
+                case "/":
+                case "^":
+                case "%":
+                case ">":
+                case ">=":
+                case "<":
+                case "<=":
+                case "==":
+                case "!=":
+                case "&&":
+                case "||":
+                    resultados[0] = "FALSE";
+                    break;
+                default:
+                    resultados[0] = "FALSE";
+                    break;
+            }
+
+        } else if (tipoDato1.equals("FLOTANTE") && tipoDato2.equals("ENTERO")) {
+            switch (operador) {
+                case "+":
+                    try {
+                        float var1 = Float.parseFloat(op1);
+                        int var2 = Integer.parseInt(op2);
+
+                        resultados[1] = (var1 + var2) + "";
+                        resultados[0] = "TRUE";
+                    } catch (NumberFormatException e) {
+                        resultados[0] = "FALSE";
+                    }
+                    break;
+                case "-":
+                    try {
+                        float var1 = Float.parseFloat(op1);
+                        int var2 = Integer.parseInt(op2);
+
+                        resultados[1] = (var1 - var2) + "";
+                        resultados[0] = "TRUE";
+                    } catch (NumberFormatException e) {
+                        resultados[0] = "FALSE";
+                    }
+                    break;
+                case "*":
+                    try {
+                        float var1 = Float.parseFloat(op1);
+                        int var2 = Integer.parseInt(op2);
+
+                        resultados[1] = (var1 * var2) + "";
+                        resultados[0] = "TRUE";
+                    } catch (NumberFormatException e) {
+                        resultados[0] = "FALSE";
+                    }
+                    break;
+                case "/":
+                    try {
+                        float var1 = Float.parseFloat(op1);
+                        int var2 = Integer.parseInt(op2);
+
+                        resultados[1] = (var1 / var2) + "";
+                        resultados[0] = "TRUE";
+                    } catch (NumberFormatException e) {
+                        resultados[0] = "FALSE";
+                    }
+                    break;
+                case "^":
+                    try {
+                        float var1 = Float.parseFloat(op1);
+                        int var2 = Integer.parseInt(op2);
+
+                        resultados[1] = Math.pow(var2, var1) + "";
+                        resultados[0] = "TRUE";
+                    } catch (NumberFormatException e) {
+                        resultados[0] = "FALSE";
+                    }
+                    break;
+                case "%":
+                    try {
+                        float var1 = Float.parseFloat(op1);
+                        int var2 = Integer.parseInt(op2);
+
+                        resultados[1] = (var1 % var2) + "";
+                        resultados[0] = "TRUE";
+                    } catch (NumberFormatException e) {
+                        resultados[0] = "FALSE";
+                    }
+                    break;
+                case ">":
+                    try {
+                        float var1 = Float.parseFloat(op1);
+                        int var2 = Integer.parseInt(op2);
+
+                        resultados[1] = (var1 > var2) + "";
+                        resultados[0] = "TRUE";
+                    } catch (NumberFormatException e) {
+                        resultados[0] = "FALSE";
+                    }
+                    break;
+                case ">=":
+                    try {
+                        float var1 = Float.parseFloat(op1);
+                        int var2 = Integer.parseInt(op2);
+
+                        resultados[1] = (var1 >= var2) + "";
+                        resultados[0] = "TRUE";
+                    } catch (NumberFormatException e) {
+                        resultados[0] = "FALSE";
+                    }
+                    break;
+                case "<":
+                    try {
+                        float var1 = Float.parseFloat(op1);
+                        int var2 = Integer.parseInt(op2);
+
+                        resultados[1] = (var1 < var2) + "";
+                        resultados[0] = "TRUE";
+                    } catch (NumberFormatException e) {
+                        resultados[0] = "FALSE";
+                    }
+                    break;
+                case "<=":
+                    try {
+                        float var1 = Float.parseFloat(op1);
+                        int var2 = Integer.parseInt(op2);
+
+                        resultados[1] = (var1 <= var2) + "";
+                        resultados[0] = "TRUE";
+                    } catch (NumberFormatException e) {
+                        resultados[0] = "FALSE";
+                    }
+                    break;
+                case "==":
+                    try {
+                        float var1 = Float.parseFloat(op1);
+                        int var2 = Integer.parseInt(op2);
+
+                        resultados[1] = (var1 == var2) + "";
+                        resultados[0] = "TRUE";
+                    } catch (NumberFormatException e) {
+                        resultados[0] = "FALSE";
+                    }
+                    break;
+                case "!=":
+                    try {
+                        float var1 = Float.parseFloat(op1);
+                        int var2 = Integer.parseInt(op2);
+
+                        resultados[1] = (var1 != var2) + "";
+                        resultados[0] = "TRUE";
+                    } catch (NumberFormatException e) {
+                        resultados[0] = "FALSE";
+                    }
+                    break;
+                case "&&":
+                case "||":
+                    resultados[0] = "FALSE";
+                    break;
+                default:
+                    resultados[0] = "FALSE";
+                    break;
+            }
+
+        } else if (tipoDato1.equals("FLOTANTE") && tipoDato2.equals("FLOTANTE")) {
+            switch (operador) {
+                case "+":
+                    try {
+                        float var1 = Float.parseFloat(op1);
+                        float var2 = Float.parseFloat(op2);
+
+                        resultados[1] = (var1 + var2) + "";
+                        resultados[0] = "TRUE";
+                    } catch (NumberFormatException e) {
+                        resultados[0] = "FALSE";
+                    }
+                    break;
+                case "-":
+                    try {
+                        float var1 = Float.parseFloat(op1);
+                        float var2 = Float.parseFloat(op2);
+
+                        resultados[1] = (var1 - var2) + "";
+                        resultados[0] = "TRUE";
+                    } catch (NumberFormatException e) {
+                        resultados[0] = "FALSE";
+                    }
+                    break;
+                case "*":
+                    try {
+                        float var1 = Float.parseFloat(op1);
+                        float var2 = Float.parseFloat(op2);
+
+                        resultados[1] = (var1 * var2) + "";
+                        resultados[0] = "TRUE";
+                    } catch (NumberFormatException e) {
+                        resultados[0] = "FALSE";
+                    }
+                    break;
+                case "/":
+                    try {
+                        float var1 = Float.parseFloat(op1);
+                        float var2 = Float.parseFloat(op2);
+
+                        resultados[1] = (var1 / var2) + "";
+                        resultados[0] = "TRUE";
+                    } catch (NumberFormatException e) {
+                        resultados[0] = "FALSE";
+                    }
+                    break;
+                case "^":
+                    try {
+                        float var1 = Float.parseFloat(op1);
+                        float var2 = Float.parseFloat(op2);
+
+                        resultados[1] = Math.pow(var2, var1) + "";
+                        resultados[0] = "TRUE";
+                    } catch (NumberFormatException e) {
+                        resultados[0] = "FALSE";
+                    }
+                    break;
+                case "%":
+                    try {
+                        float var1 = Float.parseFloat(op1);
+                        float var2 = Float.parseFloat(op2);
+
+                        resultados[1] = (var1 % var2) + "";
+                        resultados[0] = "TRUE";
+                    } catch (NumberFormatException e) {
+                        resultados[0] = "FALSE";
+                    }
+                    break;
+                case ">":
+                    try {
+                        float var1 = Float.parseFloat(op1);
+                        float var2 = Float.parseFloat(op2);
+
+                        resultados[1] = (var1 > var2) + "";
+                        resultados[0] = "TRUE";
+                    } catch (NumberFormatException e) {
+                        resultados[0] = "FALSE";
+                    }
+                    break;
+                case ">=":
+                    try {
+                        float var1 = Float.parseFloat(op1);
+                        float var2 = Float.parseFloat(op2);
+
+                        resultados[1] = (var1 >= var2) + "";
+                        resultados[0] = "TRUE";
+                    } catch (NumberFormatException e) {
+                        resultados[0] = "FALSE";
+                    }
+                    break;
+                case "<":
+                    try {
+                        float var1 = Float.parseFloat(op1);
+                        float var2 = Float.parseFloat(op2);
+
+                        resultados[1] = (var1 < var2) + "";
+                        resultados[0] = "TRUE";
+                    } catch (NumberFormatException e) {
+                        resultados[0] = "FALSE";
+                    }
+                    break;
+                case "<=":
+                    try {
+                        float var1 = Float.parseFloat(op1);
+                        float var2 = Float.parseFloat(op2);
+
+                        resultados[1] = (var1 <= var2) + "";
+                        resultados[0] = "TRUE";
+                    } catch (NumberFormatException e) {
+                        resultados[0] = "FALSE";
+                    }
+                    break;
+                case "==":
+                    try {
+                        float var1 = Float.parseFloat(op1);
+                        float var2 = Float.parseFloat(op2);
+
+                        resultados[1] = (var1 == var2) + "";
+                        resultados[0] = "TRUE";
+                    } catch (NumberFormatException e) {
+                        resultados[0] = "FALSE";
+                    }
+                    break;
+                case "!=":
+                    try {
+                        float var1 = Float.parseFloat(op1);
+                        float var2 = Float.parseFloat(op2);
+
+                        resultados[1] = (var1 != var2) + "";
+                        resultados[0] = "TRUE";
+                    } catch (NumberFormatException e) {
+                        resultados[0] = "FALSE";
+                    }
+                    break;
+                case "&&":
+                case "||":
+                    resultados[0] = "FALSE";
+                    break;
+                default:
+                    resultados[0] = "FALSE";
+                    break;
+            }
+
+        } else if (tipoDato1.equals("FLOTANTE") && tipoDato2.equals("STRING")) {
+            switch (operador) {
+                case "+":
+                case "-":
+                case "*":
+                case "/":
+                case "^":
+                case "%":
+                case ">":
+                case ">=":
+                case "<":
+                case "<=":
+                case "==":
+                case "!=":
+                case "&&":
+                case "||":
+                    resultados[0] = "FALSE";
+                    break;
+                default:
+                    resultados[0] = "FALSE";
+                    break;
+            }
+
+        } else if (tipoDato1.equals("FLOTANTE") && tipoDato2.equals("BOOLEANO")) {
+            switch (operador) {
+                case "+":
+                case "-":
+                case "*":
+                case "/":
+                case "^":
+                case "%":
+                case ">":
+                case ">=":
+                case "<":
+                case "<=":
+                case "==":
+                case "!=":
+                case "&&":
+                case "||":
+                    resultados[0] = "FALSE";
+                    break;
+                default:
+                    resultados[0] = "FALSE";
+                    break;
+            }
+
+        } else if (tipoDato1.equals("STRING") && tipoDato2.equals("ENTERO")) {
+            switch (operador) {
+                case "+":
+                    try {
+                        String var1 = String.valueOf(op1);
+                        int var2 = Integer.parseInt(op2);
+
+                        resultados[1] = var1 + var2 + "";
+                        resultados[0] = "TRUE";
+                    } catch (NumberFormatException e) {
+                        resultados[0] = "FALSE";
+                    }
+                    break;
+                case "-":
+                case "*":
+                case "/":
+                case "^":
+                case "%":
+                case ">":
+                case ">=":
+                case "<":
+                case "<=":
+                case "==":
+                case "!=":
+                case "&&":
+                case "||":
+                    resultados[0] = "FALSE";
+                    break;
+                default:
+                    resultados[0] = "FALSE";
+                    break;
+            }
+
+        } else if (tipoDato1.equals("STRING") && tipoDato2.equals("FLOTANTE")) {
+            switch (operador) {
+                case "+":
+                    try {
+                        String var1 = String.valueOf(op1);
+                        float var2 = Float.parseFloat(op2);
+
+                        resultados[1] = var1 + var2 + "";
+                        resultados[0] = "TRUE";
+                    } catch (NumberFormatException e) {
+                        resultados[0] = "FALSE";
+                    }
+                    break;
+                case "-":
+                case "*":
+                case "/":
+                case "^":
+                case "%":
+                case ">":
+                case ">=":
+                case "<":
+                case "<=":
+                case "==":
+                case "!=":
+                case "&&":
+                case "||":
+                    resultados[0] = "FALSE";
+                    break;
+                default:
+                    resultados[0] = "FALSE";
+                    break;
+            }
+
+        } else if (tipoDato1.equals("STRING") && tipoDato2.equals("STRING")) {
+            switch (operador) {
+                case "+":
+                    try {
+                        String var1 = String.valueOf(op1);
+                        String var2 = String.valueOf(op2);
+
+                        resultados[1] = var1 + var2 + "";
+                        resultados[0] = "TRUE";
+                    } catch (Exception e) {
+                        resultados[0] = "FALSE";
+                    }
+                    break;
+                case "-":
+                case "*":
+                case "/":
+                case "^":
+                case "%":
+                case ">":
+                case ">=":
+                case "<":
+                case "<=":
+                    resultados[0] = "FALSE";
+                    break;
+                case "==":
+                    try {
+                        String var1 = String.valueOf(op1);
+                        String var2 = String.valueOf(op2);
+
+                        resultados[1] = (var1.equals(var2)) + "";
+                        resultados[0] = "TRUE";
+                    } catch (Exception e) {
+                        resultados[0] = "FALSE";
+                    }
+                    break;
+                case "!=":
+                    try {
+                        String var1 = String.valueOf(op1);
+                        String var2 = String.valueOf(op2);
+
+                        resultados[1] = (!var1.equals(var2)) + "";
+                        resultados[0] = "TRUE";
+                    } catch (Exception e) {
+                        resultados[0] = "FALSE";
+                    }
+                    break;
+                case "&&":
+                case "||":
+                    resultados[0] = "FALSE";
+                    break;
+                default:
+                    resultados[0] = "FALSE";
+                    break;
+            }
+
+        } else if (tipoDato1.equals("STRING") && tipoDato2.equals("BOOLEANO")) {
+            switch (operador) {
+                case "+":
+                    try {
+                        String var1 = String.valueOf(op1);
+                        boolean var2 = Boolean.parseBoolean(op2);
+
+                        resultados[1] = (var1 + var2) + "";
+                        resultados[0] = "TRUE";
+                    } catch (Exception e) {
+                        resultados[0] = "FALSE";
+                    }
+
+                    break;
+                case "-":
+                case "*":
+                case "/":
+                case "^":
+                case "%":
+                case ">":
+                case ">=":
+                case "<":
+                case "<=":
+                case "==":
+                case "!=":
+                case "&&":
+                case "||":
+                    resultados[0] = "FALSE";
+                    break;
+                default:
+                    resultados[0] = "FALSE";
+                    break;
+            }
+
+        } else if (tipoDato1.equals("BOOLEANO") && tipoDato2.equals("ENTERO")) {
+            switch (operador) {
+                case "+":
+                case "-":
+                case "*":
+                case "/":
+                case "^":
+                case "%":
+                case ">":
+                case ">=":
+                case "<":
+                case "<=":
+                case "==":
+                case "!=":
+                case "&&":
+                case "||":
+                    resultados[0] = "FALSE";
+                    break;
+                default:
+                    resultados[0] = "FALSE";
+                    break;
+            }
+
+        } else if (tipoDato1.equals("BOOLEANO") && tipoDato2.equals("FLOTANTE")) {
+            switch (operador) {
+                case "+":
+                case "-":
+                case "*":
+                case "/":
+                case "^":
+                case "%":
+                case ">":
+                case ">=":
+                case "<":
+                case "<=":
+                case "==":
+                case "!=":
+                case "&&":
+                case "||":
+                    resultados[0] = "FALSE";
+                    break;
+                default:
+                    resultados[0] = "FALSE";
+                    break;
+            }
+
+        } else if (tipoDato1.equals("BOOLEANO") && tipoDato2.equals("STRING")) {
+            switch (operador) {
+                case "+":
+                case "-":
+                case "*":
+                case "/":
+                case "^":
+                case "%":
+                case ">":
+                case ">=":
+                case "<":
+                case "<=":
+                case "==":
+                case "!=":
+                case "&&":
+                case "||":
+                    resultados[0] = "FALSE";
+                    break;
+                default:
+                    resultados[0] = "FALSE";
+                    break;
+            }
+
+        } else if (tipoDato1.equals("BOOLEANO") && tipoDato2.equals("BOOLEANO")) {
+            switch (operador) {
+                case "+":
+                case "-":
+                case "*":
+                case "/":
+                case "^":
+                case "%":
+                case ">":
+                case ">=":
+                case "<":
+                case "<=":
+                case "==":
+                case "!=":
+                    resultados[0] = "FALSE";
+                    break;
+                case "&&":
+                    try {
+                        boolean var1 = Boolean.parseBoolean(op1);
+                        boolean var2 = Boolean.parseBoolean(op2);
+
+                        resultados[1] = (var1 && var2) + "";
+                        resultados[0] = "TRUE";
+                    } catch (Exception e) {
+                        resultados[0] = "FALSE";
+                    }
+                    break;
+                case "||":
+                    try {
+                        boolean var1 = Boolean.parseBoolean(op1);
+                        boolean var2 = Boolean.parseBoolean(op2);
+
+                        resultados[1] = (var1 || var2) + "";
+                        resultados[0] = "TRUE";
+                    } catch (Exception e) {
+                        resultados[0] = "FALSE";
+                    }
+                    break;
+                default:
+                    resultados[0] = "FALSE";
+                    break;
+            }
+
+        } else {
+            resultados[0] = "FALSE";
+        }
+
+        return resultados;
+    }
+
+    /**
+     * Método que verifica que a una variable se le pueda asignar el tipo de
+     * dato, dependiendo si es compatible con su mismo tipo de dato de la
+     * variable
+     *
+     * @param tipoDato1
+     * @param tipoDato2
+     * @return
+     */
+    public boolean asignacion(String tipoDato1, String tipoDato2) {
+        if (tipoDato1.equals("ENTERO") && tipoDato2.equals("ENTERO")) {
+            return true;
+        } else if (tipoDato1.equals("ENTERO") && tipoDato2.equals("FLOTANTE")) {
+            return false;
+        } else if (tipoDato1.equals("ENTERO") && tipoDato2.equals("STRING")) {
+            return false;
+        } else if (tipoDato1.equals("ENTERO") && tipoDato2.equals("BOOLEANO")) {
+            return false;
+        } else if (tipoDato1.equals("FLOTANTE") && tipoDato2.equals("ENTERO")) {
+            return true;
+        } else if (tipoDato1.equals("FLOTANTE") && tipoDato2.equals("FLOTANTE")) {
+            return true;
+        } else if (tipoDato1.equals("FLOTANTE") && tipoDato2.equals("STRING")) {
+            return false;
+        } else if (tipoDato1.equals("FLOTANTE") && tipoDato2.equals("BOOLEANO")) {
+            return false;
+        } else if (tipoDato1.equals("STRING") && tipoDato2.equals("ENTERO")) {
+            return false;
+        } else if (tipoDato1.equals("STRING") && tipoDato2.equals("FLOTANTE")) {
+            return false;
+        } else if (tipoDato1.equals("STRING") && tipoDato2.equals("STRING")) {
+            return true;
+        } else if (tipoDato1.equals("STRING") && tipoDato2.equals("BOOLEANO")) {
+            return false;
+        } else if (tipoDato1.equals("BOOLEANO") && tipoDato2.equals("ENTERO")) {
+            return false;
+        } else if (tipoDato1.equals("BOOLEANO") && tipoDato2.equals("FLOTANTE")) {
+            return false;
+        } else if (tipoDato1.equals("BOOLEANO") && tipoDato2.equals("STRING")) {
+            return false;
+        } else {
+            return tipoDato1.equals("BOOLEANO") && tipoDato2.equals("BOOLEANO");
+        }
+
+    }
+
+    /**
+     * Método que retorna el numero de prioridad de las operaciones, segun su
+     * prioridad
+     *
+     * @param operador
+     * @return
+     */
+    public int prioridad(String operador) {
+        switch (operador) {
+            case "^":
+                return 6;
+            case "/":
+            case "*":
+            case "%":
+                return 5;
+            case "+":
+            case "-":
+                return 4;
+            case ">":
+            case "<":
+            case ">=":
+            case "<=":
+            case "==":
+            case "!=":
+                return 3;
+            case "&&":
+            case "||":
+            case "!":
+                return 2;
+            default:
+                break;
+        }
+        return 1;
+    }
+
+    /**
+     * Método que verifica que el lexema sea un operador o no
+     *
+     * @param s
+     * @return si es un operador, retorna true
+     */
+    public boolean isOperador(String s) {
+        return s.equals("%") || s.equals("*") || s.equals("^") || s.equals("/") || s.equals("+") || s.equals("-") || s.equals("!") || s.equals("&&") || s.equals("||") || s.equals("<") || s.equals(">") || s.equals(">=") || s.equals("<=") || s.equals("==") || s.equals("!=");
     }
 
     public static void main(String[] args) {
@@ -196,64 +1656,4 @@ public class Semantico {
         System.out.println("Resultado: " + s.operaciones(res));
 
     }
-
-    public String[] expresionFinal(String op1, String op2, String operador) {
-        String resultados[] = new String[3];
-        if (operador.equals("+")) {
-
-        } else if (operador.equals("-")) {
-
-        } else if (operador.equals("*")) {
-
-        } else if (operador.equals("/")) {
-
-        } else if (operador.equals("^")) {
-
-        } else if (operador.equals("%")) {
-
-        } else if (operador.equals(">")) {
-
-        } else if (operador.equals(">=")) {
-
-        } else if (operador.equals("<")) {
-
-        } else if (operador.equals("<=")) {
-
-        } else if (operador.equals("==")) {
-
-        } else if (operador.equals("!=")) {
-
-        } else if (operador.equals("&&")) {
-
-        } else if (operador.equals("||")) {
-
-        }
-        return resultados;
-    }
-
-    public int prioridad(String operador) {
-        if (operador.equals("^")) {
-            return 6;
-        } else if (operador.equals("/") || operador.equals("*") || operador.equals("%")) {
-            return 5;
-        } else if (operador.equals("+") || operador.equals("-")) {
-            return 4;
-        } else if (operador.equals(">") || operador.equals("<") || operador.equals(">=") || operador.equals("<=") || operador.equals("==") || operador.equals("!=")) {
-            return 3;
-        } else if (operador.equals("&&") || operador.equals("||") || operador.equals("!")) {
-            return 2;
-        }
-        return 1;
-    }
-
-    public boolean isOperador(String s) {
-
-        if (s.equals("%") || s.equals("*") || s.equals("^") || s.equals("/") || s.equals("+") || s.equals("-") || s.equals("!") || s.equals("&&") || s.equals("||") || s.equals("<") || s.equals(">") || s.equals(">=") || s.equals("<=") || s.equals("==") || s.equals("!=")) {
-            return true;
-        }
-
-        return false;
-    }
-    //Lexema
-
 }

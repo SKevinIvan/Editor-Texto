@@ -5,8 +5,6 @@
  */
 package planetprogrammig;
 
-import Utils.CustomJTree;
-import Utils.Node;
 import java.awt.Color;
 import java.awt.Cursor;
 import java.awt.HeadlessException;
@@ -46,8 +44,6 @@ import java.awt.print.PrinterJob;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 import java.util.StringTokenizer;
-import java.util.Timer;
-import java.util.TimerTask;
 import javax.swing.JScrollPane;
 import javax.swing.JTextPane;
 import javax.swing.border.EmptyBorder;
@@ -711,10 +707,10 @@ public final class EditorPlanetProgramming extends javax.swing.JFrame {
             }
         });
         pestaniasEntradaSalidas.addInputMethodListener(new java.awt.event.InputMethodListener() {
+            public void inputMethodTextChanged(java.awt.event.InputMethodEvent evt) {
+            }
             public void caretPositionChanged(java.awt.event.InputMethodEvent evt) {
                 pestaniasEntradaSalidasCaretPositionChanged(evt);
-            }
-            public void inputMethodTextChanged(java.awt.event.InputMethodEvent evt) {
             }
         });
         pestaniasEntradaSalidas.addKeyListener(new java.awt.event.KeyAdapter() {
@@ -1086,11 +1082,6 @@ public final class EditorPlanetProgramming extends javax.swing.JFrame {
         checkEditando.addItemListener(new java.awt.event.ItemListener() {
             public void itemStateChanged(java.awt.event.ItemEvent evt) {
                 checkEditandoItemStateChanged(evt);
-            }
-        });
-        checkEditando.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                checkEditandoActionPerformed(evt);
             }
         });
         menuVista.add(checkEditando);
@@ -1555,7 +1546,15 @@ public final class EditorPlanetProgramming extends javax.swing.JFrame {
     private void checkEditandoItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_checkEditandoItemStateChanged
         if (checkEditando.isSelected()) {
             crearPestaniaEdicion();
+            if(archivo){
+                txtPanelEditando.setText(textoPanelEditando);
+            }
         } else {
+            if (!txtPanelEditando.getText().isEmpty()) {
+                if (archivo) {
+                    textoPanelEditando = txtPanelEditando.getText();
+                }
+            }
             cerrarPestaniaEdicion();
         }
     }//GEN-LAST:event_checkEditandoItemStateChanged
@@ -2058,10 +2057,6 @@ public final class EditorPlanetProgramming extends javax.swing.JFrame {
     private void jMenuItem3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem3ActionPerformed
         txtPanelEditando.setFont(new Font(txtPanelEditando.getFont().getFamily(), txtPanelEditando.getFont().getStyle(), txtPanelEditando.getFont().getSize() + 2));
     }//GEN-LAST:event_jMenuItem3ActionPerformed
-
-    private void checkEditandoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_checkEditandoActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_checkEditandoActionPerformed
 
     private void jMenuItem9ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem9ActionPerformed
         txtPanelEditando.setFont(new Font(txtPanelEditando.getFont().getFamily(), txtPanelEditando.getFont().getStyle(), 14));
@@ -3092,12 +3087,11 @@ public final class EditorPlanetProgramming extends javax.swing.JFrame {
                 errora = p;
                 bError = true;
                 Errores e = new Errores();
-                for (int j = 0; j < analisisLexico.getConjuntoErrores().length; j++) {
-
-                    if (String.valueOf(lexemas.get(p).getNumToken()).equals(analisisLexico.getConjuntoErrores()[j][1])) {
+                for (String[] conjuntoErrore : analisisLexico.getConjuntoErrores()) {
+                    if (String.valueOf(lexemas.get(p).getNumToken()).equals(conjuntoErrore[1])) {
                         e.setError("Error de lexemas");
-                        e.setIdError(analisisLexico.getConjuntoErrores()[j][2]);
-                        e.setDescripcion(analisisLexico.getConjuntoErrores()[j][0]);
+                        e.setIdError(conjuntoErrore[2]);
+                        e.setDescripcion(conjuntoErrore[0]);
                     }
                 }
                 e.setLineaCodigo(lexemas.get(errora).getRenglon());
@@ -3241,7 +3235,7 @@ public final class EditorPlanetProgramming extends javax.swing.JFrame {
         for (int j = 0; j < lstInfo.size(); j++) {
             inf += lstInfo.get(j).getAccion() + " ::\t Transacción: " + lstInfo.get(j).getNoTransaccion() + " ::\t Fecha: " + lstInfo.get(j).getFechaTransaccion() + " ::\t Estado: " + lstInfo.get(j).getEstado() + "\n";
         }
-          TextPaneTest.ponerEstilo(txtPanelCompilando, "NEGRITAS", "Lenguaje: CoffeeCode\n");
+        TextPaneTest.ponerEstilo(txtPanelCompilando, "NEGRITAS", "Lenguaje: CoffeeCode\n");
         TextPaneTest.ponerEstilo(txtPanelCompilando, "NEGRITAS", "------------------------------------------------------------------------------------------------------------------------------------------\n"
                 + "EXTRAYENDO ARCHIVOS NECESARIOS");
 
@@ -3272,8 +3266,8 @@ public final class EditorPlanetProgramming extends javax.swing.JFrame {
     }
 
     public void fuente() {
-        VtnConfiguracion c = new VtnConfiguracion(this, true);
-        c.setVisible(true);
+        VtnConfiguracion vtnConfig = new VtnConfiguracion(this, true);
+        vtnConfig.setVisible(true);
 
     }
 
@@ -3491,7 +3485,6 @@ public final class EditorPlanetProgramming extends javax.swing.JFrame {
         entrada = txtPanelSalida.getText().substring(pointInicio, pointFinal);
         System.out.println("Salida del dato: " + entrada);
 
-        TextPaneTest c = new TextPaneTest();
         TextPaneTest.ponerEstilo(txtPanelSalida, "CURSIVA Y NEGRITA", "\n" + entrada);
 
     }
@@ -3621,14 +3614,6 @@ public final class EditorPlanetProgramming extends javax.swing.JFrame {
     private String cadenaSeleccionada = "";
     private String palabraSeleccionada = "";
     private String textoPanelEditando = "";
-    private String textoPanelCompilando = "";
-    private String textoPanelSalida = "";
-    private String textoPanelLexico = "";
-    private String textoPanelSintactico = "";
-    private String textoPanelSemantico = "";
-    private String textoPanelIntermedio = "";
-    private String textoPanelOptimizacion = "";
-    private String textoPanelObjeto = "";
 
     private String entrada = "";
     private int pointInicio = 0;

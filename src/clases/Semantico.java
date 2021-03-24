@@ -16,22 +16,89 @@ import java.util.ArrayList;
  */
 public class Semantico {
 
-    public static ArrayList<TablaSimbolos> tablaSimboloses;
+    /**
+     * Método que realiza el proceso de validación entre operaciones, y
+     * asignaciones
+     *
+     * @param arr
+     * @param tipo
+     * @return
+     */
+    public static String conversionArrayCola(ArrayList<String> arr, String tipo) {
+        String valor;
+        if (arr.size() == 1) {
+            return arr.get(0);
+        } else {
+            ColaD colaOperaciones = new ColaD();
+            for (int i = 0; i < arr.size(); i++) {
+                Nodo n = new Nodo(arr.get(i), -1);
+                colaOperaciones.inserta(n, null);
+            }
+            Semantico s = new Semantico();
+            ColaD notacionPostfija = s.posfijo(colaOperaciones);
 
-    public void proyecto() {
+            valor = String.valueOf(s.operaciones(notacionPostfija));
+        }
 
+        return valor;
     }
 
-    public ColaD posfijo(ColaD cola, ArrayList<TablaSimbolos> tb, String var) {
+    /**
+     * Método que realiza la converión de una notación infija, a una postfija.
+     * Con el uso de pilas
+     *
+     * @param cola cadena resultado
+     * @return una cola con la notación posfija
+     */
+    public ColaD posfijo(ColaD cola) {
 
         ColaD pResultado = new ColaD();
         PilaD pOperadores = new PilaD();
         while (cola.getF() != null) {
             String s = cola.elimina(null).getS();
             try {
-                int num = Integer.parseInt(s);
-                //Es un operando, por lo tanto se inserta en la cola Resultado
-                pResultado.inserta(new Nodo(s, -1), null);
+                if (isOperador(s) || s.equals(")")) {
+                    if (s.equals(")")) {
+
+                        while (pOperadores.getTope() != null) {
+                            if (pOperadores.getTope().getS().equals("(")) {
+                                pOperadores.elimina(null);
+                                break;
+                            } else {
+                                String op = pOperadores.elimina(null).getS();
+                                pResultado.inserta(new Nodo(op, -1), null);
+                            }
+                        }
+                    } else {
+                        if (isOperador(s)) {
+                            if (pOperadores.getTope() != null) {
+                                String s2 = pOperadores.elimina(null).getS();
+                                if (isOperador(s2)) {
+                                    if (prioridad(s2) >= prioridad(s)) {
+                                        pOperadores.inserta(new Nodo(s, -1), null);
+                                        pResultado.inserta(new Nodo(s2, -1), null);
+                                    } else if (prioridad(s2) < prioridad(s)) {
+                                        pOperadores.inserta(new Nodo(s2, -1), null);
+                                        pResultado.inserta(new Nodo(s, -1), null);
+                                    } else {
+                                        pOperadores.inserta(new Nodo(s2, -1), null);
+                                        pOperadores.inserta(new Nodo(s, -1), null);
+                                    }
+                                } else {
+                                    pOperadores.inserta(new Nodo(s2, -1), null);
+                                    pOperadores.inserta(new Nodo(s, -1), null);
+                                }
+                            } else {
+                                pOperadores.inserta(new Nodo(s, -1), null);
+                            }
+                        } else {
+                            pOperadores.inserta(new Nodo(s, -1), null);
+                        }
+                    }
+                } else {
+                    pResultado.inserta(new Nodo(s, -1), null);
+                }
+
             } catch (NumberFormatException e) {
                 //Es un operador
                 if (s.equals(")")) {
@@ -78,16 +145,60 @@ public class Semantico {
             String op = pOperadores.elimina(null).getS();
             pResultado.inserta(new Nodo(op, -1), null);
         }
-
-        //Insertar el valor en la tabla de simbolos
-        /*  for (int i = 0; i < tb.size(); i++) {
-            if (tb.get(i).getLexema().equals(var)) {
-                tb.get(i).setValor(r);
-            }
-        }*/
         return pResultado;
     }
 
+    /**
+     * Método que verifica que el lexema sea un operador o no
+     *
+     * @param s
+     * @return si es un operador, retorna true
+     */
+    private boolean isOperador(String s) {
+        return s.equals("%") || s.equals("*") || s.equals("^") || s.equals("/") || s.equals("+") || s.equals("-") || s.equals("!") || s.equals("&&") || s.equals("||") || s.equals("<") || s.equals(">") || s.equals(">=") || s.equals("<=") || s.equals("==") || s.equals("!=");
+    }
+
+    /**
+     * Método que retorna el numero de prioridad de las operaciones, segun su
+     * prioridad
+     *
+     * @param operador
+     * @return
+     */
+    private int prioridad(String operador) {
+        switch (operador) {
+            case "^":
+                return 6;
+            case "/":
+            case "*":
+            case "%":
+                return 5;
+            case "+":
+            case "-":
+                return 4;
+            case ">":
+            case "<":
+            case ">=":
+            case "<=":
+            case "==":
+            case "!=":
+                return 3;
+            case "&&":
+            case "||":
+            case "!":
+                return 2;
+            default:
+                break;
+        }
+        return 1;
+    }
+
+    /**
+     * Metodo que realiza la operación, segun la prioridad de las operaciones
+     *
+     * @param pResultado
+     * @return
+     */
     public Object operaciones(ColaD pResultado) {
         PilaD pOperacion = new PilaD();
         Object resultado = 0;
@@ -96,6 +207,7 @@ public class Semantico {
             String s = pResultado.elimina(null).getS();
             if (isOperador(s)) {
                 String op2 = pOperacion.elimina(null).getS();
+
                 String op1 = pOperacion.elimina(null).getS();
 
                 String tipoOp1 = tipoDato(op1);
@@ -116,7 +228,7 @@ public class Semantico {
 
                 } else {
                     //MARCAR UN ERROR DE INCOMPATIBILIDAD DE OPERACIONES
-                    System.out.println("Compatilibidad de operaciones err");
+                    System.out.println("Compatilibidad de operaciones");
                     break;
                 }
             } else {
@@ -128,472 +240,23 @@ public class Semantico {
 
     }
 
-    public String tipoDato(String s) {
-
-        try {
-            int S1 = Integer.parseInt(s);
-            return "ENTERO";
-        } catch (NumberFormatException e2) {
-            try {
-                float S2 = Float.parseFloat(s);
-                return "FLOTANTE";
-            } catch (NumberFormatException e3) {
-                if (s.equals("true") || s.equals("false")) {
-                    return "BOOLEANO";
-                } else {
-                    return "STRING";
-                }
-            }
-        }
-    }
-
-    public static String tablaResultados(String tipoDato1, String tipoDato2, String operador) {
-        String bandera = "BOOLEANO";
-        if (tipoDato1.equals("ENTERO") && tipoDato2.equals("ENTERO")) {
-            switch (operador) {
-                case "+":
-                    return "ENTERO";
-                case "-":
-                    return "ENTERO";
-                case "*":
-                    return "ENTERO";
-                case "/":
-                    return "FLOTANTE";
-                case "%":
-                    return "ENTERO";
-                case "^":
-                    return "FLOTANTE";
-                case ">":
-                case "<":
-                case ">=":
-                case "<=":
-                case "!=":
-                case "==":
-                    return "BOOLEANO";
-                case "&&":
-                case "||":
-                    return "NOT";
-                default:
-                    return "NOT";
-            }
-
-        } else if (tipoDato1.equals("ENTERO") && tipoDato2.equals("FLOTANTE")) {
-            switch (operador) {
-                case "+":
-                    return "FLOTANTE";
-                case "-":
-                    return "FLOTANTE";
-                case "*":
-                    return "FLOTANTE";
-                case "/":
-                    return "FLOTANTE";
-                case "%":
-                    return "FLOTANTE";
-                case "^":
-                    return "FLOTANTE";
-                case ">":
-                case "<":
-                case ">=":
-                case "<=":
-                case "!=":
-                case "==":
-                    return "BOOLEANO";
-                case "&&":
-                case "||":
-                    return "NOT";
-                default:
-                    return "NOT";
-            }
-
-        } else if (tipoDato1.equals("ENTERO") && tipoDato2.equals("STRING")) {
-            switch (operador) {
-                case "+":
-                    return "NOT";
-                case "-":
-                    return "NOT";
-                case "*":
-                    return "NOT";
-                case "/":
-                    return "NOT";
-                case "%":
-                    return "NOT";
-                case "^":
-                    return "NOT";
-                case ">":
-                case "<":
-                case ">=":
-                case "<=":
-                case "!=":
-                case "==":
-                    return "NOT";
-                case "&&":
-                case "||":
-                    return "NOT";
-                default:
-                    return "NOT";
-            }
-
-        } else if (tipoDato1.equals("ENTERO") && tipoDato2.equals("BOOLEANO")) {
-            switch (operador) {
-                case "+":
-                    return "NOT";
-                case "-":
-                    return "NOT";
-                case "*":
-                    return "NOT";
-                case "/":
-                    return "NOT";
-                case "%":
-                    return "NOT";
-                case "^":
-                    return "NOT";
-                case ">":
-                case "<":
-                case ">=":
-                case "<=":
-                case "!=":
-                case "==":
-                    return "NOT";
-                case "&&":
-                case "||":
-                    return "NOT";
-                default:
-                    return "NOT";
-            }
-        } else if (tipoDato1.equals("FLOTANTE") && tipoDato2.equals("ENTERO")) {
-            switch (operador) {
-                case "+":
-                    return "FLOTANTE";
-                case "-":
-                    return "FLOTANTE";
-                case "*":
-                    return "FLOTANTE";
-                case "/":
-                    return "FLOTANTE";
-                case "%":
-                    return "FLOTANTE";
-                case "^":
-                    return "FLOTANTE";
-                case ">":
-                case "<":
-                case ">=":
-                case "<=":
-                case "!=":
-                case "==":
-                    return "BOOLEANO";
-                case "&&":
-                case "||":
-                    return "NOT";
-                default:
-                    return "NOT";
-            }
-        } else if (tipoDato1.equals("FLOTANTE") && tipoDato2.equals("FLOTANTE")) {
-            switch (operador) {
-                case "+":
-                    return "FLOTANTE";
-                case "-":
-                    return "FLOTANTE";
-                case "*":
-                    return "FLOTANTE";
-                case "/":
-                    return "FLOTANTE";
-                case "%":
-                    return "FLOTANTE";
-                case "^":
-                    return "FLOTANTE";
-                case ">":
-                case "<":
-                case ">=":
-                case "<=":
-                case "!=":
-                case "==":
-                    return "BOOLEANO";
-                case "&&":
-                case "||":
-                    return "NOT";
-                default:
-                    return "NOT";
-            }
-
-        } else if (tipoDato1.equals("FLOTANTE") && tipoDato2.equals("STRING")) {
-            switch (operador) {
-                case "+":
-                    return "NOT";
-                case "-":
-                    return "NOT";
-                case "*":
-                    return "NOT";
-                case "/":
-                    return "NOT";
-                case "%":
-                    return "NOT";
-                case "^":
-                    return "NOT";
-                case ">":
-                case "<":
-                case ">=":
-                case "<=":
-                case "!=":
-                case "==":
-                    return "NOT";
-                case "&&":
-                case "||":
-                    return "NOT";
-                default:
-                    return "NOT";
-            }
-        } else if (tipoDato1.equals("FLOTANTE") && tipoDato2.equals("BOOLEAN")) {
-            switch (operador) {
-                case "+":
-                    return "NOT";
-                case "-":
-                    return "NOT";
-                case "*":
-                    return "NOT";
-                case "/":
-                    return "NOT";
-                case "%":
-                    return "NOT";
-                case "^":
-                    return "NOT";
-                case ">":
-                case "<":
-                case ">=":
-                case "<=":
-                case "!=":
-                case "==":
-                    return "NOT";
-                case "&&":
-                case "||":
-                    return "NOT";
-                default:
-                    return "NOT";
-            }
-        } else if (tipoDato1.equals("STRING") && tipoDato2.equals("ENTERO")) {
-            switch (operador) {
-                case "+":
-                    return "STRING";
-                case "-":
-                    return "NOT";
-                case "*":
-                    return "NOT";
-                case "/":
-                    return "NOT";
-                case "%":
-                    return "NOT";
-                case "^":
-                    return "NOT";
-                case ">":
-                case "<":
-                case ">=":
-                case "<=":
-                case "!=":
-                case "==":
-                    return "NOT";
-                case "&&":
-                case "||":
-                    return "NOT";
-                default:
-                    return "NOT";
-            }
-        } else if (tipoDato1.equals("STRING") && tipoDato2.equals("FLOTANTE")) {
-            switch (operador) {
-                case "+":
-                    return "STRING";
-                case "-":
-                    return "NOT";
-                case "*":
-                    return "NOT";
-                case "/":
-                    return "NOT";
-                case "%":
-                    return "NOT";
-                case "^":
-                    return "NOT";
-                case ">":
-                case "<":
-                case ">=":
-                case "<=":
-                case "!=":
-                case "==":
-                    return "NOT";
-                case "&&":
-                case "||":
-                    return "NOT";
-                default:
-                    return "NOT";
-            }
-        } else if (tipoDato1.equals("STRING") && tipoDato2.equals("STRING")) {
-            switch (operador) {
-                case "+":
-                    return "STRING";
-                case "-":
-                    return "NOT";
-                case "*":
-                    return "NOT";
-                case "/":
-                    return "NOT";
-                case "%":
-                    return "NOT";
-                case "^":
-                    return "NOT";
-                case ">":
-                case "<":
-                case ">=":
-                case "<=":
-                case "!=":
-                case "==":
-                    return "BOOLEANO";
-                case "&&":
-                case "||":
-                    return "NOT";
-                default:
-                    return "NOT";
-            }
-        } else if (tipoDato1.equals("STRING") && tipoDato2.equals("BOOLEANO")) {
-            switch (operador) {
-                case "+":
-                    return "STRING";
-                case "-":
-                    return "NOT";
-                case "*":
-                    return "NOT";
-                case "/":
-                    return "NOT";
-                case "%":
-                    return "NOT";
-                case "^":
-                    return "NOT";
-                case ">":
-                case "<":
-                case ">=":
-                case "<=":
-                case "!=":
-                case "==":
-                    return "NOT";
-                case "&&":
-                case "||":
-                    return "NOT";
-                default:
-                    return "NOT";
-            }
-        } else if (tipoDato1.equals("BOOLEANO") && tipoDato2.equals("ENTERO")) {
-            switch (operador) {
-                case "+":
-                    return "NOT";
-                case "-":
-                    return "NOT";
-                case "*":
-                    return "NOT";
-                case "/":
-                    return "NOT";
-                case "%":
-                    return "NOT";
-                case "^":
-                    return "NOT";
-                case ">":
-                case "<":
-                case ">=":
-                case "<=":
-                case "!=":
-                case "==":
-                    return "NOT";
-                case "&&":
-                case "||":
-                    return "NOT";
-                default:
-                    return "NOT";
-            }
-        } else if (tipoDato1.equals("BOOLEANO") && tipoDato2.equals("FLOTANTE")) {
-            switch (operador) {
-                case "+":
-                    return "NOT";
-                case "-":
-                    return "NOT";
-                case "*":
-                    return "NOT";
-                case "/":
-                    return "NOT";
-                case "%":
-                    return "NOT";
-                case "^":
-                    return "NOT";
-                case ">":
-                case "<":
-                case ">=":
-                case "<=":
-                case "!=":
-                case "==":
-                    return "NOT";
-                case "&&":
-                case "||":
-                    return "NOT";
-                default:
-                    return "NOT";
-            }
-        } else if (tipoDato1.equals("BOOLEANO") && tipoDato2.equals("STRING")) {
-            switch (operador) {
-                case "+":
-                    return "NOT";
-                case "-":
-                    return "NOT";
-                case "*":
-                    return "NOT";
-                case "/":
-                    return "NOT";
-                case "%":
-                    return "NOT";
-                case "^":
-                    return "NOT";
-                case ">":
-                case "<":
-                case ">=":
-                case "<=":
-                case "!=":
-                case "==":
-                    return "NOT";
-                case "&&":
-                case "||":
-                    return "NOT";
-                default:
-                    return "NOT";
-            }
-        } else if (tipoDato1.equals("BOOLEANO") && tipoDato2.equals("BOOLEANO")) {
-            switch (operador) {
-                case "+":
-                    return "NOT";
-                case "-":
-                    return "NOT";
-                case "*":
-                    return "NOT";
-                case "/":
-                    return "NOT";
-                case "%":
-                    return "NOT";
-                case "^":
-                    return "NOT";
-                case ">":
-                case "<":
-                case ">=":
-                case "<=":
-                case "!=":
-                case "==":
-                    return "BOOLEANO";
-                case "&&":
-                case "||":
-                    return "NOT";
-                default:
-                    return "NOT";
-            }
-        }
-
-        return bandera;
-    }
-
-    public String[] expresionFinal(String op1, String op2, String operador, String tipoDato1, String tipoDato2) {
+    /**
+     * Método que regresa el valor resultante, comparando primero los tipos de
+     * datos asociados, para realizar el parseo entre operandos La operación es
+     * binaria
+     *
+     * @param op1
+     * @param op2
+     * @param operador
+     * @param tipoDato1
+     * @param tipoDato2
+     * @return un arreglo de tipo String [0] - regresa si es valido hacer la
+     * operacion [1] - retorna el resultado final
+     */
+    private String[] expresionFinal(String op1, String op2, String operador, String tipoDato1, String tipoDato2) {
         String resultados[] = new String[3];
 
-        if (tipoDato1.equals("ENTERO") && tipoDato2.equals("ENTERO")) {
+        if (tipoDato1.equals("INTEGER") && tipoDato2.equals("INTEGER")) {
             switch (operador) {
                 case "+":
                     try {
@@ -735,7 +398,7 @@ public class Semantico {
                     resultados[0] = "FALSE";
                     break;
             }
-        } else if (tipoDato1.equals("ENTERO") && tipoDato2.equals("FLOTANTE")) {
+        } else if (tipoDato1.equals("INTEGER") && tipoDato2.equals("FLOAT")) {
             switch (operador) {
                 case "+":
                     try {
@@ -878,7 +541,7 @@ public class Semantico {
                     break;
             }
 
-        } else if (tipoDato1.equals("ENTERO") && tipoDato2.equals("STRING")) {
+        } else if (tipoDato1.equals("INTEGER") && tipoDato2.equals("STRING")) {
             switch (operador) {
                 case "+":
                 case "-":
@@ -901,7 +564,7 @@ public class Semantico {
                     break;
             }
 
-        } else if (tipoDato1.equals("ENTERO") && tipoDato2.equals("BOOLEANO")) {
+        } else if (tipoDato1.equals("INTEGER") && tipoDato2.equals("BOOLEAN")) {
             switch (operador) {
                 case "+":
                 case "-":
@@ -924,7 +587,7 @@ public class Semantico {
                     break;
             }
 
-        } else if (tipoDato1.equals("FLOTANTE") && tipoDato2.equals("ENTERO")) {
+        } else if (tipoDato1.equals("FLOAT") && tipoDato2.equals("INTEGER")) {
             switch (operador) {
                 case "+":
                     try {
@@ -1067,7 +730,7 @@ public class Semantico {
                     break;
             }
 
-        } else if (tipoDato1.equals("FLOTANTE") && tipoDato2.equals("FLOTANTE")) {
+        } else if (tipoDato1.equals("FLOAT") && tipoDato2.equals("FLOAT")) {
             switch (operador) {
                 case "+":
                     try {
@@ -1210,7 +873,7 @@ public class Semantico {
                     break;
             }
 
-        } else if (tipoDato1.equals("FLOTANTE") && tipoDato2.equals("STRING")) {
+        } else if (tipoDato1.equals("FLOAT") && tipoDato2.equals("STRING")) {
             switch (operador) {
                 case "+":
                 case "-":
@@ -1233,7 +896,7 @@ public class Semantico {
                     break;
             }
 
-        } else if (tipoDato1.equals("FLOTANTE") && tipoDato2.equals("BOOLEANO")) {
+        } else if (tipoDato1.equals("FLOAT") && tipoDato2.equals("BOOLEAN")) {
             switch (operador) {
                 case "+":
                 case "-":
@@ -1256,7 +919,7 @@ public class Semantico {
                     break;
             }
 
-        } else if (tipoDato1.equals("STRING") && tipoDato2.equals("ENTERO")) {
+        } else if (tipoDato1.equals("STRING") && tipoDato2.equals("INTEGER")) {
             switch (operador) {
                 case "+":
                     try {
@@ -1289,7 +952,7 @@ public class Semantico {
                     break;
             }
 
-        } else if (tipoDato1.equals("STRING") && tipoDato2.equals("FLOTANTE")) {
+        } else if (tipoDato1.equals("STRING") && tipoDato2.equals("FLOAT")) {
             switch (operador) {
                 case "+":
                     try {
@@ -1377,7 +1040,7 @@ public class Semantico {
                     break;
             }
 
-        } else if (tipoDato1.equals("STRING") && tipoDato2.equals("BOOLEANO")) {
+        } else if (tipoDato1.equals("STRING") && tipoDato2.equals("BOOLEAN")) {
             switch (operador) {
                 case "+":
                     try {
@@ -1411,7 +1074,7 @@ public class Semantico {
                     break;
             }
 
-        } else if (tipoDato1.equals("BOOLEANO") && tipoDato2.equals("ENTERO")) {
+        } else if (tipoDato1.equals("BOOLEAN") && tipoDato2.equals("INTEGER")) {
             switch (operador) {
                 case "+":
                 case "-":
@@ -1434,7 +1097,7 @@ public class Semantico {
                     break;
             }
 
-        } else if (tipoDato1.equals("BOOLEANO") && tipoDato2.equals("FLOTANTE")) {
+        } else if (tipoDato1.equals("BOOLEAN") && tipoDato2.equals("FLOAT")) {
             switch (operador) {
                 case "+":
                 case "-":
@@ -1457,7 +1120,7 @@ public class Semantico {
                     break;
             }
 
-        } else if (tipoDato1.equals("BOOLEANO") && tipoDato2.equals("STRING")) {
+        } else if (tipoDato1.equals("BOOLEAN") && tipoDato2.equals("STRING")) {
             switch (operador) {
                 case "+":
                 case "-":
@@ -1480,7 +1143,7 @@ public class Semantico {
                     break;
             }
 
-        } else if (tipoDato1.equals("BOOLEANO") && tipoDato2.equals("BOOLEANO")) {
+        } else if (tipoDato1.equals("BOOLEAN") && tipoDato2.equals("BOOLEAN")) {
             switch (operador) {
                 case "+":
                 case "-":
@@ -1531,6 +1194,484 @@ public class Semantico {
     }
 
     /**
+     * Método que verifica que tipo de dato es el que tiene una expresión
+     *
+     * @param s
+     * @return
+     */
+    public static String tipoDato(String s) {
+
+        try {
+            int S1 = Integer.parseInt(s);
+            return "INTEGER";
+        } catch (NumberFormatException e2) {
+            try {
+                float S2 = Float.parseFloat(s);
+                return "FLOAT";
+            } catch (NumberFormatException e3) {
+                if (s.equals("true") || s.equals("false")) {
+                    return "BOOLEAN";
+                } else {
+                    return "STRING";
+                }
+            }
+        }
+    }
+
+    /**
+     * Método que revisa la compatibilidad de los tipos de datos con el operando
+     * para retornar el tipo de dato que resultará
+     *
+     * @param tipoDato1
+     * @param tipoDato2
+     * @param operador
+     * @return
+     */
+    private static String tablaResultados(String tipoDato1, String tipoDato2, String operador) {
+        String bandera = "BOOLEAN";
+        if (tipoDato1.equals("INTEGER") && tipoDato2.equals("INTEGER")) {
+            switch (operador) {
+                case "+":
+                    return "INTEGER";
+                case "-":
+                    return "INTEGER";
+                case "*":
+                    return "INTEGER";
+                case "/":
+                    return "FLOAT";
+                case "%":
+                    return "INTEGER";
+                case "^":
+                    return "FLOAT";
+                case ">":
+                case "<":
+                case ">=":
+                case "<=":
+                case "!=":
+                case "==":
+                    return "BOOLEAN";
+                case "&&":
+                case "||":
+                    return "NOT";
+                default:
+                    return "NOT";
+            }
+
+        } else if (tipoDato1.equals("INTEGER") && tipoDato2.equals("FLOAT")) {
+            switch (operador) {
+                case "+":
+                    return "FLOAT";
+                case "-":
+                    return "FLOAT";
+                case "*":
+                    return "FLOAT";
+                case "/":
+                    return "FLOAT";
+                case "%":
+                    return "FLOAT";
+                case "^":
+                    return "FLOAT";
+                case ">":
+                case "<":
+                case ">=":
+                case "<=":
+                case "!=":
+                case "==":
+                    return "BOOLEAN";
+                case "&&":
+                case "||":
+                    return "NOT";
+                default:
+                    return "NOT";
+            }
+
+        } else if (tipoDato1.equals("INTEGER") && tipoDato2.equals("STRING")) {
+            switch (operador) {
+                case "+":
+                    return "NOT";
+                case "-":
+                    return "NOT";
+                case "*":
+                    return "NOT";
+                case "/":
+                    return "NOT";
+                case "%":
+                    return "NOT";
+                case "^":
+                    return "NOT";
+                case ">":
+                case "<":
+                case ">=":
+                case "<=":
+                case "!=":
+                case "==":
+                    return "NOT";
+                case "&&":
+                case "||":
+                    return "NOT";
+                default:
+                    return "NOT";
+            }
+
+        } else if (tipoDato1.equals("INTEGER") && tipoDato2.equals("BOOLEAN")) {
+            switch (operador) {
+                case "+":
+                    return "NOT";
+                case "-":
+                    return "NOT";
+                case "*":
+                    return "NOT";
+                case "/":
+                    return "NOT";
+                case "%":
+                    return "NOT";
+                case "^":
+                    return "NOT";
+                case ">":
+                case "<":
+                case ">=":
+                case "<=":
+                case "!=":
+                case "==":
+                    return "NOT";
+                case "&&":
+                case "||":
+                    return "NOT";
+                default:
+                    return "NOT";
+            }
+        } else if (tipoDato1.equals("FLOAT") && tipoDato2.equals("INTEGER")) {
+            switch (operador) {
+                case "+":
+                    return "FLOAT";
+                case "-":
+                    return "FLOAT";
+                case "*":
+                    return "FLOAT";
+                case "/":
+                    return "FLOAT";
+                case "%":
+                    return "FLOAT";
+                case "^":
+                    return "FLOAT";
+                case ">":
+                case "<":
+                case ">=":
+                case "<=":
+                case "!=":
+                case "==":
+                    return "BOOLEAN";
+                case "&&":
+                case "||":
+                    return "NOT";
+                default:
+                    return "NOT";
+            }
+        } else if (tipoDato1.equals("FLOAT") && tipoDato2.equals("FLOAT")) {
+            switch (operador) {
+                case "+":
+                    return "FLOAT";
+                case "-":
+                    return "FLOAT";
+                case "*":
+                    return "FLOAT";
+                case "/":
+                    return "FLOAT";
+                case "%":
+                    return "FLOAT";
+                case "^":
+                    return "FLOAT";
+                case ">":
+                case "<":
+                case ">=":
+                case "<=":
+                case "!=":
+                case "==":
+                    return "BOOLEAN";
+                case "&&":
+                case "||":
+                    return "NOT";
+                default:
+                    return "NOT";
+            }
+
+        } else if (tipoDato1.equals("FLOAT") && tipoDato2.equals("STRING")) {
+            switch (operador) {
+                case "+":
+                    return "NOT";
+                case "-":
+                    return "NOT";
+                case "*":
+                    return "NOT";
+                case "/":
+                    return "NOT";
+                case "%":
+                    return "NOT";
+                case "^":
+                    return "NOT";
+                case ">":
+                case "<":
+                case ">=":
+                case "<=":
+                case "!=":
+                case "==":
+                    return "NOT";
+                case "&&":
+                case "||":
+                    return "NOT";
+                default:
+                    return "NOT";
+            }
+        } else if (tipoDato1.equals("FLOAT") && tipoDato2.equals("BOOLEAN")) {
+            switch (operador) {
+                case "+":
+                    return "NOT";
+                case "-":
+                    return "NOT";
+                case "*":
+                    return "NOT";
+                case "/":
+                    return "NOT";
+                case "%":
+                    return "NOT";
+                case "^":
+                    return "NOT";
+                case ">":
+                case "<":
+                case ">=":
+                case "<=":
+                case "!=":
+                case "==":
+                    return "NOT";
+                case "&&":
+                case "||":
+                    return "NOT";
+                default:
+                    return "NOT";
+            }
+        } else if (tipoDato1.equals("STRING") && tipoDato2.equals("INTEGER")) {
+            switch (operador) {
+                case "+":
+                    return "STRING";
+                case "-":
+                    return "NOT";
+                case "*":
+                    return "NOT";
+                case "/":
+                    return "NOT";
+                case "%":
+                    return "NOT";
+                case "^":
+                    return "NOT";
+                case ">":
+                case "<":
+                case ">=":
+                case "<=":
+                case "!=":
+                case "==":
+                    return "NOT";
+                case "&&":
+                case "||":
+                    return "NOT";
+                default:
+                    return "NOT";
+            }
+        } else if (tipoDato1.equals("STRING") && tipoDato2.equals("FLOAT")) {
+            switch (operador) {
+                case "+":
+                    return "STRING";
+                case "-":
+                    return "NOT";
+                case "*":
+                    return "NOT";
+                case "/":
+                    return "NOT";
+                case "%":
+                    return "NOT";
+                case "^":
+                    return "NOT";
+                case ">":
+                case "<":
+                case ">=":
+                case "<=":
+                case "!=":
+                case "==":
+                    return "NOT";
+                case "&&":
+                case "||":
+                    return "NOT";
+                default:
+                    return "NOT";
+            }
+        } else if (tipoDato1.equals("STRING") && tipoDato2.equals("STRING")) {
+            switch (operador) {
+                case "+":
+                    return "STRING";
+                case "-":
+                    return "NOT";
+                case "*":
+                    return "NOT";
+                case "/":
+                    return "NOT";
+                case "%":
+                    return "NOT";
+                case "^":
+                    return "NOT";
+                case ">":
+                case "<":
+                case ">=":
+                case "<=":
+                    return "NOT";
+                case "!=":
+                case "==":
+                    return "BOOLEAN";
+                case "&&":
+                case "||":
+                    return "NOT";
+                default:
+                    return "NOT";
+            }
+        } else if (tipoDato1.equals("STRING") && tipoDato2.equals("BOOLEAN")) {
+            switch (operador) {
+                case "+":
+                    return "STRING";
+                case "-":
+                    return "NOT";
+                case "*":
+                    return "NOT";
+                case "/":
+                    return "NOT";
+                case "%":
+                    return "NOT";
+                case "^":
+                    return "NOT";
+                case ">":
+                case "<":
+                case ">=":
+                case "<=":
+                case "!=":
+                case "==":
+                    return "NOT";
+                case "&&":
+                case "||":
+                    return "NOT";
+                default:
+                    return "NOT";
+            }
+        } else if (tipoDato1.equals("BOOLEAN") && tipoDato2.equals("INTEGER")) {
+            switch (operador) {
+                case "+":
+                    return "NOT";
+                case "-":
+                    return "NOT";
+                case "*":
+                    return "NOT";
+                case "/":
+                    return "NOT";
+                case "%":
+                    return "NOT";
+                case "^":
+                    return "NOT";
+                case ">":
+                case "<":
+                case ">=":
+                case "<=":
+                case "!=":
+                case "==":
+                    return "NOT";
+                case "&&":
+                case "||":
+                    return "NOT";
+                default:
+                    return "NOT";
+            }
+        } else if (tipoDato1.equals("BOOLEAN") && tipoDato2.equals("FLOAT")) {
+            switch (operador) {
+                case "+":
+                    return "NOT";
+                case "-":
+                    return "NOT";
+                case "*":
+                    return "NOT";
+                case "/":
+                    return "NOT";
+                case "%":
+                    return "NOT";
+                case "^":
+                    return "NOT";
+                case ">":
+                case "<":
+                case ">=":
+                case "<=":
+                case "!=":
+                case "==":
+                    return "NOT";
+                case "&&":
+                case "||":
+                    return "NOT";
+                default:
+                    return "NOT";
+            }
+        } else if (tipoDato1.equals("BOOLEAN") && tipoDato2.equals("STRING")) {
+            switch (operador) {
+                case "+":
+                    return "NOT";
+                case "-":
+                    return "NOT";
+                case "*":
+                    return "NOT";
+                case "/":
+                    return "NOT";
+                case "%":
+                    return "NOT";
+                case "^":
+                    return "NOT";
+                case ">":
+                case "<":
+                case ">=":
+                case "<=":
+                case "!=":
+                case "==":
+                    return "NOT";
+                case "&&":
+                case "||":
+                    return "NOT";
+                default:
+                    return "NOT";
+            }
+        } else if (tipoDato1.equals("BOOLEAN") && tipoDato2.equals("BOOLEAN")) {
+            switch (operador) {
+                case "+":
+                    return "NOT";
+                case "-":
+                    return "NOT";
+                case "*":
+                    return "NOT";
+                case "/":
+                    return "NOT";
+                case "%":
+                    return "NOT";
+                case "^":
+                    return "NOT";
+                case ">":
+                case "<":
+                case ">=":
+                case "<=":
+                case "!=":
+                case "==":
+                    return "NOT";
+                case "&&":
+                case "||":
+                    return "BOOLEAN";
+                default:
+                    return "NOT";
+            }
+        }
+
+        return bandera;
+    }
+
+    /**
      * Método que verifica que a una variable se le pueda asignar el tipo de
      * dato, dependiendo si es compatible con su mismo tipo de dato de la
      * variable
@@ -1539,121 +1680,54 @@ public class Semantico {
      * @param tipoDato2
      * @return
      */
-    public boolean asignacion(String tipoDato1, String tipoDato2) {
-        if (tipoDato1.equals("ENTERO") && tipoDato2.equals("ENTERO")) {
+    public static boolean asignacion(String tipoDato1, String tipoDato2) {
+        if (tipoDato1.equals("INTEGER") && tipoDato2.equals("INTEGER")) {
             return true;
-        } else if (tipoDato1.equals("ENTERO") && tipoDato2.equals("FLOTANTE")) {
+        } else if (tipoDato1.equals("INTEGER") && tipoDato2.equals("FLOAT")) {
             return false;
-        } else if (tipoDato1.equals("ENTERO") && tipoDato2.equals("STRING")) {
+        } else if (tipoDato1.equals("INTEGER") && tipoDato2.equals("STRING")) {
             return false;
-        } else if (tipoDato1.equals("ENTERO") && tipoDato2.equals("BOOLEANO")) {
+        } else if (tipoDato1.equals("INTEGER") && tipoDato2.equals("BOOLEAN")) {
             return false;
-        } else if (tipoDato1.equals("FLOTANTE") && tipoDato2.equals("ENTERO")) {
+        } else if (tipoDato1.equals("FLOAT") && tipoDato2.equals("INTEGER")) {
             return true;
-        } else if (tipoDato1.equals("FLOTANTE") && tipoDato2.equals("FLOTANTE")) {
+        } else if (tipoDato1.equals("FLOAT") && tipoDato2.equals("FLOAT")) {
             return true;
-        } else if (tipoDato1.equals("FLOTANTE") && tipoDato2.equals("STRING")) {
+        } else if (tipoDato1.equals("FLOAT") && tipoDato2.equals("STRING")) {
             return false;
-        } else if (tipoDato1.equals("FLOTANTE") && tipoDato2.equals("BOOLEANO")) {
+        } else if (tipoDato1.equals("FLOTANTE") && tipoDato2.equals("BOOLEAN")) {
             return false;
-        } else if (tipoDato1.equals("STRING") && tipoDato2.equals("ENTERO")) {
+        } else if (tipoDato1.equals("STRING") && tipoDato2.equals("INTEGER")) {
             return false;
-        } else if (tipoDato1.equals("STRING") && tipoDato2.equals("FLOTANTE")) {
+        } else if (tipoDato1.equals("STRING") && tipoDato2.equals("FLOAT")) {
             return false;
         } else if (tipoDato1.equals("STRING") && tipoDato2.equals("STRING")) {
             return true;
-        } else if (tipoDato1.equals("STRING") && tipoDato2.equals("BOOLEANO")) {
+        } else if (tipoDato1.equals("STRING") && tipoDato2.equals("BOOLEAN")) {
             return false;
-        } else if (tipoDato1.equals("BOOLEANO") && tipoDato2.equals("ENTERO")) {
+        } else if (tipoDato1.equals("BOOLEAN") && tipoDato2.equals("INTEGER")) {
             return false;
-        } else if (tipoDato1.equals("BOOLEANO") && tipoDato2.equals("FLOTANTE")) {
+        } else if (tipoDato1.equals("BOOLEAN") && tipoDato2.equals("FLOAT")) {
             return false;
-        } else if (tipoDato1.equals("BOOLEANO") && tipoDato2.equals("STRING")) {
+        } else if (tipoDato1.equals("BOOLEAN") && tipoDato2.equals("STRING")) {
             return false;
         } else {
-            return tipoDato1.equals("BOOLEANO") && tipoDato2.equals("BOOLEANO");
+            return tipoDato1.equals("BOOLEAN") && tipoDato2.equals("BOOLEAN");
         }
 
-    }
-
-    /**
-     * Método que retorna el numero de prioridad de las operaciones, segun su
-     * prioridad
-     *
-     * @param operador
-     * @return
-     */
-    public int prioridad(String operador) {
-        switch (operador) {
-            case "^":
-                return 6;
-            case "/":
-            case "*":
-            case "%":
-                return 5;
-            case "+":
-            case "-":
-                return 4;
-            case ">":
-            case "<":
-            case ">=":
-            case "<=":
-            case "==":
-            case "!=":
-                return 3;
-            case "&&":
-            case "||":
-            case "!":
-                return 2;
-            default:
-                break;
-        }
-        return 1;
-    }
-
-    /**
-     * Método que verifica que el lexema sea un operador o no
-     *
-     * @param s
-     * @return si es un operador, retorna true
-     */
-    public boolean isOperador(String s) {
-        return s.equals("%") || s.equals("*") || s.equals("^") || s.equals("/") || s.equals("+") || s.equals("-") || s.equals("!") || s.equals("&&") || s.equals("||") || s.equals("<") || s.equals(">") || s.equals(">=") || s.equals("<=") || s.equals("==") || s.equals("!=");
     }
 
     public static void main(String[] args) {
-        ColaD cola = new ColaD();
-        cola.inserta(new Nodo("4", -1), null);
-        cola.inserta(new Nodo("*", -1), null);
-        cola.inserta(new Nodo("2", -1), null);
-        cola.inserta(new Nodo("+", -1), null);
-        cola.inserta(new Nodo("(", -1), null);
-        cola.inserta(new Nodo("12", -1), null);
-        cola.inserta(new Nodo("/", -1), null);
-        cola.inserta(new Nodo("3", -1), null);
-        cola.inserta(new Nodo(")", -1), null);
-        cola.inserta(new Nodo("-", -1), null);
-        cola.inserta(new Nodo("5", -1), null);
-        Semantico s = new Semantico();
-        System.out.println("Operacion infija: ");
-        System.out.println(" 4 * 2 +(12/3)-5");
-        ColaD res = s.posfijo(cola, null, null);
-        ColaD res2 = new ColaD();
-        System.out.println("Posfija");
-        while (res.getA() != null) {
-            Nodo n1 = res.elimina(null);
-            Nodo n2 = new Nodo(n1.getS(), -1);
-            res2.inserta(n2, null);
-            System.out.print(n2.getS() + " ");
-        }
-        while (res2.getA() != null) {
+        ArrayList<String> arr = new ArrayList<>();
+        arr.add("true");
+        String id = "var";
+        String tipo = "BOOLEAN";//Si no esta declarado ERROR!! :(
+        String valor = Semantico.conversionArrayCola(arr, tipo); //RETORNA EL VALOR DE LA OPERACION
+        String tipoDatoValor = Semantico.tipoDato(valor); //RETORNA EL TIPO DE DATO DEL VALOR
+        if (Semantico.asignacion(tipo, tipoDatoValor)) { //VALIDA EL TIPO DE DATO DEL IDENTIFICADOR CON EL DEL VALOR
 
-            Nodo n1 = res2.elimina(null);
-            Nodo n2 = new Nodo(n1.getS(), -1);
-            res.inserta(n1, null);
+        } else {
+            System.out.println("ERROR DE ASIGNACION");
         }
-        System.out.println("");
-        System.out.println("Resultado: " + s.operaciones(res));
-
     }
 }

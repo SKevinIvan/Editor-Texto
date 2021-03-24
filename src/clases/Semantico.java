@@ -21,10 +21,9 @@ public class Semantico {
      * asignaciones
      *
      * @param arr
-     * @param tipo
      * @return
      */
-    public static String conversionArrayCola(ArrayList<String> arr, String tipo) {
+    public static String conversionArrayCola(ArrayList<String> arr) {
         String valor;
         if (arr.size() == 1) {
             return arr.get(0);
@@ -1717,17 +1716,39 @@ public class Semantico {
 
     }
 
+    public static String tipoDatoID(String tipoD) {
+        switch (tipoD) {
+            case "int":
+                return "INTEGER";
+
+            case "float":
+                return "FLOAT";
+            case "String":
+                return "STRING";
+            case "boolean":
+                return "BOOLEAN";
+            default:
+                return "?";
+        }
+    }
+
     public static void main(String[] args) {
         ArrayList<String> arr = new ArrayList<>();
         arr.add("true");
         String id = "var";
-        String tipo = "BOOLEAN";//Si no esta declarado ERROR!! :(
-        String valor = Semantico.conversionArrayCola(arr, tipo); //RETORNA EL VALOR DE LA OPERACION
-        String tipoDatoValor = Semantico.tipoDato(valor); //RETORNA EL TIPO DE DATO DEL VALOR
-        if (Semantico.asignacion(tipo, tipoDatoValor)) { //VALIDA EL TIPO DE DATO DEL IDENTIFICADOR CON EL DEL VALOR
-
+        String tipo = "int";//Si no esta declarado debe marcar ERROR!! :(
+        String tipoDatoID = Semantico.tipoDatoID(tipo);
+        if (tipoDatoID.equals("?")) {
+            System.out.println("ERROR, ACTUALIZAR TABLA Y DECIR QUE NO ESTA DECLARADA");
         } else {
-            System.out.println("ERROR DE ASIGNACION");
+            String valor = Semantico.conversionArrayCola(arr); //RETORNA EL VALOR DE LA OPERACION
+            String tipoDatoValor = Semantico.tipoDato(valor); //RETORNA EL TIPO DE DATO DEL VALOR
+            if (Semantico.asignacion(tipo, tipoDatoValor)) { //VALIDA EL TIPO DE DATO DEL IDENTIFICADOR CON EL DEL VALOR
+
+            } else {
+                System.out.println("ERROR DE ASIGNACION");
+            }
         }
+
     }
 }

@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package clases;
+package anexos;
 
 import estructurasDatos.ColaD;
 import estructurasDatos.Nodo;
@@ -55,53 +55,31 @@ public class Semantico {
         PilaD pOperadores = new PilaD();
         while (cola.getF() != null) {
             String s = cola.elimina(null).getS();
-            try {
-                if (isOperador(s) || s.equals(")")) {
-                    if (s.equals(")")) {
-
-                        while (pOperadores.getTope() != null) {
-                            if (pOperadores.getTope().getS().equals("(")) {
-                                pOperadores.elimina(null);
-                                break;
+            if (isOperadorS(s)) {
+                if (isOperador(s)) {
+                    if (pOperadores.getTope() != null) {
+                        String s2 = pOperadores.elimina(null).getS();
+                        if (isOperador(s2)) {
+                            if (prioridad(s2) >= prioridad(s)) {
+                                pOperadores.inserta(new Nodo(s, -1), null);
+                                pResultado.inserta(new Nodo(s2, -1), null);
+                            } else if (prioridad(s2) < prioridad(s)) {
+                                pOperadores.inserta(new Nodo(s2, -1), null);
+                                pOperadores.inserta(new Nodo(s, -1), null);
                             } else {
-                                String op = pOperadores.elimina(null).getS();
-                                pResultado.inserta(new Nodo(op, -1), null);
-                            }
-                        }
-                    } else {
-                        if (isOperador(s)) {
-                            if (pOperadores.getTope() != null) {
-                                String s2 = pOperadores.elimina(null).getS();
-                                if (isOperador(s2)) {
-                                    if (prioridad(s2) >= prioridad(s)) {
-                                        pOperadores.inserta(new Nodo(s, -1), null);
-                                        pResultado.inserta(new Nodo(s2, -1), null);
-                                    } else if (prioridad(s2) < prioridad(s)) {
-                                        pOperadores.inserta(new Nodo(s2, -1), null);
-                                        pResultado.inserta(new Nodo(s, -1), null);
-                                    } else {
-                                        pOperadores.inserta(new Nodo(s2, -1), null);
-                                        pOperadores.inserta(new Nodo(s, -1), null);
-                                    }
-                                } else {
-                                    pOperadores.inserta(new Nodo(s2, -1), null);
-                                    pOperadores.inserta(new Nodo(s, -1), null);
-                                }
-                            } else {
+                                pOperadores.inserta(new Nodo(s2, -1), null);
                                 pOperadores.inserta(new Nodo(s, -1), null);
                             }
                         } else {
+                            pOperadores.inserta(new Nodo(s2, -1), null);
                             pOperadores.inserta(new Nodo(s, -1), null);
                         }
+                    } else {
+                        pOperadores.inserta(new Nodo(s, -1), null);
                     }
-                } else {
-                    pResultado.inserta(new Nodo(s, -1), null);
-                }
-
-            } catch (NumberFormatException e) {
-                //Es un operador
-                if (s.equals(")")) {
-
+                } else if (s.equals("(")) {
+                    pOperadores.inserta(new Nodo(s, -1), null);
+                } else if (s.equals(")")) {
                     while (pOperadores.getTope() != null) {
                         if (pOperadores.getTope().getS().equals("(")) {
                             pOperadores.elimina(null);
@@ -111,39 +89,16 @@ public class Semantico {
                             pResultado.inserta(new Nodo(op, -1), null);
                         }
                     }
-                } else {
-                    if (isOperador(s)) {
-                        if (pOperadores.getTope() != null) {
-                            String s2 = pOperadores.elimina(null).getS();
-                            if (isOperador(s2)) {
-                                if (prioridad(s2) >= prioridad(s)) {
-                                    pOperadores.inserta(new Nodo(s, -1), null);
-                                    pResultado.inserta(new Nodo(s2, -1), null);
-                                } else if (prioridad(s2) < prioridad(s)) {
-                                    pOperadores.inserta(new Nodo(s2, -1), null);
-                                    pResultado.inserta(new Nodo(s, -1), null);
-                                } else {
-                                    pOperadores.inserta(new Nodo(s2, -1), null);
-                                    pOperadores.inserta(new Nodo(s, -1), null);
-                                }
-                            } else {
-                                pOperadores.inserta(new Nodo(s2, -1), null);
-                                pOperadores.inserta(new Nodo(s, -1), null);
-                            }
-                        } else {
-                            pOperadores.inserta(new Nodo(s, -1), null);
-                        }
-                    } else {
-                        pOperadores.inserta(new Nodo(s, -1), null);
-                    }
                 }
+            } else {
+                pResultado.inserta(new Nodo(s, -1), null);
             }
-
         }
         while (pOperadores.getTope() != null) {
             String op = pOperadores.elimina(null).getS();
             pResultado.inserta(new Nodo(op, -1), null);
         }
+
         return pResultado;
     }
 
@@ -261,8 +216,8 @@ public class Semantico {
                     try {
                         int var1 = Integer.parseInt(op1);
                         int var2 = Integer.parseInt(op2);
-
-                        resultados[1] = (var1 + var2) + "";
+                        int res = var1 + var2;
+                        resultados[1] = res + "";
                         resultados[0] = "TRUE";
                     } catch (NumberFormatException e) {
                         resultados[0] = "FALSE";
@@ -272,8 +227,8 @@ public class Semantico {
                     try {
                         int var1 = Integer.parseInt(op1);
                         int var2 = Integer.parseInt(op2);
-
-                        resultados[1] = (var1 - var2) + "";
+                        int var3 = var1 - var2;
+                        resultados[1] = var3 + "";
                         resultados[0] = "TRUE";
                     } catch (NumberFormatException e) {
                         resultados[0] = "FALSE";
@@ -283,8 +238,8 @@ public class Semantico {
                     try {
                         int var1 = Integer.parseInt(op1);
                         int var2 = Integer.parseInt(op2);
-
-                        resultados[1] = (var1 * var2) + "";
+                        int var3 = var1 * var2;
+                        resultados[1] = var3 + "";
                         resultados[0] = "TRUE";
                     } catch (NumberFormatException e) {
                         resultados[0] = "FALSE";
@@ -294,8 +249,8 @@ public class Semantico {
                     try {
                         int var1 = Integer.parseInt(op1);
                         int var2 = Integer.parseInt(op2);
-
-                        resultados[1] = (var1 / var2) + "";
+                        int var3 = var1 / var2;
+                        resultados[1] = var3 + "";
                         resultados[0] = "TRUE";
                     } catch (NumberFormatException e) {
                         resultados[0] = "FALSE";
@@ -305,8 +260,9 @@ public class Semantico {
                     try {
                         int var1 = Integer.parseInt(op1);
                         int var2 = Integer.parseInt(op2);
-
-                        resultados[1] = Math.pow(var2, var1) + "";
+                        String s = String.valueOf(Math.pow(var2, var1));
+                        int res = Integer.parseInt(s);
+                        resultados[1] = res + "";
                         resultados[0] = "TRUE";
                     } catch (NumberFormatException e) {
                         resultados[0] = "FALSE";
@@ -316,8 +272,8 @@ public class Semantico {
                     try {
                         int var1 = Integer.parseInt(op1);
                         int var2 = Integer.parseInt(op2);
-
-                        resultados[1] = (var1 % var2) + "";
+                        int var3 = var1 % var2;
+                        resultados[1] = var3 + "";
                         resultados[0] = "TRUE";
                     } catch (NumberFormatException e) {
                         resultados[0] = "FALSE";
@@ -327,8 +283,8 @@ public class Semantico {
                     try {
                         int var1 = Integer.parseInt(op1);
                         int var2 = Integer.parseInt(op2);
-
-                        resultados[1] = (var1 > var2) + "";
+                        boolean var3 = var1 > var2;
+                        resultados[1] = var3 + "";
                         resultados[0] = "TRUE";
                     } catch (NumberFormatException e) {
                         resultados[0] = "FALSE";
@@ -338,8 +294,8 @@ public class Semantico {
                     try {
                         int var1 = Integer.parseInt(op1);
                         int var2 = Integer.parseInt(op2);
-
-                        resultados[1] = (var1 >= var2) + "";
+                        boolean var3 = var1 >= var2;
+                        resultados[1] = var3 + "";
                         resultados[0] = "TRUE";
                     } catch (NumberFormatException e) {
                         resultados[0] = "FALSE";
@@ -349,8 +305,8 @@ public class Semantico {
                     try {
                         int var1 = Integer.parseInt(op1);
                         int var2 = Integer.parseInt(op2);
-
-                        resultados[1] = (var1 < var2) + "";
+                        boolean var3 = var1 < var2;
+                        resultados[1] = var3 + "";
                         resultados[0] = "TRUE";
                     } catch (NumberFormatException e) {
                         resultados[0] = "FALSE";
@@ -360,8 +316,8 @@ public class Semantico {
                     try {
                         int var1 = Integer.parseInt(op1);
                         int var2 = Integer.parseInt(op2);
-
-                        resultados[1] = (var1 <= var2) + "";
+                        boolean var3 = var1 <= var2;
+                        resultados[1] = var3 + "";
                         resultados[0] = "TRUE";
                     } catch (NumberFormatException e) {
                         resultados[0] = "FALSE";
@@ -371,8 +327,8 @@ public class Semantico {
                     try {
                         int var1 = Integer.parseInt(op1);
                         int var2 = Integer.parseInt(op2);
-
-                        resultados[1] = (var1 == var2) + "";
+                        boolean var3 = var1 == var2;
+                        resultados[1] = var3 + "";
                         resultados[0] = "TRUE";
                     } catch (NumberFormatException e) {
                         resultados[0] = "FALSE";
@@ -382,8 +338,8 @@ public class Semantico {
                     try {
                         int var1 = Integer.parseInt(op1);
                         int var2 = Integer.parseInt(op2);
-
-                        resultados[1] = (var1 != var2) + "";
+                        boolean var3 = var1 != var2;
+                        resultados[1] = var3 + "";
                         resultados[0] = "TRUE";
                     } catch (NumberFormatException e) {
                         resultados[0] = "FALSE";
@@ -403,8 +359,8 @@ public class Semantico {
                     try {
                         int var1 = Integer.parseInt(op1);
                         float var2 = Float.parseFloat(op2);
-
-                        resultados[1] = (var1 + var2) + "";
+                        float var3 = var1 + var2;
+                        resultados[1] = var3 + "";
                         resultados[0] = "TRUE";
                     } catch (NumberFormatException e) {
                         resultados[0] = "FALSE";
@@ -414,8 +370,8 @@ public class Semantico {
                     try {
                         int var1 = Integer.parseInt(op1);
                         float var2 = Float.parseFloat(op2);
-
-                        resultados[1] = (var1 - var2) + "";
+                        float var3 = var1 - var2;
+                        resultados[1] = var3 + "";
                         resultados[0] = "TRUE";
                     } catch (NumberFormatException e) {
                         resultados[0] = "FALSE";
@@ -425,8 +381,8 @@ public class Semantico {
                     try {
                         int var1 = Integer.parseInt(op1);
                         float var2 = Float.parseFloat(op2);
-
-                        resultados[1] = (var1 * var2) + "";
+                        float var3 = var1 * var2;
+                        resultados[1] = var3 + "";
                         resultados[0] = "TRUE";
                     } catch (NumberFormatException e) {
                         resultados[0] = "FALSE";
@@ -436,8 +392,8 @@ public class Semantico {
                     try {
                         int var1 = Integer.parseInt(op1);
                         float var2 = Float.parseFloat(op2);
-
-                        resultados[1] = (var1 / var2) + "";
+                        float var3 = var1 / var2;
+                        resultados[1] = var3 + "";
                         resultados[0] = "TRUE";
                     } catch (NumberFormatException e) {
                         resultados[0] = "FALSE";
@@ -447,8 +403,9 @@ public class Semantico {
                     try {
                         int var1 = Integer.parseInt(op1);
                         float var2 = Float.parseFloat(op2);
-
-                        resultados[1] = Math.pow(var2, var1) + "";
+                        String s = String.valueOf(Math.pow(var2, var1));
+                        float var3 = Float.parseFloat(s);
+                        resultados[1] = var3 + "";
                         resultados[0] = "TRUE";
                     } catch (NumberFormatException e) {
                         resultados[0] = "FALSE";
@@ -458,8 +415,8 @@ public class Semantico {
                     try {
                         int var1 = Integer.parseInt(op1);
                         float var2 = Float.parseFloat(op2);
-
-                        resultados[1] = var1 % var2 + "";
+                        float var3 = var1 % var2;
+                        resultados[1] = var3 + "";
                         resultados[0] = "TRUE";
                     } catch (NumberFormatException e) {
                         resultados[0] = "FALSE";
@@ -469,8 +426,8 @@ public class Semantico {
                     try {
                         int var1 = Integer.parseInt(op1);
                         float var2 = Float.parseFloat(op2);
-
-                        resultados[1] = (var1 > var2) + "";
+                        boolean var3 = var1 > var2;
+                        resultados[1] = var3 + "";
                         resultados[0] = "TRUE";
                     } catch (NumberFormatException e) {
                         resultados[0] = "FALSE";
@@ -481,7 +438,8 @@ public class Semantico {
                         int var1 = Integer.parseInt(op1);
                         float var2 = Float.parseFloat(op2);
 
-                        resultados[1] = (var1 >= var2) + "";
+                        boolean var3 = var1 >= var2;
+                        resultados[1] = var3 + "";
                         resultados[0] = "TRUE";
                     } catch (NumberFormatException e) {
                         resultados[0] = "FALSE";
@@ -492,7 +450,8 @@ public class Semantico {
                         int var1 = Integer.parseInt(op1);
                         float var2 = Float.parseFloat(op2);
 
-                        resultados[1] = (var1 < var2) + "";
+                        boolean var3 = var1 < var2;
+                        resultados[1] = var3 + "";
                         resultados[0] = "TRUE";
                     } catch (NumberFormatException e) {
                         resultados[0] = "FALSE";
@@ -503,7 +462,8 @@ public class Semantico {
                         int var1 = Integer.parseInt(op1);
                         float var2 = Float.parseFloat(op2);
 
-                        resultados[1] = (var1 <= var2) + "";
+                        boolean var3 = var1 <= var2;
+                        resultados[1] = var3 + "";
                         resultados[0] = "TRUE";
                     } catch (NumberFormatException e) {
                         resultados[0] = "FALSE";
@@ -514,7 +474,8 @@ public class Semantico {
                         int var1 = Integer.parseInt(op1);
                         float var2 = Float.parseFloat(op2);
 
-                        resultados[1] = (var1 == var2) + "";
+                        boolean var3 = var1 == var2;
+                        resultados[1] = var3 + "";
                         resultados[0] = "TRUE";
                     } catch (NumberFormatException e) {
                         resultados[0] = "FALSE";
@@ -525,7 +486,8 @@ public class Semantico {
                         int var1 = Integer.parseInt(op1);
                         float var2 = Float.parseFloat(op2);
 
-                        resultados[1] = (var1 != var2) + "";
+                        boolean var3 = var1 != var2;
+                        resultados[1] = var3 + "";
                         resultados[0] = "TRUE";
                     } catch (NumberFormatException e) {
                         resultados[0] = "FALSE";
@@ -541,51 +503,9 @@ public class Semantico {
             }
 
         } else if (tipoDato1.equals("INTEGER") && tipoDato2.equals("STRING")) {
-            switch (operador) {
-                case "+":
-                case "-":
-                case "*":
-                case "/":
-                case "^":
-                case "%":
-                case ">":
-                case ">=":
-                case "<":
-                case "<=":
-                case "==":
-                case "!=":
-                case "&&":
-                case "||":
-                    resultados[0] = "FALSE";
-                    break;
-                default:
-                    resultados[0] = "FALSE";
-                    break;
-            }
-
+            resultados[0] = "FALSE";
         } else if (tipoDato1.equals("INTEGER") && tipoDato2.equals("BOOLEAN")) {
-            switch (operador) {
-                case "+":
-                case "-":
-                case "*":
-                case "/":
-                case "^":
-                case "%":
-                case ">":
-                case ">=":
-                case "<":
-                case "<=":
-                case "==":
-                case "!=":
-                case "&&":
-                case "||":
-                    resultados[0] = "FALSE";
-                    break;
-                default:
-                    resultados[0] = "FALSE";
-                    break;
-            }
-
+            resultados[0] = "FALSE";
         } else if (tipoDato1.equals("FLOAT") && tipoDato2.equals("INTEGER")) {
             switch (operador) {
                 case "+":
@@ -593,7 +513,8 @@ public class Semantico {
                         float var1 = Float.parseFloat(op1);
                         int var2 = Integer.parseInt(op2);
 
-                        resultados[1] = (var1 + var2) + "";
+                        float var3 = var1 + var2;
+                        resultados[1] = var3 + "";
                         resultados[0] = "TRUE";
                     } catch (NumberFormatException e) {
                         resultados[0] = "FALSE";
@@ -603,8 +524,8 @@ public class Semantico {
                     try {
                         float var1 = Float.parseFloat(op1);
                         int var2 = Integer.parseInt(op2);
-
-                        resultados[1] = (var1 - var2) + "";
+                        float var3 = var1 - var2;
+                        resultados[1] = var3 + "";
                         resultados[0] = "TRUE";
                     } catch (NumberFormatException e) {
                         resultados[0] = "FALSE";
@@ -614,8 +535,8 @@ public class Semantico {
                     try {
                         float var1 = Float.parseFloat(op1);
                         int var2 = Integer.parseInt(op2);
-
-                        resultados[1] = (var1 * var2) + "";
+                        float var3 = var1 * var2;
+                        resultados[1] = var3 + "";
                         resultados[0] = "TRUE";
                     } catch (NumberFormatException e) {
                         resultados[0] = "FALSE";
@@ -625,8 +546,8 @@ public class Semantico {
                     try {
                         float var1 = Float.parseFloat(op1);
                         int var2 = Integer.parseInt(op2);
-
-                        resultados[1] = (var1 / var2) + "";
+                        float var3 = var1 / var2;
+                        resultados[1] = var3 + "";
                         resultados[0] = "TRUE";
                     } catch (NumberFormatException e) {
                         resultados[0] = "FALSE";
@@ -636,8 +557,9 @@ public class Semantico {
                     try {
                         float var1 = Float.parseFloat(op1);
                         int var2 = Integer.parseInt(op2);
-
-                        resultados[1] = Math.pow(var2, var1) + "";
+                        String s = String.valueOf(Math.pow(var2, var1));
+                        float var3 = Float.parseFloat(s);
+                        resultados[1] = var3 + "";
                         resultados[0] = "TRUE";
                     } catch (NumberFormatException e) {
                         resultados[0] = "FALSE";
@@ -647,8 +569,8 @@ public class Semantico {
                     try {
                         float var1 = Float.parseFloat(op1);
                         int var2 = Integer.parseInt(op2);
-
-                        resultados[1] = (var1 % var2) + "";
+                        float var3 = var1 % var2;
+                        resultados[1] = var3 + "";
                         resultados[0] = "TRUE";
                     } catch (NumberFormatException e) {
                         resultados[0] = "FALSE";
@@ -658,8 +580,8 @@ public class Semantico {
                     try {
                         float var1 = Float.parseFloat(op1);
                         int var2 = Integer.parseInt(op2);
-
-                        resultados[1] = (var1 > var2) + "";
+                        boolean var3 = var1 > var2;
+                        resultados[1] = var3 + "";
                         resultados[0] = "TRUE";
                     } catch (NumberFormatException e) {
                         resultados[0] = "FALSE";
@@ -669,8 +591,8 @@ public class Semantico {
                     try {
                         float var1 = Float.parseFloat(op1);
                         int var2 = Integer.parseInt(op2);
-
-                        resultados[1] = (var1 >= var2) + "";
+                        boolean var3 = var1 >= var2;
+                        resultados[1] = var3 + "";
                         resultados[0] = "TRUE";
                     } catch (NumberFormatException e) {
                         resultados[0] = "FALSE";
@@ -681,7 +603,8 @@ public class Semantico {
                         float var1 = Float.parseFloat(op1);
                         int var2 = Integer.parseInt(op2);
 
-                        resultados[1] = (var1 < var2) + "";
+                        boolean var3 = var1 < var2;
+                        resultados[1] = var3 + "";
                         resultados[0] = "TRUE";
                     } catch (NumberFormatException e) {
                         resultados[0] = "FALSE";
@@ -691,8 +614,8 @@ public class Semantico {
                     try {
                         float var1 = Float.parseFloat(op1);
                         int var2 = Integer.parseInt(op2);
-
-                        resultados[1] = (var1 <= var2) + "";
+                        boolean var3 = var1 <= var2;
+                        resultados[1] = var3 + "";
                         resultados[0] = "TRUE";
                     } catch (NumberFormatException e) {
                         resultados[0] = "FALSE";
@@ -702,8 +625,8 @@ public class Semantico {
                     try {
                         float var1 = Float.parseFloat(op1);
                         int var2 = Integer.parseInt(op2);
-
-                        resultados[1] = (var1 == var2) + "";
+                        boolean var3 = var1 == var2;
+                        resultados[1] = var3 + "";
                         resultados[0] = "TRUE";
                     } catch (NumberFormatException e) {
                         resultados[0] = "FALSE";
@@ -713,8 +636,8 @@ public class Semantico {
                     try {
                         float var1 = Float.parseFloat(op1);
                         int var2 = Integer.parseInt(op2);
-
-                        resultados[1] = (var1 != var2) + "";
+                        boolean var3 = var1 != var2;
+                        resultados[1] = var3 + "";
                         resultados[0] = "TRUE";
                     } catch (NumberFormatException e) {
                         resultados[0] = "FALSE";
@@ -735,8 +658,8 @@ public class Semantico {
                     try {
                         float var1 = Float.parseFloat(op1);
                         float var2 = Float.parseFloat(op2);
-
-                        resultados[1] = (var1 + var2) + "";
+                        float var3 = var1 + var2;
+                        resultados[1] = var3 + "";
                         resultados[0] = "TRUE";
                     } catch (NumberFormatException e) {
                         resultados[0] = "FALSE";
@@ -746,8 +669,8 @@ public class Semantico {
                     try {
                         float var1 = Float.parseFloat(op1);
                         float var2 = Float.parseFloat(op2);
-
-                        resultados[1] = (var1 - var2) + "";
+                        float var3 = var1 - var2;
+                        resultados[1] = var3 + "";
                         resultados[0] = "TRUE";
                     } catch (NumberFormatException e) {
                         resultados[0] = "FALSE";
@@ -757,8 +680,8 @@ public class Semantico {
                     try {
                         float var1 = Float.parseFloat(op1);
                         float var2 = Float.parseFloat(op2);
-
-                        resultados[1] = (var1 * var2) + "";
+                        float var3 = var1 * var2;
+                        resultados[1] = var3 + "";
                         resultados[0] = "TRUE";
                     } catch (NumberFormatException e) {
                         resultados[0] = "FALSE";
@@ -768,8 +691,8 @@ public class Semantico {
                     try {
                         float var1 = Float.parseFloat(op1);
                         float var2 = Float.parseFloat(op2);
-
-                        resultados[1] = (var1 / var2) + "";
+                        float var3 = var1 / var2;
+                        resultados[1] = var3 + "";
                         resultados[0] = "TRUE";
                     } catch (NumberFormatException e) {
                         resultados[0] = "FALSE";
@@ -780,7 +703,9 @@ public class Semantico {
                         float var1 = Float.parseFloat(op1);
                         float var2 = Float.parseFloat(op2);
 
-                        resultados[1] = Math.pow(var2, var1) + "";
+                        String s = String.valueOf(Math.pow(var2, var1));
+                        float var3 = Float.parseFloat(s);
+                        resultados[1] = var3 + "";
                         resultados[0] = "TRUE";
                     } catch (NumberFormatException e) {
                         resultados[0] = "FALSE";
@@ -790,8 +715,8 @@ public class Semantico {
                     try {
                         float var1 = Float.parseFloat(op1);
                         float var2 = Float.parseFloat(op2);
-
-                        resultados[1] = (var1 % var2) + "";
+                        float var3 = var1 % var2;
+                        resultados[1] = var3 + "";
                         resultados[0] = "TRUE";
                     } catch (NumberFormatException e) {
                         resultados[0] = "FALSE";
@@ -801,8 +726,8 @@ public class Semantico {
                     try {
                         float var1 = Float.parseFloat(op1);
                         float var2 = Float.parseFloat(op2);
-
-                        resultados[1] = (var1 > var2) + "";
+                        boolean var3 = var1 > var2;
+                        resultados[1] = var3 + "";
                         resultados[0] = "TRUE";
                     } catch (NumberFormatException e) {
                         resultados[0] = "FALSE";
@@ -812,8 +737,8 @@ public class Semantico {
                     try {
                         float var1 = Float.parseFloat(op1);
                         float var2 = Float.parseFloat(op2);
-
-                        resultados[1] = (var1 >= var2) + "";
+                        boolean var3 = var1 >= var2;
+                        resultados[1] = var3 + "";
                         resultados[0] = "TRUE";
                     } catch (NumberFormatException e) {
                         resultados[0] = "FALSE";
@@ -823,8 +748,8 @@ public class Semantico {
                     try {
                         float var1 = Float.parseFloat(op1);
                         float var2 = Float.parseFloat(op2);
-
-                        resultados[1] = (var1 < var2) + "";
+                        boolean var3 = var1 < var2;
+                        resultados[1] = var3 + "";
                         resultados[0] = "TRUE";
                     } catch (NumberFormatException e) {
                         resultados[0] = "FALSE";
@@ -834,9 +759,8 @@ public class Semantico {
                     try {
                         float var1 = Float.parseFloat(op1);
                         float var2 = Float.parseFloat(op2);
-
-                        resultados[1] = (var1 <= var2) + "";
-                        resultados[0] = "TRUE";
+                        boolean var3 = var1 <= var2;
+                        resultados[1] = var3 + "";
                     } catch (NumberFormatException e) {
                         resultados[0] = "FALSE";
                     }
@@ -845,8 +769,8 @@ public class Semantico {
                     try {
                         float var1 = Float.parseFloat(op1);
                         float var2 = Float.parseFloat(op2);
-
-                        resultados[1] = (var1 == var2) + "";
+                        boolean var3 = var1 == var2;
+                        resultados[1] = var3 + "";
                         resultados[0] = "TRUE";
                     } catch (NumberFormatException e) {
                         resultados[0] = "FALSE";
@@ -856,8 +780,8 @@ public class Semantico {
                     try {
                         float var1 = Float.parseFloat(op1);
                         float var2 = Float.parseFloat(op2);
-
-                        resultados[1] = (var1 != var2) + "";
+                        boolean var3 = var1 != var2;
+                        resultados[1] = var3 + "";
                         resultados[0] = "TRUE";
                     } catch (NumberFormatException e) {
                         resultados[0] = "FALSE";
@@ -873,58 +797,15 @@ public class Semantico {
             }
 
         } else if (tipoDato1.equals("FLOAT") && tipoDato2.equals("STRING")) {
-            switch (operador) {
-                case "+":
-                case "-":
-                case "*":
-                case "/":
-                case "^":
-                case "%":
-                case ">":
-                case ">=":
-                case "<":
-                case "<=":
-                case "==":
-                case "!=":
-                case "&&":
-                case "||":
-                    resultados[0] = "FALSE";
-                    break;
-                default:
-                    resultados[0] = "FALSE";
-                    break;
-            }
-
+            resultados[0] = "FALSE";
         } else if (tipoDato1.equals("FLOAT") && tipoDato2.equals("BOOLEAN")) {
-            switch (operador) {
-                case "+":
-                case "-":
-                case "*":
-                case "/":
-                case "^":
-                case "%":
-                case ">":
-                case ">=":
-                case "<":
-                case "<=":
-                case "==":
-                case "!=":
-                case "&&":
-                case "||":
-                    resultados[0] = "FALSE";
-                    break;
-                default:
-                    resultados[0] = "FALSE";
-                    break;
-            }
-
+            resultados[0] = "FALSE";
         } else if (tipoDato1.equals("STRING") && tipoDato2.equals("INTEGER")) {
             switch (operador) {
                 case "+":
                     try {
                         String var1 = String.valueOf(op1);
                         int var2 = Integer.parseInt(op2);
-
                         resultados[1] = var1 + var2 + "";
                         resultados[0] = "TRUE";
                     } catch (NumberFormatException e) {
@@ -1241,7 +1122,7 @@ public class Semantico {
                 case "%":
                     return "INTEGER";
                 case "^":
-                    return "FLOAT";
+                    return "INTEGER";
                 case ">":
                 case "<":
                 case ">=":
@@ -1285,60 +1166,9 @@ public class Semantico {
             }
 
         } else if (tipoDato1.equals("INTEGER") && tipoDato2.equals("STRING")) {
-            switch (operador) {
-                case "+":
-                    return "NOT";
-                case "-":
-                    return "NOT";
-                case "*":
-                    return "NOT";
-                case "/":
-                    return "NOT";
-                case "%":
-                    return "NOT";
-                case "^":
-                    return "NOT";
-                case ">":
-                case "<":
-                case ">=":
-                case "<=":
-                case "!=":
-                case "==":
-                    return "NOT";
-                case "&&":
-                case "||":
-                    return "NOT";
-                default:
-                    return "NOT";
-            }
-
+            return "NOT";
         } else if (tipoDato1.equals("INTEGER") && tipoDato2.equals("BOOLEAN")) {
-            switch (operador) {
-                case "+":
-                    return "NOT";
-                case "-":
-                    return "NOT";
-                case "*":
-                    return "NOT";
-                case "/":
-                    return "NOT";
-                case "%":
-                    return "NOT";
-                case "^":
-                    return "NOT";
-                case ">":
-                case "<":
-                case ">=":
-                case "<=":
-                case "!=":
-                case "==":
-                    return "NOT";
-                case "&&":
-                case "||":
-                    return "NOT";
-                default:
-                    return "NOT";
-            }
+            return "NOT";
         } else if (tipoDato1.equals("FLOAT") && tipoDato2.equals("INTEGER")) {
             switch (operador) {
                 case "+":
@@ -1395,83 +1225,13 @@ public class Semantico {
             }
 
         } else if (tipoDato1.equals("FLOAT") && tipoDato2.equals("STRING")) {
-            switch (operador) {
-                case "+":
-                    return "NOT";
-                case "-":
-                    return "NOT";
-                case "*":
-                    return "NOT";
-                case "/":
-                    return "NOT";
-                case "%":
-                    return "NOT";
-                case "^":
-                    return "NOT";
-                case ">":
-                case "<":
-                case ">=":
-                case "<=":
-                case "!=":
-                case "==":
-                    return "NOT";
-                case "&&":
-                case "||":
-                    return "NOT";
-                default:
-                    return "NOT";
-            }
+            return "NOT";
         } else if (tipoDato1.equals("FLOAT") && tipoDato2.equals("BOOLEAN")) {
-            switch (operador) {
-                case "+":
-                    return "NOT";
-                case "-":
-                    return "NOT";
-                case "*":
-                    return "NOT";
-                case "/":
-                    return "NOT";
-                case "%":
-                    return "NOT";
-                case "^":
-                    return "NOT";
-                case ">":
-                case "<":
-                case ">=":
-                case "<=":
-                case "!=":
-                case "==":
-                    return "NOT";
-                case "&&":
-                case "||":
-                    return "NOT";
-                default:
-                    return "NOT";
-            }
+            return "NOT";
         } else if (tipoDato1.equals("STRING") && tipoDato2.equals("INTEGER")) {
             switch (operador) {
                 case "+":
                     return "STRING";
-                case "-":
-                    return "NOT";
-                case "*":
-                    return "NOT";
-                case "/":
-                    return "NOT";
-                case "%":
-                    return "NOT";
-                case "^":
-                    return "NOT";
-                case ">":
-                case "<":
-                case ">=":
-                case "<=":
-                case "!=":
-                case "==":
-                    return "NOT";
-                case "&&":
-                case "||":
-                    return "NOT";
                 default:
                     return "NOT";
             }
@@ -1479,26 +1239,6 @@ public class Semantico {
             switch (operador) {
                 case "+":
                     return "STRING";
-                case "-":
-                    return "NOT";
-                case "*":
-                    return "NOT";
-                case "/":
-                    return "NOT";
-                case "%":
-                    return "NOT";
-                case "^":
-                    return "NOT";
-                case ">":
-                case "<":
-                case ">=":
-                case "<=":
-                case "!=":
-                case "==":
-                    return "NOT";
-                case "&&":
-                case "||":
-                    return "NOT";
                 default:
                     return "NOT";
             }
@@ -1507,15 +1247,10 @@ public class Semantico {
                 case "+":
                     return "STRING";
                 case "-":
-                    return "NOT";
                 case "*":
-                    return "NOT";
                 case "/":
-                    return "NOT";
                 case "%":
-                    return "NOT";
                 case "^":
-                    return "NOT";
                 case ">":
                 case "<":
                 case ">=":
@@ -1534,131 +1269,17 @@ public class Semantico {
             switch (operador) {
                 case "+":
                     return "STRING";
-                case "-":
-                    return "NOT";
-                case "*":
-                    return "NOT";
-                case "/":
-                    return "NOT";
-                case "%":
-                    return "NOT";
-                case "^":
-                    return "NOT";
-                case ">":
-                case "<":
-                case ">=":
-                case "<=":
-                case "!=":
-                case "==":
-                    return "NOT";
-                case "&&":
-                case "||":
-                    return "NOT";
                 default:
                     return "NOT";
             }
         } else if (tipoDato1.equals("BOOLEAN") && tipoDato2.equals("INTEGER")) {
-            switch (operador) {
-                case "+":
-                    return "NOT";
-                case "-":
-                    return "NOT";
-                case "*":
-                    return "NOT";
-                case "/":
-                    return "NOT";
-                case "%":
-                    return "NOT";
-                case "^":
-                    return "NOT";
-                case ">":
-                case "<":
-                case ">=":
-                case "<=":
-                case "!=":
-                case "==":
-                    return "NOT";
-                case "&&":
-                case "||":
-                    return "NOT";
-                default:
-                    return "NOT";
-            }
+            return "NOT";
         } else if (tipoDato1.equals("BOOLEAN") && tipoDato2.equals("FLOAT")) {
-            switch (operador) {
-                case "+":
-                    return "NOT";
-                case "-":
-                    return "NOT";
-                case "*":
-                    return "NOT";
-                case "/":
-                    return "NOT";
-                case "%":
-                    return "NOT";
-                case "^":
-                    return "NOT";
-                case ">":
-                case "<":
-                case ">=":
-                case "<=":
-                case "!=":
-                case "==":
-                    return "NOT";
-                case "&&":
-                case "||":
-                    return "NOT";
-                default:
-                    return "NOT";
-            }
+            return "NOT";
         } else if (tipoDato1.equals("BOOLEAN") && tipoDato2.equals("STRING")) {
-            switch (operador) {
-                case "+":
-                    return "NOT";
-                case "-":
-                    return "NOT";
-                case "*":
-                    return "NOT";
-                case "/":
-                    return "NOT";
-                case "%":
-                    return "NOT";
-                case "^":
-                    return "NOT";
-                case ">":
-                case "<":
-                case ">=":
-                case "<=":
-                case "!=":
-                case "==":
-                    return "NOT";
-                case "&&":
-                case "||":
-                    return "NOT";
-                default:
-                    return "NOT";
-            }
+            return "NOT";
         } else if (tipoDato1.equals("BOOLEAN") && tipoDato2.equals("BOOLEAN")) {
             switch (operador) {
-                case "+":
-                    return "NOT";
-                case "-":
-                    return "NOT";
-                case "*":
-                    return "NOT";
-                case "/":
-                    return "NOT";
-                case "%":
-                    return "NOT";
-                case "^":
-                    return "NOT";
-                case ">":
-                case "<":
-                case ">=":
-                case "<=":
-                case "!=":
-                case "==":
-                    return "NOT";
                 case "&&":
                 case "||":
                     return "BOOLEAN";
@@ -1716,11 +1337,20 @@ public class Semantico {
 
     }
 
+    /**
+     * Método que verifica que el lexema sea un operador o no
+     *
+     * @param s
+     * @return si es un operador, retorna true
+     */
+    public boolean isOperadorS(String s) {
+        return s.equals("%") || s.equals("*") || s.equals("^") || s.equals("/") || s.equals("+") || s.equals("-") || s.equals("!") || s.equals("&&") || s.equals("||") || s.equals("<") || s.equals(">") || s.equals(">=") || s.equals("<=") || s.equals("==") || s.equals("!=") || s.equals("(") || s.equals(")");
+    }
+
     public static String tipoDatoID(String tipoD) {
         switch (tipoD) {
             case "int":
                 return "INTEGER";
-
             case "float":
                 return "FLOAT";
             case "String":
@@ -1734,7 +1364,25 @@ public class Semantico {
 
     public static void main(String[] args) {
         ArrayList<String> arr = new ArrayList<>();
-        arr.add("true");
+        arr.add("345");
+        arr.add("+");
+        arr.add("(");
+        arr.add("53");
+        arr.add("+");
+        arr.add("(");
+        arr.add("345");
+        arr.add("+");
+        arr.add("(");
+        arr.add("23");
+        arr.add("+");
+        arr.add("35");
+        arr.add(")");
+        arr.add("+");
+        arr.add("345");
+        arr.add("+");
+        arr.add("4");
+        arr.add(")");
+        arr.add(")");
         String id = "var";
         String tipo = "int";//Si no esta declarado debe marcar ERROR!! :(
         String tipoDatoID = Semantico.tipoDatoID(tipo);
@@ -1743,12 +1391,11 @@ public class Semantico {
         } else {
             String valor = Semantico.conversionArrayCola(arr); //RETORNA EL VALOR DE LA OPERACION
             String tipoDatoValor = Semantico.tipoDato(valor); //RETORNA EL TIPO DE DATO DEL VALOR
-            if (Semantico.asignacion(tipo, tipoDatoValor)) { //VALIDA EL TIPO DE DATO DEL IDENTIFICADOR CON EL DEL VALOR
-
+            if (Semantico.asignacion(tipoDatoID, tipoDatoValor)) { //VALIDA EL TIPO DE DATO DEL IDENTIFICADOR CON EL DEL VALOR
+                System.out.println("" + valor);
             } else {
                 System.out.println("ERROR DE ASIGNACION");
             }
         }
-
     }
 }

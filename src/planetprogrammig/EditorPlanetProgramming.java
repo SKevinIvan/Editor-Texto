@@ -1546,7 +1546,7 @@ public final class EditorPlanetProgramming extends javax.swing.JFrame {
     private void checkEditandoItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_checkEditandoItemStateChanged
         if (checkEditando.isSelected()) {
             crearPestaniaEdicion();
-            if(archivo){
+            if (archivo) {
                 txtPanelEditando.setText(textoPanelEditando);
             }
         } else {
@@ -2147,7 +2147,7 @@ public final class EditorPlanetProgramming extends javax.swing.JFrame {
             // txtPanelEditando = new javax.swing.JTextPane();
             scrollPaneEditando = new javax.swing.JScrollPane();
 
-            txtPanelEditando = new HighlightLineTextPaneAzul();
+            txtPanelEditando = new PanelTextoEditor();
             EmptyBorder eb = new EmptyBorder(new Insets(0, 5, 0, 0));
             txtPanelEditando.setBorder(eb);
 
@@ -3903,6 +3903,7 @@ public final class EditorPlanetProgramming extends javax.swing.JFrame {
 
         public MyHighlightPainter(Color color) {
             super(color);
+
         }
     }
 

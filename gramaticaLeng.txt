@@ -58,7 +58,7 @@
 <DeclaracionArregloVariable2>  →   54 22 <TipoDato> <ArregloVar2> 
 <DeclaracionArregloVariable2>  →    λ 
 <InicializacionConstante>   →   <InicializacionAtributo>
-<InicializacionConstante>   →  <ArregloVar3> <DeclaracionArregloConstante>
+<InicializacionConstante>   →  <DeclaracionArregloConstante>
 <DeclaracionArregloConstante>   →   <Arreglo1>  <DeclaracionArregloConstante2> <Arreglo2> 
 <DeclaracionArregloConstante2>  →   <Arreglo1>  <DeclaracionArregloConstante2> <Arreglo2>
 <DeclaracionArregloConstante2>  →   54 22 <TipoDato> 
@@ -203,7 +203,7 @@
 <CaptarExtendido>    →   λ 
 <Finalmente>   →    43 61  <Sentencia> 62 
 <Finalmente>   →    λ
-<Concatenacion>   →   47 <Operacion> 
+<Concatenacion>   →   52 <Operacion> 
 <Concatenacion>   →   λ
 <OperacionAritmetica>   →   <Numero> <OperacionAritmetica2>
 <OperacionAritmetica>   →    48  <OperacionAritmetica>
@@ -264,3 +264,4 @@
 <Condicion>   →   39 <CondicionLog> 
 <ReferenciaAtributo>   → 73  65 <Parametro> 66
 <ReferenciaAtributo2> → 73  65 <Parametro> 66
+<AsignacionAtributoVar2> →   22 <TipoDato> <ArregloVar2> 

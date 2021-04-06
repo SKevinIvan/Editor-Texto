@@ -9,6 +9,7 @@ import estructurasDatos.ColaD;
 import estructurasDatos.Nodo;
 import estructurasDatos.PilaD;
 import java.util.ArrayList;
+import java.util.Arrays;
 
 /**
  *
@@ -101,7 +102,6 @@ public class Semantico {
 
         return pResultado;
     }
-
     /**
      * Método que verifica que el lexema sea un operador o no
      *
@@ -155,7 +155,7 @@ public class Semantico {
      */
     public Object operaciones(ColaD pResultado) {
         PilaD pOperacion = new PilaD();
-        Object resultado = 0;
+        Object resultado = null;
         String res[];
         while (pResultado.getF() != null) {
             String s = pResultado.elimina(null).getS();
@@ -176,6 +176,7 @@ public class Semantico {
                         resultado = res[1];
                     } else {
                         //ERROR NO SE PUEDE REALIZAR LA OPERACION
+                        System.out.println(s);
                         System.out.println("Error de operacion");
                         break;
                     }
@@ -249,7 +250,7 @@ public class Semantico {
                     try {
                         int var1 = Integer.parseInt(op1);
                         int var2 = Integer.parseInt(op2);
-                        int var3 = var1 / var2;
+                        int var3 = var2 / var1;
                         resultados[1] = var3 + "";
                         resultados[0] = "TRUE";
                     } catch (NumberFormatException e) {
@@ -260,8 +261,8 @@ public class Semantico {
                     try {
                         int var1 = Integer.parseInt(op1);
                         int var2 = Integer.parseInt(op2);
-                        String s = String.valueOf(Math.pow(var2, var1));
-                        int res = Integer.parseInt(s);
+                        int res = (int) Math.pow(var1, var2);
+
                         resultados[1] = res + "";
                         resultados[0] = "TRUE";
                     } catch (NumberFormatException e) {
@@ -703,7 +704,7 @@ public class Semantico {
                         float var1 = Float.parseFloat(op1);
                         float var2 = Float.parseFloat(op2);
 
-                        String s = String.valueOf(Math.pow(var2, var1));
+                        String s = String.valueOf(Math.pow(var1, var2));
                         float var3 = Float.parseFloat(s);
                         resultados[1] = var3 + "";
                         resultados[0] = "TRUE";
@@ -1364,32 +1365,17 @@ public class Semantico {
 
     public static void main(String[] args) {
         ArrayList<String> arr = new ArrayList<>();
-        arr.add("345");
-        arr.add("+");
-        arr.add("(");
-        arr.add("53");
-        arr.add("+");
-        arr.add("(");
-        arr.add("345");
-        arr.add("+");
-        arr.add("(");
-        arr.add("23");
-        arr.add("+");
-        arr.add("35");
-        arr.add(")");
-        arr.add("+");
-        arr.add("345");
-        arr.add("+");
-        arr.add("4");
-        arr.add(")");
-        arr.add(")");
+        arr.add("2");
+        arr.add("^");
+        arr.add("3");
         String id = "var";
-        String tipo = "int";//Si no esta declarado debe marcar ERROR!! :(
+        String tipo = "boolean";//Si no esta declarado debe marcar ERROR!! :(
         String tipoDatoID = Semantico.tipoDatoID(tipo);
         if (tipoDatoID.equals("?")) {
             System.out.println("ERROR, ACTUALIZAR TABLA Y DECIR QUE NO ESTA DECLARADA");
         } else {
             String valor = Semantico.conversionArrayCola(arr); //RETORNA EL VALOR DE LA OPERACION
+
             String tipoDatoValor = Semantico.tipoDato(valor); //RETORNA EL TIPO DE DATO DEL VALOR
             if (Semantico.asignacion(tipoDatoID, tipoDatoValor)) { //VALIDA EL TIPO DE DATO DEL IDENTIFICADOR CON EL DEL VALOR
                 System.out.println("" + valor);

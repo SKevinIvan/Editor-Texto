@@ -1694,16 +1694,8 @@ public class Semantico_Antes {
     public static void main(String[] args) {
         ArrayList<String> arr = new ArrayList<>();
         arr.add("4");
-        arr.add("-");
+        arr.add("+");
         arr.add("2");
-        arr.add("+");
-        arr.add("8");
-        arr.add("/");
-        arr.add("8");
-        arr.add("+");
-        arr.add("1");
-        arr.add("*");
-        arr.add("4");
         String id = "var";
         String tipo = "INTEGER";
         Semantico_Antes s = new Semantico_Antes();

@@ -225,11 +225,12 @@ public class RutinasSemanticas {
                     if (lexemas.get(i).getNumToken() == 58) {
                         i++;
                     } else {
-                        
+
                     }
                 } else {
-                    
-                }   break;
+
+                }
+                break;
             case 81:
                 importarLibreria2();
                 if (lexemas.get(i).getNumToken() == 81) {
@@ -237,11 +238,12 @@ public class RutinasSemanticas {
                     if (lexemas.get(i).getNumToken() == 58) {
                         i++;
                     } else {
-                        
+
                     }
                 } else {
-                    
-                }   break;
+
+                }
+                break;
             default:
                 break;
         }
@@ -255,9 +257,10 @@ public class RutinasSemanticas {
                     i++;
                     importarLibreria2();
                 } else {
-                    
-                }   break;
-        //Salir
+
+                }
+                break;
+            //Salir
             case 81:
                 break;
             default:
@@ -294,7 +297,8 @@ public class RutinasSemanticas {
         switch (lexemas.get(i).getNumToken()) {
             case 20:
                 //24
-                i++;if (lexemas.get(i).getNumToken() == 4) {
+                i++;
+                if (lexemas.get(i).getNumToken() == 4) {
                     i++;
                     if (lexemas.get(i).getNumToken() == 72) {
                         i++;
@@ -308,17 +312,19 @@ public class RutinasSemanticas {
                                 //Salir
                             }
                         } else {
-                            
+
                         }
                     } else {
 
                     }
                 } else {
-                    
-                }   break;
+
+                }
+                break;
             case 17:
                 //25
-                i++;if (lexemas.get(i).getNumToken() == 4) {
+                i++;
+                if (lexemas.get(i).getNumToken() == 4) {
                     i++;
                     if (lexemas.get(i).getNumToken() == 72) {
                         i++;
@@ -329,7 +335,7 @@ public class RutinasSemanticas {
                             if (lexemas.get(i).getNumToken() == 62) {
                                 i++;
                             } else {
-                                
+
                             }
                         } else {
 
@@ -338,11 +344,13 @@ public class RutinasSemanticas {
 
                     }
                 } else {
-                    
-                }   break;
+
+                }
+                break;
             case 4:
                 //26
-                i++;if (lexemas.get(i).getNumToken() == 72) {
+                i++;
+                if (lexemas.get(i).getNumToken() == 72) {
                     i++;
                     extension();
                     if (lexemas.get(i).getNumToken() == 61) {
@@ -351,14 +359,15 @@ public class RutinasSemanticas {
                         if (lexemas.get(i).getNumToken() == 62) {
                             i++;
                         } else {
-                            
+
                         }
                     } else {
 
                     }
                 } else {
-                    
-                }   break;
+
+                }
+                break;
             default:
                 break;
         }
@@ -375,8 +384,8 @@ public class RutinasSemanticas {
                 //28
                 implementacion();
                 break;
-        //29
-        //Salir
+            //29
+            //Salir
             case 61:
                 break;
             default:
@@ -406,8 +415,8 @@ public class RutinasSemanticas {
                 //31
                 implementar();
                 break;
-        //32
-        //Salir
+            //32
+            //Salir
             case 61:
                 break;
             default:
@@ -451,8 +460,8 @@ public class RutinasSemanticas {
                 //35
                 implementar1();
                 break;
-        //36
-        //Salir
+            //36
+            //Salir
             case 61:
                 break;
             default:
@@ -546,8 +555,9 @@ public class RutinasSemanticas {
                 if (lexemas.get(i).getNumToken() == 58) {
                     i++;
                 } else {
-                    
-                }   break;
+
+                }
+                break;
             case 45:
                 //47
                 tipoDato();
@@ -556,8 +566,9 @@ public class RutinasSemanticas {
                 if (lexemas.get(i).getNumToken() == 58) {
                     i++;
                 } else {
-                    
-                }   break;
+
+                }
+                break;
             case 46:
                 //47
                 tipoDato();
@@ -566,8 +577,9 @@ public class RutinasSemanticas {
                 if (lexemas.get(i).getNumToken() == 58) {
                     i++;
                 } else {
-                    
-                }   break;
+
+                }
+                break;
             default:
                 break;
         }
@@ -577,11 +589,12 @@ public class RutinasSemanticas {
         switch (lexemas.get(i).getNumToken()) {
             case 57:
                 //48
-                i++;asignacionAtributo();
+                i++;
+                asignacionAtributo();
                 conjuntoAtributo();
                 break;
-        //49
-        //Salir
+            //49
+            //Salir
             case 58:
                 break;
             default:
@@ -706,12 +719,14 @@ public class RutinasSemanticas {
                 break;
             case 54:
                 //64
-                i++;if (lexemas.get(i).getNumToken() == 22) {
+                i++;
+                if (lexemas.get(i).getNumToken() == 22) {
                     i++;
                     tipoDato();
                 } else {
-                    
-                }   break;
+
+                }
+                break;
             default:
                 break;
         }
@@ -780,15 +795,17 @@ public class RutinasSemanticas {
         switch (lexemas.get(i).getNumToken()) {
             case 57:
                 //69
-                i++;if (lexemas.get(i).getNumToken() == 76) {
+                i++;
+                if (lexemas.get(i).getNumToken() == 76) {
                     i++;
                     inicializacionObjeto();
                     conjuntoObjetos();
                 } else {
-                    
-                }   break;
-        //70
-        //Salir
+
+                }
+                break;
+            //70
+            //Salir
             case 58:
                 break;
             default:
@@ -822,13 +839,16 @@ public class RutinasSemanticas {
         switch (lexemas.get(i).getNumToken()) {
             case 24:
                 //74
-                i++;break;
+                i++;
+                break;
             case 76:
                 //75
-                i++;break;
+                i++;
+                break;
             case 22:
                 //76
-                i++;if (lexemas.get(i).getNumToken() == 72) {
+                i++;
+                if (lexemas.get(i).getNumToken() == 72) {
                     i++;
                     if (lexemas.get(i).getNumToken() == 65) {
                         i++;
@@ -836,14 +856,15 @@ public class RutinasSemanticas {
                         if (lexemas.get(i).getNumToken() == 66) {
                             i++;
                         } else {
-                            
+
                         }
                     } else {
 
                     }
                 } else {
-                    
-                }   break;
+
+                }
+                break;
             default:
                 break;
         }
@@ -919,11 +940,13 @@ public class RutinasSemanticas {
         switch (lexemas.get(i).getNumToken()) {
             case 54:
                 //83
-                i++;asignacionObjeto3();
+                i++;
+                asignacionObjeto3();
                 break;
             case 63:
                 //84
-                i++;posicion();
+                i++;
+                posicion();
                 if (lexemas.get(i).getNumToken() == 64) {
                     i++;
                     arregloObjeto2();
@@ -931,11 +954,12 @@ public class RutinasSemanticas {
                         i++;
                         asignacionObjeto3();
                     } else {
-                        
+
                     }
                 } else {
-                    
-                }   break;
+
+                }
+                break;
             default:
                 break;
         }
@@ -945,10 +969,12 @@ public class RutinasSemanticas {
         switch (lexemas.get(i).getNumToken()) {
             case 24:
                 //85
-                i++;break;
+                i++;
+                break;
             case 22:
                 //86
-                i++;if (lexemas.get(i).getNumToken() == 72) {
+                i++;
+                if (lexemas.get(i).getNumToken() == 72) {
                     i++;
                     if (lexemas.get(i).getNumToken() == 65) {
                         i++;
@@ -956,17 +982,19 @@ public class RutinasSemanticas {
                         if (lexemas.get(i).getNumToken() == 66) {
                             i++;
                         } else {
-                            
+
                         }
                     } else {
 
                     }
                 } else {
-                    
-                }   break;
+
+                }
+                break;
             case 76:
                 //87
-                i++;break;
+                i++;
+                break;
             default:
                 break;
         }
@@ -1069,19 +1097,21 @@ public class RutinasSemanticas {
         switch (lexemas.get(i).getNumToken()) {
             case 63:
                 //98
-                i++;posicion();
+                i++;
+                posicion();
                 if (lexemas.get(i).getNumToken() == 64) {
                     i++;
                     arregloVar4();
                 } else {
-                    
-                }   break;
-        //99
-        //Salir
+
+                }
+                break;
+            //99
+            //Salir
             case 54:
                 break;
-        //99
-        //Salir
+            //99
+            //Salir
             case 53:
                 break;
             default:
@@ -1094,44 +1124,53 @@ public class RutinasSemanticas {
         switch (lexemas.get(i).getNumToken()) {
             case 72:
                 //100
-                i++;if (lexemas.get(i).getNumToken() == 59) {
+                i++;
+                if (lexemas.get(i).getNumToken() == 59) {
                     i++;
                     claseInstancia2();
                 } else {
-                    
-                }   break;
+
+                }
+                break;
             case 23:
                 //101
-                i++;if (lexemas.get(i).getNumToken() == 59) {
+                i++;
+                if (lexemas.get(i).getNumToken() == 59) {
                     i++;
                     claseInstancia2();
                 } else {
-                    
-                }   break;
+
+                }
+                break;
             case 76:
                 //102
-                i++;claseInstancia22();
+                i++;
+                claseInstancia22();
                 break;
             case 73:
                 //103
-                i++;if (lexemas.get(i).getNumToken() == 65) {
+                i++;
+                if (lexemas.get(i).getNumToken() == 65) {
                     i++;
                     parametro();
                     if (lexemas.get(i).getNumToken() == 66) {
                         i++;
                     } else {
-                        
+
                     }
                 } else {
-                    
-                }   break;
+
+                }
+                break;
             case 74:
                 //104
-                i++;arregloVar22();
+                i++;
+                arregloVar22();
                 break;
             case 75:
                 //105
-                i++;arregloVar22();
+                i++;
+                arregloVar22();
                 break;
             default:
                 break;
@@ -1142,28 +1181,33 @@ public class RutinasSemanticas {
         switch (lexemas.get(i).getNumToken()) {
             case 73:
                 //106
-                i++;if (lexemas.get(i).getNumToken() == 65) {
+                i++;
+                if (lexemas.get(i).getNumToken() == 65) {
                     i++;
                     parametro();
                     if (lexemas.get(i).getNumToken() == 66) {
                         i++;
                     } else {
-                        
+
                     }
                 } else {
-                    
-                }   break;
+
+                }
+                break;
             case 74:
                 //107
-                i++;arregloVar22();
+                i++;
+                arregloVar22();
                 break;
             case 75:
                 //108
-                i++;arregloVar22();
+                i++;
+                arregloVar22();
                 break;
             case 76:
                 //109
-                i++;claseInstancia22();
+                i++;
+                claseInstancia22();
                 break;
             default:
                 break;
@@ -1174,7 +1218,8 @@ public class RutinasSemanticas {
         switch (lexemas.get(i).getNumToken()) {
             case 59:
                 //110
-                i++;claseInstancia2();
+                i++;
+                claseInstancia2();
                 break;
             case 63:
                 //111
@@ -1213,44 +1258,50 @@ public class RutinasSemanticas {
                 break;
             case 72:
                 //115
-                i++;refDeclaracionObjeto();
+                i++;
+                refDeclaracionObjeto();
                 if (lexemas.get(i).getNumToken() == 58) {
                     i++;
                 } else {
-                    
-                }   break;
+
+                }
+                break;
             case 23:
                 //116
                 referenciaAtributo();
                 if (lexemas.get(i).getNumToken() == 58) {
                     i++;
                 } else {
-                    
-                }   break;
+
+                }
+                break;
             case 76:
                 //116
                 referenciaAtributo();
                 if (lexemas.get(i).getNumToken() == 58) {
                     i++;
                 } else {
-                    
-                }   break;
+
+                }
+                break;
             case 74:
                 //116
                 referenciaAtributo();
                 if (lexemas.get(i).getNumToken() == 58) {
                     i++;
                 } else {
-                    
-                }   break;
+
+                }
+                break;
             case 73:
                 //116
                 referenciaAtributo();
                 if (lexemas.get(i).getNumToken() == 58) {
                     i++;
                 } else {
-                    
-                }   break;
+
+                }
+                break;
             default:
                 break;
         }
@@ -1260,11 +1311,13 @@ public class RutinasSemanticas {
         switch (lexemas.get(i).getNumToken()) {
             case 59:
                 //117
-                i++;referenciaAtributo2();
+                i++;
+                referenciaAtributo2();
                 break;
             case 76:
                 //118
-                i++;inicializacionObjeto();
+                i++;
+                inicializacionObjeto();
                 conjuntoObjetos();
                 break;
             default:
@@ -1276,34 +1329,40 @@ public class RutinasSemanticas {
         switch (lexemas.get(i).getNumToken()) {
             case 23:
                 //119
-                i++;if (lexemas.get(i).getNumToken() == 59) {
+                i++;
+                if (lexemas.get(i).getNumToken() == 59) {
                     i++;
                     referenciaAtributo2();
                 } else {
-                    
-                }   break;
+
+                }
+                break;
             case 76:
                 //120
-                i++;referenciaAtributo22();
+                i++;
+                referenciaAtributo22();
                 break;
             case 74:
                 //121
-                i++;arregloVar4();
+                i++;
+                arregloVar4();
                 asignacionAtributoVar();
                 break;
             case 73:
                 //265
-                i++;if (lexemas.get(i).getNumToken() == 65) {
+                i++;
+                if (lexemas.get(i).getNumToken() == 65) {
                     i++;
                     parametro();
                     if (lexemas.get(i).getNumToken() == 66) {
                         i++;
                     } else {
-                        
+
                     }
                 } else {
-                    
-                }   break;
+
+                }
+                break;
             default:
                 break;
         }
@@ -1313,26 +1372,30 @@ public class RutinasSemanticas {
         switch (lexemas.get(i).getNumToken()) {
             case 74:
                 //122
-                i++;arregloVar4();
+                i++;
+                arregloVar4();
                 asignacionAtributoVar();
                 break;
             case 76:
                 //123
-                i++;referenciaAtributo22();
+                i++;
+                referenciaAtributo22();
                 break;
             case 73:
                 //266
-                i++;if (lexemas.get(i).getNumToken() == 65) {
+                i++;
+                if (lexemas.get(i).getNumToken() == 65) {
                     i++;
                     parametro();
                     if (lexemas.get(i).getNumToken() == 66) {
                         i++;
                     } else {
-                        
+
                     }
                 } else {
-                    
-                }   break;
+
+                }
+                break;
             default:
                 break;
         }
@@ -1342,7 +1405,8 @@ public class RutinasSemanticas {
         switch (lexemas.get(i).getNumToken()) {
             case 59:
                 //124
-                i++;referenciaAtributo2();
+                i++;
+                referenciaAtributo2();
                 break;
             case 54:
                 //125
@@ -1376,11 +1440,13 @@ public class RutinasSemanticas {
         switch (lexemas.get(i).getNumToken()) {
             case 54:
                 //127
-                i++;asignacionAtributoVar2();
+                i++;
+                asignacionAtributoVar2();
                 break;
             case 53:
                 //128
-                i++;operacionAritmetica();
+                i++;
+                operacionAritmetica();
                 break;
             default:
                 break;
@@ -1400,11 +1466,11 @@ public class RutinasSemanticas {
         } else if (lexemas.get(i).getNumToken() == 15) {
             //131
             i++;
-            if (lexemas.get(i).getNumToken() == 59){
+            if (lexemas.get(i).getNumToken() == 59) {
                 i++;
                 lectura();
-            }else{
-                
+            } else {
+
             }
         } else if (lexemas.get(i).getNumToken() == 22) {
             //267
@@ -1420,13 +1486,16 @@ public class RutinasSemanticas {
         switch (lexemas.get(i).getNumToken()) {
             case 44:
                 //132
-                i++;break;
+                i++;
+                break;
             case 45:
                 //133
-                i++;break;
+                i++;
+                break;
             case 46:
                 //134
-                i++;break;
+                i++;
+                break;
             default:
                 break;
         }
@@ -1444,10 +1513,12 @@ public class RutinasSemanticas {
                 break;
             case 80:
                 //136
-                i++;break;
+                i++;
+                break;
             case 79:
                 //137
-                i++;concatenacion();
+                i++;
+                concatenacion();
                 break;
             case 38:
                 //138
@@ -1459,7 +1530,8 @@ public class RutinasSemanticas {
                 break;
             case 24:
                 //139
-                i++;break;
+                i++;
+                break;
             default:
                 break;
         }
@@ -1469,10 +1541,12 @@ public class RutinasSemanticas {
         switch (lexemas.get(i).getNumToken()) {
             case 77:
                 //140
-                i++;break;
+                i++;
+                break;
             case 78:
                 //141
-                i++;break;
+                i++;
+                break;
             default:
                 break;
         }
@@ -1483,10 +1557,12 @@ public class RutinasSemanticas {
         switch (lexemas.get(i).getNumToken()) {
             case 38:
                 //142
-                i++;break;
+                i++;
+                break;
             case 39:
                 //143
-                i++;break;
+                i++;
+                break;
             default:
                 break;
         }
@@ -1495,68 +1571,194 @@ public class RutinasSemanticas {
     private void constructor() {
         if (lexemas.get(i).getNumToken() == 40) {
             //144
+            i++;
+            if (lexemas.get(i).getNumToken() == 72) {
+                i++;
+                if (lexemas.get(i).getNumToken() == 65) {
+                    i++;
+                    argumento();
+                    if (lexemas.get(i).getNumToken() == 66) {
+                        i++;
+                        if (lexemas.get(i).getNumToken() == 61) {
+                            i++;
+                            sentencia();
+                            if (lexemas.get(i).getNumToken() == 62) {
+                                i++;
+                            } else {
+
+                            }
+                        } else {
+
+                        }
+                    } else {
+
+                    }
+                } else {
+
+                }
+            } else {
+
+            }
         } else {
 
         }
     }
 
     private void argumento() {
-        if (lexemas.get(i).getNumToken() == 44) {
-            //145
-        } else if (lexemas.get(i).getNumToken() == 45) {
-            //145
-        } else if (lexemas.get(i).getNumToken() == 46) {
-            //145
-        } else if (lexemas.get(i).getNumToken() == 72) {
-            //259
-        } else if (lexemas.get(i).getNumToken() == 66) {
-            //146
-        } else {
+        switch (lexemas.get(i).getNumToken()) {
+            case 44:
+                //145
+                tipoDato();
+                arregloVar22();
+                if (lexemas.get(i).getNumToken() == 74) {
+                    i++;
+                    argumento1();
+                } else {
 
+                }
+                break;
+            case 45:
+                //145
+                tipoDato();
+                arregloVar22();
+                if (lexemas.get(i).getNumToken() == 74) {
+                    i++;
+                    argumento1();
+                } else {
+
+                }
+                break;
+            case 46:
+                //145
+                tipoDato();
+                arregloVar22();
+                if (lexemas.get(i).getNumToken() == 74) {
+                    i++;
+                    argumento1();
+                } else {
+
+                }
+                break;
+            case 72:
+                //256
+                i++;
+                if (lexemas.get(i).getNumToken() == 76) {
+                    i++;
+                    argumento1();
+                } else {
+
+                }
+                break;
+            //146
+            //Salir
+            case 66:
+                break;
+            default:
+                break;
         }
     }
 
     private void argumento1() {
-        if (lexemas.get(i).getNumToken() == 57) {
-            //147
-        } else if (lexemas.get(i).getNumToken() == 66) {
+        switch (lexemas.get(i).getNumToken()) {
+            case 57:
+                //147
+                i++;
+                argumento();
+                break;
             //148
-        } else {
-
+            //Salir
+            case 66:
+                break;
+            default:
+                break;
         }
     }
 
     private void metodo() {
-        if (lexemas.get(i).getNumToken() == 12) {
-            //149
-        } else if (lexemas.get(i).getNumToken() == 11) {
-            //150
-        } else {
-
+        switch (lexemas.get(i).getNumToken()) {
+            case 12:
+                //149
+                funcion();
+                break;
+            case 11:
+                //150
+                procedimiento();
+                break;
+            default:
+                break;
         }
     }
 
     private void procedimiento() {
         if (lexemas.get(i).getNumToken() == 11) {
             //151
+            i++;
+            procedimiento1();
         } else {
 
         }
     }
 
     private void procedimiento1() {
-        if (lexemas.get(i).getNumToken() == 73) {
-            //152
-        } else if (lexemas.get(i).getNumToken() == 21) {
-            //153
-        } else {
-
+        switch (lexemas.get(i).getNumToken()) {
+            case 73:
+                //152
+                procedimientoNormal();
+                break;
+            case 21:
+                //153
+                procedimientoPrincipal();
+                break;
+            default:
+                break;
         }
     }
 
     private void procedimientoPrincipal() {
         if (lexemas.get(i).getNumToken() == 21) {
             //154
+            i++;
+            if (lexemas.get(i).getNumToken() == 65) {
+                i++;
+                if (lexemas.get(i).getNumToken() == 44) {
+                    i++;
+                    if (lexemas.get(i).getNumToken() == 63) {
+                        i++;
+                        if (lexemas.get(i).getNumToken() == 64) {
+                            i++;
+                            if (lexemas.get(i).getNumToken() == 74) {
+                                i++;
+                                if (lexemas.get(i).getNumToken() == 66) {
+                                    i++;
+                                    if (lexemas.get(i).getNumToken() == 61) {
+                                        i++;
+                                        sentencia();
+                                        if (lexemas.get(i).getNumToken() == 62) {
+                                            i++;
+                                        } else {
+
+                                        }
+                                    } else {
+
+                                    }
+                                } else {
+
+                                }
+                            } else {
+
+                            }
+                        } else {
+
+                        }
+                    } else {
+
+                    }
+                } else {
+
+                }
+            } else {
+
+            }
         } else {
 
         }
@@ -1565,6 +1767,46 @@ public class RutinasSemanticas {
     private void funcion() {
         if (lexemas.get(i).getNumToken() == 12) {
             //155
+            i++;
+            tipoDato();
+            if (lexemas.get(i).getNumToken() == 73) {
+                i++;
+                if (lexemas.get(i).getNumToken() == 65) {
+                    i++;
+                    argumento();
+                    if (lexemas.get(i).getNumToken() == 66) {
+                        i++;
+                        if (lexemas.get(i).getNumToken() == 61) {
+                            i++;
+                            sentencia();
+                            if (lexemas.get(i).getNumToken() == 10) {
+                                i++;
+                                retorna();
+                                if (lexemas.get(i).getNumToken() == 58) {
+                                    i++;
+                                    if (lexemas.get(i).getNumToken() == 62) {
+                                        i++;
+                                    } else {
+
+                                    }
+                                } else {
+
+                                }
+                            } else {
+
+                            }
+                        } else {
+
+                        }
+                    } else {
+
+                    }
+                } else {
+
+                }
+            } else {
+
+            }
         } else {
 
         }
@@ -1573,6 +1815,7 @@ public class RutinasSemanticas {
     private void retorna() {
         if (RutinasSemanticas.esSiguiente(lexemas.get(i).getNumToken(), 72, 23, 76, 73, 74, 75, 77, 78, 48, 79, 80, 24, 46, 56, 65)) {
             //156
+            operacion();
         } else {
 
         }
@@ -1581,6 +1824,29 @@ public class RutinasSemanticas {
     private void procedimientoNormal() {
         if (lexemas.get(i).getNumToken() == 73) {
             //157
+            i++;
+            if (lexemas.get(i).getNumToken() == 65) {
+                i++;
+                argumento();
+                if (lexemas.get(i).getNumToken() == 66) {
+                    i++;
+                    if (lexemas.get(i).getNumToken() == 61) {
+                        i++;
+                        sentencia();
+                        if (lexemas.get(i).getNumToken() == 62) {
+                            i++;
+                        } else {
+
+                        }
+                    } else {
+
+                    }
+                } else {
+
+                }
+            } else {
+
+            }
         } else {
 
         }
@@ -1589,86 +1855,163 @@ public class RutinasSemanticas {
     private void parametro() {
         if (RutinasSemanticas.esSiguiente(lexemas.get(i).getNumToken(), 72, 23, 76, 74, 75)) {
             //158
+            claseInstancia();
+            parametro1();
         } else if (lexemas.get(i).getNumToken() == 66) {
             //159
+            //Salir
         } else {
 
         }
     }
 
     private void parametro1() {
-        if (lexemas.get(i).getNumToken() == 57) {
-            //160
-        } else if (lexemas.get(i).getNumToken() == 66) {
+        switch (lexemas.get(i).getNumToken()) {
+            case 57:
+                //160
+                i++;
+                parametro();
+                break;
             //161
-        } else {
-
+            //Salir
+            case 66:
+                break;
+            default:
+                break;
         }
     }
 
     private void iteracion() {
-        if (lexemas.get(i).getNumToken() == 68) {
-            //162
-        } else if (lexemas.get(i).getNumToken() == 69) {
-            //163
-        } else {
-
+        switch (lexemas.get(i).getNumToken()) {
+            case 68:
+                //162
+                i++;
+                break;
+            case 69:
+                //163
+                i++;
+                break;
+            default:
+                break;
         }
     }
 
     private void sentencia() {
         if (RutinasSemanticas.esSiguiente(lexemas.get(i).getNumToken(), 41, 82, 83, 32, 35, 36, 37, 30, 44, 45, 46, 72, 23, 76, 74, 15)) {
             //164
+            sentencia2();
+            sentencia();
         } else if (RutinasSemanticas.esSiguiente(lexemas.get(i).getNumToken(), 62, 28, 31, 27, 10)) {
 //165
+//Salir
         } else {
 
         }
     }
 
     private void sentencia2() {
-        if (lexemas.get(i).getNumToken() == 41) {
-            //166
-        } else if (lexemas.get(i).getNumToken() == 82) {
-            //167
-        } else if (lexemas.get(i).getNumToken() == 83) {
-            //167
+        switch (lexemas.get(i).getNumToken()) {
+            case 41:
+                //166
+                excepcion();
+                break;
+            case 82:
+                //167
+                comentario();
+                break;
+            case 83:
+                //167
+                comentario();
+                break;
+            case 32:
+                //168
+                sentenciaSi();
+                break;
+            case 35:
+                //169
+                sentenciaMientras();
+                break;
+            case 36:
+                //170
+                sentenciaHacerMientras();
+                break;
+            case 37:
+                //171
+                sentenciaPara();
+                break;
+            case 30:
+                //172
+                sentenciaCaso();
+                break;
+            case 44:
+                //173
+                atributoSentencia();
+                break;
+            case 45:
+                //173
+                atributoSentencia();
+                break;
+            case 46:
+                //173
+                atributoSentencia();
+                break;
+            case 72:
+                //173
+                atributoSentencia();
+                break;
+            case 23:
+                //173
+                atributoSentencia();
+                break;
+            case 76:
+                //173
+                atributoSentencia();
+                break;
+            case 74:
+                //173
+                atributoSentencia();
+                break;
+            case 15:
+                //174
+                operacionSistema();
+                if (lexemas.get(i).getNumToken() == 58) {
+                    i++;
+                } else {
 
-        } else if (lexemas.get(i).getNumToken() == 32) {
-            //168
-        } else if (lexemas.get(i).getNumToken() == 35) {
-            //169
-        } else if (lexemas.get(i).getNumToken() == 36) {
-            //170
-        } else if (lexemas.get(i).getNumToken() == 37) {
-            //171
-        } else if (lexemas.get(i).getNumToken() == 30) {
-            //172
-        } else if (lexemas.get(i).getNumToken() == 44) {
-            //173
-        } else if (lexemas.get(i).getNumToken() == 45) {
-            //173
-        } else if (lexemas.get(i).getNumToken() == 46) {
-            //173
-        } else if (lexemas.get(i).getNumToken() == 72) {
-            //173
-        } else if (lexemas.get(i).getNumToken() == 23) {
-            //173
-        } else if (lexemas.get(i).getNumToken() == 76) {
-            //173
-        } else if (lexemas.get(i).getNumToken() == 74) {
-            //173
-        } else if (lexemas.get(i).getNumToken() == 15) {
-            //174
-
-        } else {
-
+                }
+                break;
+            default:
+                break;
         }
     }
 
     private void sentenciaSi() {
         if (lexemas.get(i).getNumToken() == 32) {
             //175
+            i++;
+            if (lexemas.get(i).getNumToken() == 65) {
+                i++;
+                condicion();
+                if (lexemas.get(i).getNumToken() == 66) {
+                    i++;
+                    if (lexemas.get(i).getNumToken() == 61) {
+                        i++;
+                        sentencia();
+                        if (lexemas.get(i).getNumToken() == 62) {
+                            i++;
+                            sentenciaSi1();
+                        } else {
+
+                        }
+                    } else {
+
+                    }
+                } else {
+
+                }
+            } else {
+
+            }
         } else {
 
         }
@@ -1677,10 +2020,13 @@ public class RutinasSemanticas {
     private void sentenciaSi1() {
         if (lexemas.get(i).getNumToken() == 33) {
             //176
+            sentenciaSino();
         } else if (lexemas.get(i).getNumToken() == 34) {
             //177
+            sentenciaSinoSi();
         } else if (RutinasSemanticas.esSiguiente(lexemas.get(i).getNumToken(), 62, 28, 31, 27, 10, 41, 82, 83, 32, 35, 36, 37, 30, 44, 45, 46, 72, 23, 76, 74, 15)) {
 //178
+//Salir
         } else {
 
         }
@@ -1689,6 +2035,18 @@ public class RutinasSemanticas {
     private void sentenciaSino() {
         if (lexemas.get(i).getNumToken() == 33) {
             //179
+            i++;
+            if (lexemas.get(i).getNumToken() == 61) {
+                i++;
+                sentencia();
+                if (lexemas.get(i).getNumToken() == 62) {
+                    i++;
+                } else {
+
+                }
+            } else {
+
+            }
         } else {
 
         }
@@ -1697,6 +2055,30 @@ public class RutinasSemanticas {
     private void sentenciaSinoSi() {
         if (lexemas.get(i).getNumToken() == 34) {
             //180
+            i++;
+            if (lexemas.get(i).getNumToken() == 65) {
+                i++;
+                condicion();
+                if (lexemas.get(i).getNumToken() == 66) {
+                    i++;
+                    if (lexemas.get(i).getNumToken() == 61) {
+                        i++;
+                        sentencia();
+                        if (lexemas.get(i).getNumToken() == 62) {
+                            i++;
+                            sentenciaSi1();
+                        } else {
+
+                        }
+                    } else {
+
+                    }
+                } else {
+
+                }
+            } else {
+
+            }
         } else {
 
         }
@@ -1705,6 +2087,47 @@ public class RutinasSemanticas {
     private void sentenciaPara() {
         if (lexemas.get(i).getNumToken() == 37) {
             //181
+            i++;
+            if (lexemas.get(i).getNumToken() == 65) {
+                i++;
+                inicializacionVariable();
+                if (lexemas.get(i).getNumToken() == 58) {
+                    i++;
+                    condicion();
+                    if (lexemas.get(i).getNumToken() == 58) {
+                        i++;
+                        if (lexemas.get(i).getNumToken() == 74) {
+                            i++;
+                            iteracion();
+                            if (lexemas.get(i).getNumToken() == 66) {
+                                i++;
+                                if (lexemas.get(i).getNumToken() == 61) {
+                                    i++;
+                                    sentencia();
+                                    if (lexemas.get(i).getNumToken() == 62) {
+                                        i++;
+                                    } else {
+
+                                    }
+                                } else {
+
+                                }
+                            } else {
+
+                            }
+
+                        } else {
+
+                        }
+                    } else {
+
+                    }
+                } else {
+
+                }
+            } else {
+
+            }
         } else {
 
         }
@@ -1713,6 +2136,29 @@ public class RutinasSemanticas {
     private void sentenciaMientras() {
         if (lexemas.get(i).getNumToken() == 36) {
             //183
+            i++;
+            if (lexemas.get(i).getNumToken() == 65) {
+                i++;
+                condicion();
+                if (lexemas.get(i).getNumToken() == 66) {
+                    i++;
+                    if (lexemas.get(i).getNumToken() == 61) {
+                        i++;
+                        sentencia();
+                        if (lexemas.get(i).getNumToken() == 62) {
+                            i++;
+                        } else {
+
+                        }
+                    } else {
+
+                    }
+                } else {
+
+                }
+            } else {
+
+            }
         } else {
 
         }
@@ -1721,6 +2167,39 @@ public class RutinasSemanticas {
     private void sentenciaHacerMientras() {
         if (lexemas.get(i).getNumToken() == 36) {
             //183
+            i++;
+            if (lexemas.get(i).getNumToken() == 61) {
+                i++;
+                sentencia();
+                if (lexemas.get(i).getNumToken() == 62) {
+                    i++;
+                    if (lexemas.get(i).getNumToken() == 35) {
+                        i++;
+                        if (lexemas.get(i).getNumToken() == 65) {
+                            i++;
+                            condicion();
+                            if (lexemas.get(i).getNumToken() == 66) {
+                                i++;
+                                if (lexemas.get(i).getNumToken() == 58) {
+                                    i++;
+                                } else {
+
+                                }
+                            } else {
+
+                            }
+                        } else {
+
+                        }
+                    } else {
+
+                    }
+                } else {
+
+                }
+            } else {
+
+            }
         } else {
 
         }
@@ -1729,6 +2208,33 @@ public class RutinasSemanticas {
     private void sentenciaCaso() {
         if (lexemas.get(i).getNumToken() == 30) {
             //184
+            i++;
+            if (lexemas.get(i).getNumToken() == 65) {
+                i++;
+                if (lexemas.get(i).getNumToken() == 74) {
+                    i++;
+                    if (lexemas.get(i).getNumToken() == 66) {
+                        i++;
+                        if (lexemas.get(i).getNumToken() == 61) {
+                            i++;
+                            alternativa();
+                            if (lexemas.get(i).getNumToken() == 62) {
+                                i++;
+                            } else {
+
+                            }
+                        } else {
+
+                        }
+                    } else {
+
+                    }
+                } else {
+
+                }
+            } else {
+
+            }
         } else {
 
         }
@@ -1737,6 +2243,16 @@ public class RutinasSemanticas {
     private void alternativa() {
         if (lexemas.get(i).getNumToken() == 31) {
             //185
+            i++;
+            valor();
+            if (lexemas.get(i).getNumToken() == 60) {
+                i++;
+                sentencia();
+                terminar();
+                alternativa1();
+            } else {
+
+            }
         } else {
 
         }
@@ -1745,28 +2261,59 @@ public class RutinasSemanticas {
     private void terminar() {
         if (lexemas.get(i).getNumToken() == 28) {
             //186
+            i++;
+            if (lexemas.get(i).getNumToken() == 58) {
+                i++;
+            } else {
+
+            }
         } else if (RutinasSemanticas.esSiguiente(lexemas.get(i).getNumToken(), 62, 31, 27)) {
 //187
+//Salir
         } else {
 
         }
     }
 
     private void alternativa1() {
-        if (lexemas.get(i).getNumToken() == 31) {
-            //188
-        } else if (lexemas.get(i).getNumToken() == 27) {
-            //189
-        } else if (lexemas.get(i).getNumToken() == 62) {
+        switch (lexemas.get(i).getNumToken()) {
+            case 31:
+                //188
+                alternativa();
+                break;
+            case 27:
+                //189
+                alternativa2();
+                break;
 //190
-        } else {
-
+//Salir
+            case 62:
+                break;
+            default:
+                break;
         }
     }
 
     private void alternativa2() {
         if (lexemas.get(i).getNumToken() == 27) {
             //191
+            i++;
+            if (lexemas.get(i).getNumToken() == 60) {
+                i++;
+                sentencia();
+                if (lexemas.get(i).getNumToken() == 28) {
+                    i++;
+                    if (lexemas.get(i).getNumToken() == 58) {
+                        i++;
+                    } else {
+
+                    }
+                } else {
+
+                }
+            } else {
+
+            }
         } else {
 
         }
@@ -1775,26 +2322,66 @@ public class RutinasSemanticas {
     private void operacionSistema() {
         if (lexemas.get(i).getNumToken() == 15) {
             //192
+            i++;
+            if (lexemas.get(i).getNumToken() == 59) {
+                i++;
+                operacionSistema1();
+                if (lexemas.get(i).getNumToken() == 58) {
+                    i++;
+                } else {
+
+                }
+            } else {
+
+            }
         } else {
 
         }
     }
 
     private void operacionSistema1() {
-        if (lexemas.get(i).getNumToken() == 13) {
-            //193
-        } else if (lexemas.get(i).getNumToken() == 14) {
-            //194
-        } else if (lexemas.get(i).getNumToken() == 29) {
-            //195
-        } else {
-
+        switch (lexemas.get(i).getNumToken()) {
+            case 13:
+                //193
+                lectura();
+                break;
+            case 14:
+                //194
+                escritura();
+                break;
+            case 29:
+                //195
+                salida();
+                break;
+            default:
+                break;
         }
     }
 
     private void lectura() {
         if (lexemas.get(i).getNumToken() == 13) {
             //196
+            i++;
+            if (lexemas.get(i).getNumToken() == 59) {
+                i++;
+                if (lexemas.get(i).getNumToken() == 25) {
+                    i++;
+                    if (lexemas.get(i).getNumToken() == 65) {
+                        i++;
+                        if (lexemas.get(i).getNumToken() == 66) {
+                            i++;
+                        } else {
+
+                        }
+                    } else {
+
+                    }
+                } else {
+
+                }
+            } else {
+
+            }
         } else {
 
         }
@@ -1803,24 +2390,68 @@ public class RutinasSemanticas {
     private void escritura() {
         if (lexemas.get(i).getNumToken() == 14) {
             //197
+            i++;
+            if (lexemas.get(i).getNumToken() == 59) {
+                i++;
+                if (lexemas.get(i).getNumToken() == 26) {
+                    i++;
+                    linea();
+                    if (lexemas.get(i).getNumToken() == 65) {
+                        i++;
+                        operacion();
+                        if (lexemas.get(i).getNumToken() == 66) {
+                            i++;
+                        } else {
+
+                        }
+                    } else {
+
+                    }
+                } else {
+
+                }
+            } else {
+
+            }
         } else {
 
         }
     }
 
     private void linea() {
-        if (lexemas.get(i).getNumToken() == 59) {
-            //198
-        } else if (lexemas.get(i).getNumToken() == 65) {
-//199
-        } else {
+        switch (lexemas.get(i).getNumToken()) {
+            case 59:
+                //198
+                i++;
+                if (lexemas.get(i).getNumToken() == 16) {
+                    i++;
+                } else {
 
+                }
+                break;
+//199
+//Salir
+            case 65:
+                break;
+            default:
+                break;
         }
     }
 
     private void salida() {
         if (lexemas.get(i).getNumToken() == 29) {
             //200
+            i++;
+            if (lexemas.get(i).getNumToken() == 65) {
+                i++;
+                if (lexemas.get(i).getNumToken() == 66) {
+                    i++;
+                } else {
+
+                }
+            } else {
+
+            }
         } else {
 
         }
@@ -1829,6 +2460,56 @@ public class RutinasSemanticas {
     private void excepcion() {
         if (lexemas.get(i).getNumToken() == 41) {
             //201
+            i++;
+            if (lexemas.get(i).getNumToken() == 61) {
+                i++;
+                sentencia();
+                if (lexemas.get(i).getNumToken() == 62) {
+                    i++;
+                    if (lexemas.get(i).getNumToken() == 42) {
+                        i++;
+                        if (lexemas.get(i).getNumToken() == 65) {
+                            i++;
+                            if (lexemas.get(i).getNumToken() == 72) {
+                                i++;
+                                if (lexemas.get(i).getNumToken() == 76) {
+                                    i++;
+                                    if (lexemas.get(i).getNumToken() == 66) {
+                                        i++;
+                                        if (lexemas.get(i).getNumToken() == 61) {
+                                            i++;
+                                            sentencia();
+                                            if (lexemas.get(i).getNumToken() == 62) {
+                                                i++;
+                                                captarExtendido();
+                                                finalmente();
+                                            } else {
+
+                                            }
+                                        } else {
+
+                                        }
+                                    } else {
+
+                                    }
+                                } else {
+
+                                }
+                            } else {
+
+                            }
+                        } else {
+
+                        }
+                    } else {
+
+                    }
+                } else {
+
+                }
+            } else {
+
+            }
         } else {
 
         }
@@ -1837,8 +2518,42 @@ public class RutinasSemanticas {
     private void captarExtendido() {
         if (lexemas.get(i).getNumToken() == 42) {
             //202
+            i++;
+            if (lexemas.get(i).getNumToken() == 65) {
+                i++;
+                if (lexemas.get(i).getNumToken() == 72) {
+                    i++;
+                    if (lexemas.get(i).getNumToken() == 76) {
+                        i++;
+                        if (lexemas.get(i).getNumToken() == 66) {
+                            i++;
+                            if (lexemas.get(i).getNumToken() == 61) {
+                                i++;
+                                sentencia();
+                                if (lexemas.get(i).getNumToken() == 62) {
+                                    i++;
+                                    captarExtendido();
+                                } else {
+
+                                }
+                            } else {
+
+                            }
+                        } else {
+
+                        }
+                    } else {
+
+                    }
+                } else {
+
+                }
+            } else {
+
+            }
         } else if (RutinasSemanticas.esSiguiente(lexemas.get(i).getNumToken(), 62, 28, 31, 27, 10, 41, 82, 83, 32, 35, 36, 37, 30, 44, 45, 46, 72, 23, 76, 74, 15, 43)) {
 //203
+//Salir
         } else {
 
         }
@@ -1847,36 +2562,73 @@ public class RutinasSemanticas {
     private void finalmente() {
         if (lexemas.get(i).getNumToken() == 43) {
             //204
+            i++;
+            if (lexemas.get(i).getNumToken() == 61) {
+                i++;
+                sentencia();
+                if (lexemas.get(i).getNumToken() == 62) {
+                    i++;
+                } else {
+
+                }
+            } else {
+
+            }
         } else if (RutinasSemanticas.esSiguiente(lexemas.get(i).getNumToken(), 62, 28, 31, 27, 10, 41, 82, 83, 32, 35, 36, 37, 30, 44, 45, 46, 72, 23, 76, 74, 15)) {
 //205
+//Salir
         } else {
 
         }
     }
 
     private void concatenacion() {
-        if (lexemas.get(i).getNumToken() == 52) {
-            //206
-        } else if (lexemas.get(i).getNumToken() == 60) {
+        switch (lexemas.get(i).getNumToken()) {
+            case 52:
+                //206
+                i++;
+                operacion();
+                break;
 //207
-        } else {
-
+//Salir
+            case 60:
+                break;
+            default:
+                break;
         }
     }
 
     private void operacionAritmetica() {
         if (RutinasSemanticas.esSiguiente(lexemas.get(i).getNumToken(), 72, 23, 76, 73, 74, 75)) {
             //211
+            claseInstancia();
+            operacionAritmetica2();
         } else if (lexemas.get(i).getNumToken() == 77) {
             //208
+            numero();
+            operacionAritmetica2();
         } else if (lexemas.get(i).getNumToken() == 78) {
             //208
+            numero();
+            operacionAritmetica2();
         } else if (lexemas.get(i).getNumToken() == 48) {
             //209
+            i++;
+            operacionAritmetica();
         } else if (lexemas.get(i).getNumToken() == 52) {
             //210
+            i++;
+            operacionAritmetica();
         } else if (lexemas.get(i).getNumToken() == 65) {
             //212
+            i++;
+            operacionAritmetica();
+            if (lexemas.get(i).getNumToken() == 66) {
+                i++;
+                operacionAritmetica2();
+            } else {
+
+            }
         } else {
 
         }
@@ -1885,12 +2637,19 @@ public class RutinasSemanticas {
     private void operacionAritmetica2() {
         if (lexemas.get(i).getNumToken() == 49) {
             //213
+            i++;
+            operacionAritmetica();
         } else if (lexemas.get(i).getNumToken() == 48) {
             //257
+            i++;
+            operacionAritmetica();
         } else if (lexemas.get(i).getNumToken() == 52) {
             //258
+            i++;
+            operacionAritmetica();
         } else if (RutinasSemanticas.esSiguiente(lexemas.get(i).getNumToken(), 58, 50, 51, 55, 66, 62, 82, 83, 1, 2, 3, 7, 44, 45, 46, 72, 12, 11, 40, 57)) {
 //259
+//Salir
         } else {
 
         }
@@ -1899,24 +2658,55 @@ public class RutinasSemanticas {
     private void condicion() {
         if (RutinasSemanticas.esSiguiente(lexemas.get(i).getNumToken(), 72, 23, 76, 73, 74, 75)) {
             //214
+            claseInstancia();
+            operadorCondicion();
         } else if (lexemas.get(i).getNumToken() == 77) {
             //215
+            numero();
+            condicionMat();
+            condicionLog();
         } else if (lexemas.get(i).getNumToken() == 78) {
             //215
+            numero();
+            condicionMat();
+            condicionLog();
         } else if (lexemas.get(i).getNumToken() == 48) {
             //216
+            i++;
+            operacionAritmetica();
+            condicionRelComp();
+            condicionLog();
         } else if (lexemas.get(i).getNumToken() == 79) {
             //217
+            i++;
+            condicionMat();
+            condicionLog();
         } else if (lexemas.get(i).getNumToken() == 80) {
             //218
+            i++;
+            condicionRelComp();
         } else if (lexemas.get(i).getNumToken() == 24) {
             //219
+            i++;
+            condicionComp();
         } else if (lexemas.get(i).getNumToken() == 46) {
             //220
+            i++;
+            condicionLog();
         } else if (lexemas.get(i).getNumToken() == 56) {
             //221
+            i++;
+            condicion();
         } else if (lexemas.get(i).getNumToken() == 65) {
             //222
+            i++;
+            condicion();
+            if (lexemas.get(i).getNumToken() == 66) {
+                i++;
+                operadorCondicion();
+            } else {
+
+            }
         } else {
 
         }
@@ -1925,43 +2715,69 @@ public class RutinasSemanticas {
     private void operadorCondicion() {
         if (RutinasSemanticas.esSiguiente(lexemas.get(i).getNumToken(), 49, 52, 50, 51, 55)) {
             //223
+            condicionMat();
+            condicionLog();
         } else if (lexemas.get(i).getNumToken() == 55) {
             //224
+            condicionLog();
         } else {
 
         }
     }
 
     private void condicionMat() {
-        if (lexemas.get(i).getNumToken() == 49) {
-            //225
-        } else if (lexemas.get(i).getNumToken() == 52) {
-            //226
-        } else if (lexemas.get(i).getNumToken() == 50) {
-            //227
-        } else if (lexemas.get(i).getNumToken() == 51) {
-            //227
-        } else if (lexemas.get(i).getNumToken() == 48) {
-            //227
-
-        } else {
-
+        switch (lexemas.get(i).getNumToken()) {
+            case 49:
+                //225
+                i++;
+                operacionAritmetica();
+                condicionRelComp();
+                break;
+            case 52:
+                //226
+                i++;
+                condicion();
+                condicionRelComp();
+                break;
+            case 50:
+                //227
+                condicionRelComp();
+                break;
+            case 51:
+                //227
+                condicionRelComp();
+                break;
+            case 48:
+                //227
+                condicionRelComp();
+                break;
+            default:
+                break;
         }
     }
 
     private void condicionRelComp() {
-        if (lexemas.get(i).getNumToken() == 50) {
-            //228
-        } else if (lexemas.get(i).getNumToken() == 51) {
-            //229
-        } else {
-
+        switch (lexemas.get(i).getNumToken()) {
+            case 50:
+                //228
+                i++;
+                condicion();
+                break;
+            case 51:
+                //229
+                i++;
+                condicion();
+                break;
+            default:
+                break;
         }
     }
 
     private void condicionComp() {
         if (lexemas.get(i).getNumToken() == 51) {
             //230
+            i++;
+            condicion();
         } else {
 
         }
@@ -1970,8 +2786,11 @@ public class RutinasSemanticas {
     private void condicionLog() {
         if (lexemas.get(i).getNumToken() == 55) {
             //231
+            i++;
+            condicion();
         } else if (RutinasSemanticas.esSiguiente(lexemas.get(i).getNumToken(), 58, 50, 51, 55, 66, 62, 82, 83, 1, 2, 3, 7, 44, 45, 46, 72, 12, 11, 40, 57)) {
 //232
+//Salir
         } else {
 
         }
@@ -1980,25 +2799,52 @@ public class RutinasSemanticas {
     private void operacion() {
         if (RutinasSemanticas.esSiguiente(lexemas.get(i).getNumToken(), 72, 23, 76, 73, 74, 75)) {
             //233
+            claseInstancia();
+            operador();
         } else if (lexemas.get(i).getNumToken() == 77) {
             //234
-
+            numero();
+            operacionMat();
         } else if (lexemas.get(i).getNumToken() == 78) {
             //234
+            numero();
+            operacionMat();
+
         } else if (lexemas.get(i).getNumToken() == 48) {
             //235
+            i++;
+            operacionAritmetica();
+            operacionRelComp();
         } else if (lexemas.get(i).getNumToken() == 79) {
             //236
+            i++;
+            operacionMat();
         } else if (lexemas.get(i).getNumToken() == 80) {
             //237
+            i++;
+            operacionRelComp();
         } else if (lexemas.get(i).getNumToken() == 24) {
             //238
+            i++;
+            operacionComp();
         } else if (lexemas.get(i).getNumToken() == 46) {
             //239
+            i++;
+            operacionLog();
         } else if (lexemas.get(i).getNumToken() == 56) {
             //240
+            i++;
+            condicion();
         } else if (lexemas.get(i).getNumToken() == 65) {
             //241
+            i++;
+            operacion();
+            if (lexemas.get(i).getNumToken() == 66) {
+                i++;
+                operador();
+            } else {
+
+            }
         } else {
 
         }
@@ -2007,16 +2853,30 @@ public class RutinasSemanticas {
     private void operador() {
         if (lexemas.get(i).getNumToken() == 49) {
             //242
+            operacionMat();
+            operacionRelComp();
+            operacionLog();
         } else if (lexemas.get(i).getNumToken() == 52) {
             //242
+            operacionMat();
+            operacionRelComp();
+            operacionLog();
         } else if (lexemas.get(i).getNumToken() == 50) {
             //243
+            operacionComp();
+            operacionLog();
         } else if (lexemas.get(i).getNumToken() == 51) {
             //243
+            operacionComp();
+            operacionLog();
         } else if (lexemas.get(i).getNumToken() == 55) {
             //244
+            operacionLog();
         } else if (lexemas.get(i).getNumToken() == 48) {
             //242
+            operacionMat();
+            operacionRelComp();
+            operacionLog();
         } else {
 
         }
@@ -2025,16 +2885,25 @@ public class RutinasSemanticas {
     private void operacionMat() {
         if (lexemas.get(i).getNumToken() == 49) {
             //246
+            i++;
+            operacionAritmetica();
         } else if (lexemas.get(i).getNumToken() == 48) {
             //247
+            i++;
+            operacionAritmetica();
         } else if (lexemas.get(i).getNumToken() == 50) {
             //248
+            operacionRelComp();
         } else if (lexemas.get(i).getNumToken() == 51) {
             //248
+            operacionRelComp();
         } else if (lexemas.get(i).getNumToken() == 52) {
             //245
+            i++;
+            operacion();
         } else if (RutinasSemanticas.esSiguiente(lexemas.get(i).getNumToken(), 58, 50, 51, 55, 66, 62, 82, 83, 1, 2, 3, 7, 44, 45, 46, 72, 12, 11, 40, 57)) {
 //260
+//Salir
         } else {
 
         }
@@ -2043,10 +2912,17 @@ public class RutinasSemanticas {
     private void operacionRelComp() {
         if (lexemas.get(i).getNumToken() == 50) {
             //249
+            i++;
+            condicion();
+            operacionLog();
         } else if (lexemas.get(i).getNumToken() == 51) {
             //250
+            i++;
+            condicion();
+            operacionLog();
         } else if (RutinasSemanticas.esSiguiente(lexemas.get(i).getNumToken(), 58, 50, 51, 55, 66, 62, 82, 83, 1, 2, 3, 7, 44, 45, 46, 72, 12, 11, 40, 57)) {
 //251
+//Salir
         } else {
 
         }
@@ -2055,8 +2931,12 @@ public class RutinasSemanticas {
     private void operacionComp() {
         if (lexemas.get(i).getNumToken() == 51) {
             //252
+            i++;
+            condicion();
+            operacionLog();
         } else if (RutinasSemanticas.esSiguiente(lexemas.get(i).getNumToken(), 58, 50, 51, 55, 66, 62, 82, 83, 1, 2, 3, 7, 44, 45, 46, 72, 12, 11, 40, 57)) {
 //253
+//Salir
         } else {
 
         }
@@ -2065,8 +2945,11 @@ public class RutinasSemanticas {
     private void operacionLog() {
         if (lexemas.get(i).getNumToken() == 55) {
             //254
+            i++;
+            condicion();
         } else if (RutinasSemanticas.esSiguiente(lexemas.get(i).getNumToken(), 58, 50, 51, 55, 66, 62, 82, 83, 1, 2, 3, 7, 44, 45, 46, 72, 12, 11, 40, 57)) {
 //255
+//Salir
         } else {
 
         }

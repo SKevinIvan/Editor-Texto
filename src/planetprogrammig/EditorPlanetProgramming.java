@@ -3163,7 +3163,9 @@ public final class EditorPlanetProgramming extends javax.swing.JFrame {
     }
 
     public void semantico() {
-
+        RutinasSemanticas rSem=new RutinasSemanticas(lexemas);
+        rSem.analisisSemantico();
+        
         CtrlInterfaz.habilita(true, itemGuardar, itemLexico, itemSintactico, itemSemantico, itemIntermedio);
         CtrlInterfaz.habilita(false, itemOptmizacion, itemObjeto);
         CtrlInterfaz.habilita(true, checkEditando, checkCompilando, checkSalida, checkLexico, checkSintactico, checkSemantico, checkIntermedio);

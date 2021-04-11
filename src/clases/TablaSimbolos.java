@@ -16,11 +16,11 @@ public class TablaSimbolos {
     private int token;
     private Object valor;
     private String tipoDato;
-    private String estado;
     private String tipo;
     private int tamanio;
     private int index;
     private String alcance;
+    
 
     /**
      * Get the value of alcance
@@ -86,23 +86,6 @@ public class TablaSimbolos {
         this.tipo = tipo;
     }
 
-    /**
-     * Get the value of estado
-     *
-     * @return the value of estado
-     */
-    public String getEstado() {
-        return estado;
-    }
-
-    /**
-     * Set the value of estado
-     *
-     * @param estado new value of estado
-     */
-    public void setEstado(String estado) {
-        this.estado = estado;
-    }
 
     //Fin de la declaración de variables 
 
@@ -177,6 +160,7 @@ public class TablaSimbolos {
      */
     public void setLexema(String lexema) {
         this.lexema = lexema;
+      
     }
 
     

@@ -9,6 +9,10 @@ import Utils.CustomJTree;
 import Utils.Node;
 import java.awt.Image;
 import java.awt.Toolkit;
+import java.io.File;
+import javax.swing.JFileChooser;
+import javax.swing.tree.DefaultMutableTreeNode;
+import javax.swing.tree.DefaultTreeModel;
 
 /**
  *
@@ -70,8 +74,7 @@ public class VtnAyuda extends javax.swing.JDialog {
         loadProyect();
         tree.setBounds(0, 0, jPanel2.getWidth(), jPanel2.getHeight());
         jPanel2.add(tree);
-        
-
+        iniciarModelo();
     }
 
     /**
@@ -83,10 +86,15 @@ public class VtnAyuda extends javax.swing.JDialog {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jFileChooser1 = new javax.swing.JFileChooser();
         jPanel1 = new javax.swing.JPanel();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        jTree1 = new javax.swing.JTree();
         panel1 = new org.edisoncor.gui.panel.Panel();
         jButton3 = new javax.swing.JButton();
         jPanel2 = new javax.swing.JPanel();
+
+        jFileChooser1.setFileSelectionMode(javax.swing.JFileChooser.FILES_AND_DIRECTORIES);
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setBackground(new java.awt.Color(0, 102, 102));
@@ -94,15 +102,25 @@ public class VtnAyuda extends javax.swing.JDialog {
         jPanel1.setBackground(new java.awt.Color(255, 255, 255));
         jPanel1.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 1, true));
 
+        javax.swing.tree.DefaultMutableTreeNode treeNode1 = new javax.swing.tree.DefaultMutableTreeNode("Crear capeta");
+        jTree1.setModel(new javax.swing.tree.DefaultTreeModel(treeNode1));
+        jScrollPane1.setViewportView(jTree1);
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 715, Short.MAX_VALUE)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGap(61, 61, 61)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 167, Short.MAX_VALUE)
+                .addGap(487, 487, 487))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 406, Short.MAX_VALUE)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         panel1.setColorPrimario(new java.awt.Color(0, 102, 102));
@@ -112,6 +130,11 @@ public class VtnAyuda extends javax.swing.JDialog {
         jButton3.setToolTipText("Inicio");
         jButton3.setBorderPainted(false);
         jButton3.setContentAreaFilled(false);
+        jButton3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton3ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout panel1Layout = new javax.swing.GroupLayout(panel1);
         panel1.setLayout(panel1Layout);
@@ -134,7 +157,7 @@ public class VtnAyuda extends javax.swing.JDialog {
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 0, Short.MAX_VALUE)
+            .addGap(0, 422, Short.MAX_VALUE)
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -159,6 +182,18 @@ public class VtnAyuda extends javax.swing.JDialog {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+        // TODO add your handling code here:
+        int seleccion = 0;
+        jFileChooser1.showOpenDialog(null);
+        if (seleccion == JFileChooser.APPROVE_OPTION) {
+            File fichero = jFileChooser1.getSelectedFile();
+            actualizar(fichero);
+        } else {
+            System.out.println("No se selecciono nada");
+        }
+    }//GEN-LAST:event_jButton3ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -205,8 +240,100 @@ public class VtnAyuda extends javax.swing.JDialog {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton3;
+    private javax.swing.JFileChooser jFileChooser1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JTree jTree1;
     private org.edisoncor.gui.panel.Panel panel1;
     // End of variables declaration//GEN-END:variables
+private DefaultTreeModel modelo;
+    private DefaultMutableTreeNode root;
+
+    private void actualizar(File fichero) {
+        //  root = new DefaultMutableTreeNode(fichero.getName());
+        Node cat2 = new Node(Utils.TypeFile.PROYECT, fichero.getName());
+        root = new DefaultMutableTreeNode(cat2);
+        modelo = new DefaultTreeModel(root);
+        crea(root, fichero);
+        jTree1.setModel(modelo);
+    }
+
+    private void iniciarModelo() {
+
+        root = new DefaultMutableTreeNode("Raiz");
+        modelo = new DefaultTreeModel(root);
+        Node cat1 = new Node(Utils.TypeFile.PROYECT, "Categoria 1");
+        Node cat2 = new Node(Utils.TypeFile.PROYECT, "Categoria 2");
+
+        DefaultMutableTreeNode hijo1 = new DefaultMutableTreeNode(cat1);
+        DefaultMutableTreeNode hijo2 = new DefaultMutableTreeNode(cat2);
+        modelo.insertNodeInto(hijo1, root, 0);
+        modelo.insertNodeInto(hijo2, root, 1);
+
+        jTree1.setModel(modelo);
+        jTree1.setCellRenderer(tree);
+    }
+
+    private void crea(DefaultMutableTreeNode root, File fichero) {
+        File[] archivos = fichero.listFiles();
+        if (archivos != null) {
+            int contador = 0;
+            for (File f : archivos) {
+
+                if (f.isFile()) {
+                    if (f.getName().contains(".java")) {
+                        Node cat2 = new Node(Utils.TypeFile.CLASS, f.getName());
+                        DefaultMutableTreeNode hijo = new DefaultMutableTreeNode(cat2);
+                        //DefaultMutableTreeNode hijo = new DefaultMutableTreeNode(f.getName());
+                        modelo.insertNodeInto(hijo, root, contador);
+                        contador++;
+                    } else if (f.getName().contains(".png") || f.getName().contains(".jpg")) {
+                        Node cat2 = new Node(Utils.TypeFile.IMAGE, f.getName());
+                        DefaultMutableTreeNode hijo = new DefaultMutableTreeNode(cat2);
+                        //DefaultMutableTreeNode hijo = new DefaultMutableTreeNode(f.getName());
+                        modelo.insertNodeInto(hijo, root, contador);
+                        contador++;
+                    } else if (f.getName().contains(".word")) {
+                        Node cat2 = new Node(Utils.TypeFile.COMPILED_CLASS, f.getName());
+                        DefaultMutableTreeNode hijo = new DefaultMutableTreeNode(cat2);
+                        //DefaultMutableTreeNode hijo = new DefaultMutableTreeNode(f.getName());
+                        modelo.insertNodeInto(hijo, root, contador);
+                        contador++;
+                    } else {
+                        Node cat2 = new Node(Utils.TypeFile.CLASS, f.getName());
+                        DefaultMutableTreeNode hijo = new DefaultMutableTreeNode(cat2);
+                        //DefaultMutableTreeNode hijo = new DefaultMutableTreeNode(f.getName());
+                        modelo.insertNodeInto(hijo, root, contador);
+                        contador++;
+                    }
+
+                } else if (f.isDirectory()) {
+                    if (f.getName().equals("Source Package")) {
+                        Node cat2 = new Node(Utils.TypeFile.FOLDER_BUILD, f.getName());
+                        DefaultMutableTreeNode hijo = new DefaultMutableTreeNode(cat2);
+                        //DefaultMutableTreeNode hijo = new DefaultMutableTreeNode(f.getName());
+                        modelo.insertNodeInto(hijo, root, contador);
+                        contador++;
+                          crea(hijo, f);
+                    } else if (f.getName().equals("Libraries")) {
+                        Node cat2 = new Node(Utils.TypeFile.PACKAGE, f.getName());
+                        DefaultMutableTreeNode hijo = new DefaultMutableTreeNode(cat2);
+                        //DefaultMutableTreeNode hijo = new DefaultMutableTreeNode(f.getName());
+                        modelo.insertNodeInto(hijo, root, contador);
+                        contador++;
+                          crea(hijo, f);
+                    } else {
+                        Node cat2 = new Node(Utils.TypeFile.FOLDER_SOURCE, f.getName());
+                        DefaultMutableTreeNode hijo = new DefaultMutableTreeNode(cat2);
+                        //DefaultMutableTreeNode hijo = new DefaultMutableTreeNode(f.getName());
+                        modelo.insertNodeInto(hijo, root, contador);
+                        contador++;
+                        crea(hijo, f);
+                    }
+
+                }
+            }
+        }
+    }
 }

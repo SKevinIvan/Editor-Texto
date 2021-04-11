@@ -294,7 +294,9 @@ public class Sintactico {
     private void extraeLexico() {
         this.colaSalida = new ColaD();
         for (int i = 0; i < this.lexemas.size(); i++) {
-            this.colaSalida.inserta(new Nodo(String.valueOf(lexemas.get(i).getNumToken()), lexemas.get(i).getRenglon()), null);
+            if (!(this.lexemas.get(i).getNumToken() == 82 || this.lexemas.get(i).getNumToken() == 83)) {
+                this.colaSalida.inserta(new Nodo(String.valueOf(lexemas.get(i).getNumToken()), lexemas.get(i).getRenglon()), null);
+            }
         }
 
     }
@@ -393,14 +395,14 @@ public class Sintactico {
         String ttablaPredictiva[][];
         ArrayList<String> datos = new ArrayList<>();                //Matriz predictiva
         int numF, numC = 0, conArray = 0;
-        
-        Date date=new Date();
-        Informacion info=new Informacion();
+
+        Date date = new Date();
+        Informacion info = new Informacion();
         info.setAccion("Extracción de la tabla de la tabla predictiva");
         info.setFechaTransaccion(date.toString());
         info.setIdInfo("5012");
-        info.setNoTransaccion("URL: "+getPathTablaExcel());
-        
+        info.setNoTransaccion("URL: " + getPathTablaExcel());
+
         try {
             FileInputStream file = new FileInputStream(new File(getPathTablaExcel()));
             XSSFWorkbook book = new XSSFWorkbook(file);
@@ -446,7 +448,7 @@ public class Sintactico {
         } catch (IOException e) {
             System.out.println("" + e);
             info.setEstado("Rechazada");
-        }finally{
+        } finally {
             EditorPlanetProgramming.lstInfo.add(info);
         }
 //        String s = "Tabla\n";

@@ -5,6 +5,7 @@
  */
 package clases;
 
+import estructurasDatos.PilaD;
 import java.util.ArrayList;
 import planetprogrammig.EditorPlanetProgramming;
 
@@ -16,9 +17,45 @@ public class RutinasSemanticas {
 
     private ArrayList<Lexema> lexemas;
     private int i;
+    private PilaD pilaLlaves;
+    private boolean lexCorrecto = true;
+    private boolean sinCorrecto = true;
+    private boolean semCorrecto = true;
 
     public int getI() {
         return i;
+    }
+
+    public PilaD getPilaLlaves() {
+        return pilaLlaves;
+    }
+
+    public void setPilaLlaves(PilaD pilaLlaves) {
+        this.pilaLlaves = pilaLlaves;
+    }
+
+    public boolean isLexCorrecto() {
+        return lexCorrecto;
+    }
+
+    public void setLexCorrecto(boolean lexCorrecto) {
+        this.lexCorrecto = lexCorrecto;
+    }
+
+    public boolean isSinCorrecto() {
+        return sinCorrecto;
+    }
+
+    public void setSinCorrecto(boolean sinCorrecto) {
+        this.sinCorrecto = sinCorrecto;
+    }
+
+    public boolean isSemCorrecto() {
+        return semCorrecto;
+    }
+
+    public void setSemCorrecto(boolean semCorrecto) {
+        this.semCorrecto = semCorrecto;
     }
 
     public void setI(int i) {
@@ -36,19 +73,16 @@ public class RutinasSemanticas {
     public RutinasSemanticas(ArrayList<Lexema> lexemas) {
         this.lexemas = lexemas;
         this.i = 0;
+        this.pilaLlaves = new PilaD();
     }
 
     public void analisisSemantico() {
-        if (lexemas.get(i).getNumToken() == 70) {
-            proyecto();
+        if (lexemas.isEmpty()) {
+            mensajeError("AXX", "No existen instrucciones", lexemas.get(i).getRenglon(), "ADVERTENCIA SINTACTICA");
         } else {
-            Errores e = new Errores();
-            e.setIdError("E18");
-            e.setDescripcion("Se esperaba el nombre del proyecto");
-            e.setLineaCodigo(lexemas.get(i).getRenglon());
-            e.setTipo("ERROR SINTACTICO");
-            EditorPlanetProgramming.lstError.add(e);
+            proyecto();
         }
+
     }
 
     private void proyecto() {
@@ -60,29 +94,32 @@ public class RutinasSemanticas {
                 if (lexemas.get(i).getNumToken() == 62) {
                     i++;
                 } else {
-                    Errores e = new Errores();
-                    e.setIdError("E18");
-                    e.setDescripcion("Se esperaba el nombre del proyecto");
-                    e.setLineaCodigo(lexemas.get(i).getRenglon());
-                    e.setTipo("ERROR SINTACTICO");
-                    EditorPlanetProgramming.lstError.add(e);
+                    sinCorrecto = false;
+                    if (tokenNoPermitido(lexemas.get(i).getRenglon())) {
+                        mensajeError("E17", "Error al recibir " + lexemas.get(i).getLexema(), lexemas.get(i).getRenglon(), "ERROR SINTACTICO");
+
+                    } else {
+                        mensajeError("E16", "Se esperaba una llave que cierra } ", lexemas.get(i).getRenglon(), "ERROR SINTACTICO");
+
+                    }
+
                 }
             } else {
-                Errores e = new Errores();
-                e.setIdError("E18");
-                e.setDescripcion("Se esperaba el nombre del proyecto");
-                e.setLineaCodigo(lexemas.get(i).getRenglon());
-                e.setTipo("ERROR SINTACTICO");
-                EditorPlanetProgramming.lstError.add(e);
-
+                sinCorrecto = false;
+                if (tokenNoPermitido(lexemas.get(i).getRenglon())) {
+                    mensajeError("E17", "Error al recibir " + lexemas.get(i).getLexema(), lexemas.get(i).getRenglon(), "ERROR SINTACTICO");
+                } else {
+                    mensajeError("E16", "Se esperaba una llave que abre { ", lexemas.get(i).getRenglon(), "ERROR SINTACTICO");
+                }
             }
         } else {
-            Errores e = new Errores();
-            e.setIdError("E18");
-            e.setDescripcion("Se esperaba el nombre del proyecto");
-            e.setLineaCodigo(lexemas.get(i).getRenglon());
-            e.setTipo("ERROR SINTACTICO");
-            EditorPlanetProgramming.lstError.add(e);
+            sinCorrecto = false;
+            if (tokenNoPermitido(lexemas.get(i).getRenglon())) {
+                mensajeError("E17", "Error al recibir " + lexemas.get(i).getLexema(), lexemas.get(i).getRenglon(), "ERROR SINTACTICO");
+            } else {
+                mensajeError("E16", "Se esperaba el nombre de proyecto ", lexemas.get(i).getRenglon(), "ERROR SINTACTICO");
+            }
+
         }
     }
 
@@ -102,16 +139,11 @@ public class RutinasSemanticas {
                 paquete();
                 comentariosIniciales();
                 break;
-//Salir
             case 62:
                 break;
             default:
-                Errores e = new Errores();
-                e.setIdError("E18");
-                e.setDescripcion("Se esperaba el nombre del proyecto");
-                e.setLineaCodigo(lexemas.get(i).getRenglon());
-                e.setTipo("ERROR SINTACTICO");
-                EditorPlanetProgramming.lstError.add(e);
+                sinCorrecto = false;
+                mensajeError("E17", "Error al recibir " + lexemas.get(i).getLexema(), lexemas.get(i).getRenglon(), "ERROR SINTACTICO");
                 break;
         }
 
@@ -128,17 +160,38 @@ public class RutinasSemanticas {
                     if (lexemas.get(i).getNumToken() == 62) {
                         i++;
                     } else {
-
+                        sinCorrecto = false;
+                        if (tokenNoPermitido(lexemas.get(i).getRenglon())) {
+                            mensajeError("E17", "Error al recibir " + lexemas.get(i).getLexema(), lexemas.get(i).getRenglon(), "ERROR SINTACTICO");
+                        } else {
+                            mensajeError("E16", "Se esperaba  una llave que cierra } ", lexemas.get(i).getRenglon(), "ERROR SINTACTICO");
+                        }
                     }
                 } else {
+                    sinCorrecto = false;
+                    if (tokenNoPermitido(lexemas.get(i).getRenglon())) {
+                        mensajeError("E17", "Error al recibir " + lexemas.get(i).getLexema(), lexemas.get(i).getRenglon(), "ERROR SINTACTICO");
+                    } else {
+                        mensajeError("E16", "Se esperaba una llave que abre { ", lexemas.get(i).getRenglon(), "ERROR SINTACTICO");
+                    }
 
                 }
 
             } else {
-
+                sinCorrecto = false;
+                if (tokenNoPermitido(lexemas.get(i).getRenglon())) {
+                    mensajeError("E17", "Error al recibir " + lexemas.get(i).getLexema(), lexemas.get(i).getRenglon(), "ERROR SINTACTICO");
+                } else {
+                    mensajeError("E16", "Se esperaba el nombre de paquete ", lexemas.get(i).getRenglon(), "ERROR SINTACTICO");
+                }
             }
         } else {
-
+            sinCorrecto = false;
+            if (tokenNoPermitido(lexemas.get(i).getRenglon())) {
+                mensajeError("E17", "Error al recibir " + lexemas.get(i).getLexema(), lexemas.get(i).getRenglon(), "ERROR SINTACTICO");
+            } else {
+                mensajeError("E16", "Se esperaba la palabra reservada paquete(es) o package(in)", lexemas.get(i).getRenglon(), "ERROR SINTACTICO");
+            }
         }
 
     }
@@ -154,20 +207,41 @@ public class RutinasSemanticas {
                     if (lexemas.get(i).getNumToken() == 62) {
                         i++;
                     } else {
-
+                        sinCorrecto = false;
+                        if (tokenNoPermitido(lexemas.get(i).getRenglon())) {
+                            mensajeError("E17", "Error al recibir " + lexemas.get(i).getLexema(), lexemas.get(i).getRenglon(), "ERROR SINTACTICO");
+                        } else {
+                            mensajeError("E16", "Se esperaba una llave que cierra } ", lexemas.get(i).getRenglon(), "ERROR SINTACTICO");
+                        }
                     }
                 } else {
-
+                    sinCorrecto = false;
+                    if (tokenNoPermitido(lexemas.get(i).getRenglon())) {
+                        mensajeError("E17", "Error al recibir " + lexemas.get(i).getLexema(), lexemas.get(i).getRenglon(), "ERROR SINTACTICO");
+                    } else {
+                        mensajeError("E16", "Se esperaba una llave que abre { ", lexemas.get(i).getRenglon(), "ERROR SINTACTICO");
+                    }
                 }
 
             } else {
+                sinCorrecto = false;
+                if (tokenNoPermitido(lexemas.get(i).getRenglon())) {
+                    mensajeError("E17", "Error al recibir " + lexemas.get(i).getLexema(), lexemas.get(i).getRenglon(), "ERROR SINTACTICO");
+                } else {
+                    mensajeError("E16", "Se esperaba el nombre del paquete", lexemas.get(i).getRenglon(), "ERROR SINTACTICO");
+                }
 
             }
 
-        } else if (RutinasSemanticas.esSiguiente(lexemas.get(i).getNumToken(), 5, 82, 83, 6, 1, 2, 3, 7, 20, 17, 4)) {
+        } else if (RutinasSemanticas.esSiguiente(lexemas.get(i).getNumToken(), 82, 83, 6, 1, 2, 3, 7, 20, 17, 4)) {
             clase();
         } else {
-
+            sinCorrecto = false;
+            if (tokenNoPermitido(lexemas.get(i).getRenglon())) {
+                mensajeError("E17", "Error al recibir " + lexemas.get(i).getLexema(), lexemas.get(i).getRenglon(), "ERROR SINTACTICO");
+            } else {
+                mensajeError("E16", "Se esperaba la palabra reservada paquete(es) o package(in)", lexemas.get(i).getRenglon(), "ERROR SINTACTICO");
+            }
         }
     }
 
@@ -181,7 +255,7 @@ public class RutinasSemanticas {
         } else if (lexemas.get(i).getNumToken() == 6) {
             libreria();
             clase();
-        } else if (RutinasSemanticas.esSiguiente(lexemas.get(i).getNumToken(), 82, 83, 6, 1, 2, 3, 7, 20, 17, 4)) {
+        } else if (RutinasSemanticas.esSiguiente(lexemas.get(i).getNumToken(), 1, 2, 3, 7, 20, 17, 4)) {
             modificadorAcceso();
             estatico();
             polimorfismo();
@@ -189,7 +263,12 @@ public class RutinasSemanticas {
         } else if (lexemas.get(i).getNumToken() == 62) {
             //Salir
         } else {
-
+            sinCorrecto = false;
+            if (tokenNoPermitido(lexemas.get(i).getRenglon())) {
+                mensajeError("E17", "Error al recibir " + lexemas.get(i).getLexema(), lexemas.get(i).getRenglon(), "ERROR SINTACTICO");
+            } else {
+                mensajeError("E17", "Error al recibir " + lexemas.get(i).getLexema(), lexemas.get(i).getRenglon(), "ERROR SINTACTICO");
+            }
         }
 
     }
@@ -203,6 +282,12 @@ public class RutinasSemanticas {
                 i++;
                 break;
             default:
+                sinCorrecto = false;
+                if (tokenNoPermitido(lexemas.get(i).getRenglon())) {
+                    mensajeError("E17", "Error al recibir " + lexemas.get(i).getLexema(), lexemas.get(i).getRenglon(), "ERROR SINTACTICO");
+                } else {
+                    mensajeError("E16", "Se esperaba un comentario de linea o de bloque ", lexemas.get(i).getRenglon(), "ERROR SINTACTICO");
+                }
                 break;
         }
     }
@@ -212,7 +297,12 @@ public class RutinasSemanticas {
             i++;
             importarLibreria();
         } else {
-
+            sinCorrecto = false;
+            if (tokenNoPermitido(lexemas.get(i).getRenglon())) {
+                mensajeError("E17", "Error al recibir " + lexemas.get(i).getLexema(), lexemas.get(i).getRenglon(), "ERROR SINTACTICO");
+            } else {
+                mensajeError("E16", "Se esperaba la palabra reservada importar(es) o import(in)", lexemas.get(i).getRenglon(), "ERROR SINTACTICO");
+            }
         }
     }
 
@@ -225,9 +315,20 @@ public class RutinasSemanticas {
                     if (lexemas.get(i).getNumToken() == 58) {
                         i++;
                     } else {
-
+                        sinCorrecto = false;
+                        if (tokenNoPermitido(lexemas.get(i).getRenglon())) {
+                            mensajeError("E17", "Error al recibir " + lexemas.get(i).getLexema(), lexemas.get(i).getRenglon(), "ERROR SINTACTICO");
+                        } else {
+                            mensajeError("E16", "Se esperaba un punto y coma ;", lexemas.get(i).getRenglon(), "ERROR SINTACTICO");
+                        }
                     }
                 } else {
+                    sinCorrecto = false;
+                    if (tokenNoPermitido(lexemas.get(i).getRenglon())) {
+                        mensajeError("E17", "Error al recibir " + lexemas.get(i).getLexema(), lexemas.get(i).getRenglon(), "ERROR SINTACTICO");
+                    } else {
+                        mensajeError("E16", "Se esperaba el nombre de una libreria", lexemas.get(i).getRenglon(), "ERROR SINTACTICO");
+                    }
 
                 }
                 break;
@@ -238,13 +339,30 @@ public class RutinasSemanticas {
                     if (lexemas.get(i).getNumToken() == 58) {
                         i++;
                     } else {
-
+                        sinCorrecto = false;
+                        if (tokenNoPermitido(lexemas.get(i).getRenglon())) {
+                            mensajeError("E17", "Error al recibir " + lexemas.get(i).getLexema(), lexemas.get(i).getRenglon(), "ERROR SINTACTICO");
+                        } else {
+                            mensajeError("E16", "Se esperaba un punto y coma ;", lexemas.get(i).getRenglon(), "ERROR SINTACTICO");
+                        }
                     }
                 } else {
+                    sinCorrecto = false;
+                    if (tokenNoPermitido(lexemas.get(i).getRenglon())) {
+                        mensajeError("E17", "Error al recibir " + lexemas.get(i).getLexema(), lexemas.get(i).getRenglon(), "ERROR SINTACTICO");
+                    } else {
+                        mensajeError("E16", "Se esperaba el nombre de una libreria", lexemas.get(i).getRenglon(), "ERROR SINTACTICO");
+                    }
 
                 }
                 break;
             default:
+                sinCorrecto = false;
+                if (tokenNoPermitido(lexemas.get(i).getRenglon())) {
+                    mensajeError("E17", "Error al recibir " + lexemas.get(i).getLexema(), lexemas.get(i).getRenglon(), "ERROR SINTACTICO");
+                } else {
+                    mensajeError("E16", "Se esperaba la palabra reservada paquete(es) o package(in)", lexemas.get(i).getRenglon(), "ERROR SINTACTICO");
+                }
                 break;
         }
     }
@@ -260,7 +378,6 @@ public class RutinasSemanticas {
 
                 }
                 break;
-            //Salir
             case 81:
                 break;
             default:
@@ -2851,34 +2968,41 @@ public class RutinasSemanticas {
     }
 
     private void operador() {
-        if (lexemas.get(i).getNumToken() == 49) {
-            //242
-            operacionMat();
-            operacionRelComp();
-            operacionLog();
-        } else if (lexemas.get(i).getNumToken() == 52) {
-            //242
-            operacionMat();
-            operacionRelComp();
-            operacionLog();
-        } else if (lexemas.get(i).getNumToken() == 50) {
-            //243
-            operacionComp();
-            operacionLog();
-        } else if (lexemas.get(i).getNumToken() == 51) {
-            //243
-            operacionComp();
-            operacionLog();
-        } else if (lexemas.get(i).getNumToken() == 55) {
-            //244
-            operacionLog();
-        } else if (lexemas.get(i).getNumToken() == 48) {
-            //242
-            operacionMat();
-            operacionRelComp();
-            operacionLog();
-        } else {
-
+        switch (lexemas.get(i).getNumToken()) {
+            case 49:
+                //242
+                operacionMat();
+                operacionRelComp();
+                operacionLog();
+                break;
+            case 52:
+                //242
+                operacionMat();
+                operacionRelComp();
+                operacionLog();
+                break;
+            case 50:
+                //243
+                operacionComp();
+                operacionLog();
+                break;
+            case 51:
+                //243
+                operacionComp();
+                operacionLog();
+                break;
+            case 55:
+                //244
+                operacionLog();
+                break;
+            case 48:
+                //242
+                operacionMat();
+                operacionRelComp();
+                operacionLog();
+                break;
+            default:
+                break;
         }
     }
 
@@ -2972,4 +3096,49 @@ public class RutinasSemanticas {
         return b;
 
     }
+
+    /*
+    Eliminar todo lo que haya despues de algo inesperado hasta que se encuentre un punto y coma, una llave que cierra, y si viene una llave que abre, abrir una pila de llaves que abren y cierran por pares hasta encontrar su llave que cierra.
+     */
+    private void puntoRecuperacion1() {
+        //INSTRUCCIONES GLOBALES
+        switch (lexemas.get(i).getNumToken()) {
+            case 1:
+                break;
+            case 2:
+                break;
+            case 3:
+                break;
+            default:
+                break;
+        }
+    }
+
+    private void puntoRecuperacion2() {
+        //INSTRUCCIONES DENTRO DE BLOQUES
+        switch (lexemas.get(i).getNumToken()) {
+            case 1:
+                break;
+            case 2:
+                break;
+            case 3:
+                break;
+            default:
+                break;
+        }
+    }
+
+    public void mensajeError(String id, String desc, int lineaCod, String tipo) {
+        Errores e = new Errores();
+        e.setIdError(id);
+        e.setDescripcion(desc);
+        e.setLineaCodigo(lineaCod);
+        e.setTipo(tipo);
+        EditorPlanetProgramming.lstError.add(e);
+    }
+
+    private boolean tokenNoPermitido(int renglon) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
 }

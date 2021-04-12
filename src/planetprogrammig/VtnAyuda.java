@@ -22,39 +22,6 @@ public class VtnAyuda extends javax.swing.JDialog {
 
     private final CustomJTree tree = new CustomJTree();
 
-    private void loadProyect() {
-
-        Node package1 = new Node(Utils.TypeFile.PACKAGE, "Interfaces");
-        package1.addChild(new Node(Utils.TypeFile.CLASS, "Inode.jey"));
-
-        Node package2 = new Node(Utils.TypeFile.PACKAGE, "Resources");
-        Node package22 = new Node(Utils.TypeFile.PACKAGE, "Img");
-        package22.addChild(new Node(Utils.TypeFile.IMAGE, "BuildPackage.png"));
-        package22.addChild(new Node(Utils.TypeFile.IMAGE, "class.png"));
-        package22.addChild(new Node(Utils.TypeFile.IMAGE, "CodesPackage.png"));
-        package22.addChild(new Node(Utils.TypeFile.IMAGE, "Configuration.png"));
-        package2.addChild(package22);
-
-        Node package3 = new Node(Utils.TypeFile.PACKAGE, "Utils");
-        package3.addChild(new Node(Utils.TypeFile.CLASS, "CustomJtree.jey"));
-        package3.addChild(new Node(Utils.TypeFile.CLASS, "Node.jey"));
-        package3.addChild(new Node(Utils.TypeFile.CLASS, "Project.jey"));
-        package3.addChild(new Node(Utils.TypeFile.CLASS, "TypeFile.jey"));
-
-        Node package4 = new Node(Utils.TypeFile.PACKAGE, "View");
-        package4.addChild(new Node(Utils.TypeFile.CLASS, "Frame.jey"));
-
-        Node packageSource = new Node(Utils.TypeFile.FOLDER_SOURCE, "Source Packages");
-        packageSource.addChilds(package1, package2, package3, package4);
-
-        Node packageBuild = new Node(Utils.TypeFile.FOLDER_BUILD, "output");
-        packageBuild.addChild(new Node(Utils.TypeFile.COMPILED_CLASS, "Node.out"));
-
-        Node project = new Node(Utils.TypeFile.PROYECT, "CustomJTre");
-        project.addChilds(packageSource, packageBuild);
-        tree.loadNewProyect(project);
-    }
-
     /**
      * Creates new form Ayuda
      *
@@ -71,9 +38,6 @@ public class VtnAyuda extends javax.swing.JDialog {
         this.setIconImage(icono);
         setLocationRelativeTo(parent);
         setResizable(false);
-        loadProyect();
-        tree.setBounds(0, 0, jPanel2.getWidth(), jPanel2.getHeight());
-        jPanel2.add(tree);
         iniciarModelo();
     }
 
@@ -88,11 +52,10 @@ public class VtnAyuda extends javax.swing.JDialog {
 
         jFileChooser1 = new javax.swing.JFileChooser();
         jPanel1 = new javax.swing.JPanel();
-        jScrollPane1 = new javax.swing.JScrollPane();
-        jTree1 = new javax.swing.JTree();
         panel1 = new org.edisoncor.gui.panel.Panel();
         jButton3 = new javax.swing.JButton();
-        jPanel2 = new javax.swing.JPanel();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        jTree1 = new javax.swing.JTree();
 
         jFileChooser1.setFileSelectionMode(javax.swing.JFileChooser.FILES_AND_DIRECTORIES);
 
@@ -102,25 +65,15 @@ public class VtnAyuda extends javax.swing.JDialog {
         jPanel1.setBackground(new java.awt.Color(255, 255, 255));
         jPanel1.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 1, true));
 
-        javax.swing.tree.DefaultMutableTreeNode treeNode1 = new javax.swing.tree.DefaultMutableTreeNode("Crear capeta");
-        jTree1.setModel(new javax.swing.tree.DefaultTreeModel(treeNode1));
-        jScrollPane1.setViewportView(jTree1);
-
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(61, 61, 61)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 167, Short.MAX_VALUE)
-                .addGap(487, 487, 487))
+            .addGap(0, 707, Short.MAX_VALUE)
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGap(0, 420, Short.MAX_VALUE)
         );
 
         panel1.setColorPrimario(new java.awt.Color(0, 102, 102));
@@ -149,25 +102,19 @@ public class VtnAyuda extends javax.swing.JDialog {
             .addComponent(jButton3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
-        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
-        jPanel2.setLayout(jPanel2Layout);
-        jPanel2Layout.setHorizontalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 167, Short.MAX_VALUE)
-        );
-        jPanel2Layout.setVerticalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 422, Short.MAX_VALUE)
-        );
+        javax.swing.tree.DefaultMutableTreeNode treeNode1 = new javax.swing.tree.DefaultMutableTreeNode("Crear capeta");
+        jTree1.setModel(new javax.swing.tree.DefaultTreeModel(treeNode1));
+        jScrollPane1.setViewportView(jTree1);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
             .addGroup(layout.createSequentialGroup()
-                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 175, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
             .addComponent(panel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
@@ -177,7 +124,7 @@ public class VtnAyuda extends javax.swing.JDialog {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                    .addComponent(jScrollPane1)))
         );
 
         pack();
@@ -242,7 +189,6 @@ public class VtnAyuda extends javax.swing.JDialog {
     private javax.swing.JButton jButton3;
     private javax.swing.JFileChooser jFileChooser1;
     private javax.swing.JPanel jPanel1;
-    private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTree jTree1;
     private org.edisoncor.gui.panel.Panel panel1;
@@ -315,14 +261,14 @@ private DefaultTreeModel modelo;
                         //DefaultMutableTreeNode hijo = new DefaultMutableTreeNode(f.getName());
                         modelo.insertNodeInto(hijo, root, contador);
                         contador++;
-                          crea(hijo, f);
+                        crea(hijo, f);
                     } else if (f.getName().equals("Libraries")) {
                         Node cat2 = new Node(Utils.TypeFile.PACKAGE, f.getName());
                         DefaultMutableTreeNode hijo = new DefaultMutableTreeNode(cat2);
                         //DefaultMutableTreeNode hijo = new DefaultMutableTreeNode(f.getName());
                         modelo.insertNodeInto(hijo, root, contador);
                         contador++;
-                          crea(hijo, f);
+                        crea(hijo, f);
                     } else {
                         Node cat2 = new Node(Utils.TypeFile.FOLDER_SOURCE, f.getName());
                         DefaultMutableTreeNode hijo = new DefaultMutableTreeNode(cat2);

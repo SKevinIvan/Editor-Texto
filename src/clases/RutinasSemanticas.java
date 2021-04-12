@@ -3138,7 +3138,8 @@ public class RutinasSemanticas {
     }
 
     private boolean tokenNoPermitido(int renglon) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+  
+        return false;
     }
 
 }

@@ -5,6 +5,8 @@
  */
 package planetprogrammig;
 
+import Utils.CustomJTree;
+import Utils.Node;
 import java.awt.Color;
 import java.awt.Cursor;
 import java.awt.HeadlessException;
@@ -41,6 +43,7 @@ import java.awt.image.BufferedImage;
 import java.awt.print.PageFormat;
 import java.awt.print.PrinterException;
 import java.awt.print.PrinterJob;
+import java.util.Arrays;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 import java.util.StringTokenizer;
@@ -54,6 +57,9 @@ import javax.swing.text.DefaultHighlighter;
 import javax.swing.text.Document;
 import javax.swing.text.Highlighter;
 import javax.swing.text.JTextComponent;
+import javax.swing.tree.DefaultMutableTreeNode;
+import javax.swing.tree.DefaultTreeModel;
+import javax.swing.tree.TreePath;
 
 /**
  *
@@ -67,6 +73,7 @@ public final class EditorPlanetProgramming extends javax.swing.JFrame {
     public EditorPlanetProgramming() {
 
         TabbedPaneUI blackTabbedPaneUI = new TabbedPaneUI();
+        TabbedPaneUI blackTabbedPaneUI2 = new TabbedPaneUI();
         panelTab = new CmpntTabPane[9];
         //Inicializacion de las pilas de los cambios
         pilaDeshacer = new PilaD();
@@ -81,7 +88,8 @@ public final class EditorPlanetProgramming extends javax.swing.JFrame {
         //para preguntar si se quiere cerrar ventana desactivamos el boton de cerrar
         setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
 
-        pestaniasEntradaSalidas.setUI(blackTabbedPaneUI);
+        pestaniasEntradaSalidas.setUI(blackTabbedPaneUI2);
+        jTabbedPane1.setUI(blackTabbedPaneUI);
         crearPestaniaInicio();
         //pestaniasEntradaSalidas.setIconAt(0, imageInicio);
         crearPestaniaEdicion();
@@ -98,7 +106,8 @@ public final class EditorPlanetProgramming extends javax.swing.JFrame {
         setExtendedState(MAXIMIZED_BOTH);
         progressBarEditor.setVisible(false);
         lblProgreso.setVisible(false);
-
+        iniciarPageProyectos();
+        iniciarModelo();
     }
 
     private void txtPanelEditandoCaretUpdate(javax.swing.event.CaretEvent evt) {
@@ -192,6 +201,8 @@ public final class EditorPlanetProgramming extends javax.swing.JFrame {
         spEntreCerrarTodo = new javax.swing.JPopupMenu.Separator();
         popMDerecha = new javax.swing.JMenuItem();
         popMIzquierda = new javax.swing.JMenuItem();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        jTree1 = new javax.swing.JTree();
         toolBarAccesosDirectos = new javax.swing.JToolBar();
         btnNuevo = new javax.swing.JButton();
         btnAbrir = new javax.swing.JButton();
@@ -217,6 +228,7 @@ public final class EditorPlanetProgramming extends javax.swing.JFrame {
         lblProgreso = new javax.swing.JLabel();
         progressBarEditor = new javax.swing.JProgressBar();
         pestaniasEntradaSalidas = new javax.swing.JTabbedPane();
+        jTabbedPane1 = new javax.swing.JTabbedPane();
         MenuInicio = new javax.swing.JMenuBar();
         menuArchivo = new javax.swing.JMenu();
         itemNuevo = new javax.swing.JMenuItem();
@@ -387,6 +399,13 @@ public final class EditorPlanetProgramming extends javax.swing.JFrame {
 
         popMIzquierda.setText("Pasar a la izquierda");
         popMenuCerrar.add(popMIzquierda);
+
+        jTree1.addTreeSelectionListener(new javax.swing.event.TreeSelectionListener() {
+            public void valueChanged(javax.swing.event.TreeSelectionEvent evt) {
+                jTree1ValueChanged(evt);
+            }
+        });
+        jScrollPane1.setViewportView(jTree1);
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Editor planet");
@@ -707,10 +726,10 @@ public final class EditorPlanetProgramming extends javax.swing.JFrame {
             }
         });
         pestaniasEntradaSalidas.addInputMethodListener(new java.awt.event.InputMethodListener() {
-            public void inputMethodTextChanged(java.awt.event.InputMethodEvent evt) {
-            }
             public void caretPositionChanged(java.awt.event.InputMethodEvent evt) {
                 pestaniasEntradaSalidasCaretPositionChanged(evt);
+            }
+            public void inputMethodTextChanged(java.awt.event.InputMethodEvent evt) {
             }
         });
         pestaniasEntradaSalidas.addKeyListener(new java.awt.event.KeyAdapter() {
@@ -1277,15 +1296,22 @@ public final class EditorPlanetProgramming extends javax.swing.JFrame {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(toolBarAccesosDirectos, javax.swing.GroupLayout.DEFAULT_SIZE, 1403, Short.MAX_VALUE)
-            .addComponent(pestaniasEntradaSalidas, javax.swing.GroupLayout.Alignment.TRAILING)
+            .addGroup(layout.createSequentialGroup()
+                .addComponent(jTabbedPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 215, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(pestaniasEntradaSalidas))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addComponent(toolBarAccesosDirectos, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(pestaniasEntradaSalidas, javax.swing.GroupLayout.DEFAULT_SIZE, 593, Short.MAX_VALUE))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(pestaniasEntradaSalidas, javax.swing.GroupLayout.DEFAULT_SIZE, 593, Short.MAX_VALUE)
+                    .addComponent(jTabbedPane1)))
         );
+
+        jTabbedPane1.getAccessibleContext().setAccessibleName("Directorio");
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -2089,6 +2115,13 @@ public final class EditorPlanetProgramming extends javax.swing.JFrame {
         // pestaniasEntradaSalidas.setSelectedIndex(0);
     }//GEN-LAST:event_jMenuItem11ActionPerformed
 
+    private void jTree1ValueChanged(javax.swing.event.TreeSelectionEvent evt) {//GEN-FIRST:event_jTree1ValueChanged
+        // TODO add your handling code here:
+         TreePath rutaArbol=evt.getPath();
+        
+     
+    }//GEN-LAST:event_jTree1ValueChanged
+
     public void openEditor() {
 
         //Items
@@ -2235,6 +2268,19 @@ public final class EditorPlanetProgramming extends javax.swing.JFrame {
             pestaniasEntradaSalidas.setTabComponentAt(indexTab, panelTab[1]);
             checkCompilando.setSelected(true);
         }
+    }
+
+    public void iniciarPageProyectos() {
+        jTabbedPane1.addTab("Proyectos", jScrollPane1);
+        //  numLineLexico = new NumeroLinea(txtPanelLexico);
+        CmpntTabPane panelTab2 = new CmpntTabPane(jTabbedPane1, 1, imageProyectos);
+        int indexTab = 0;
+        for (int p = 0; p < jTabbedPane1.getTabCount(); p++) {
+            if (jTabbedPane1.getTitleAt(p).equals("Proyectos")) {
+                indexTab = p;
+            }
+        }
+        jTabbedPane1.setTabComponentAt(indexTab, panelTab2);
     }
 
     public void crearPestaniaSalida() {
@@ -2696,121 +2742,132 @@ public final class EditorPlanetProgramming extends javax.swing.JFrame {
 
         try {
             JFileChooser selecciona = new JFileChooser();  //crea objeto file chooser
-            FileNameExtensionFilter filtro = new FileNameExtensionFilter("Archivo .txt", "txt", "txt");  //solo muestra archivos .mp3 en file chocer
-            selecciona.setFileFilter(filtro);  //se agrega el filtro al file chooser
+            selecciona.setFileSelectionMode(javax.swing.JFileChooser.FILES_AND_DIRECTORIES);
+            //  FileNameExtensionFilter filtro = new FileNameExtensionFilter("Archivo .txt", "txt", "txt");  //solo muestra archivos .mp3 en file chocer
+            //  selecciona.setFileFilter(filtro);  //se agrega el filtro al file chooser
             selecciona.showOpenDialog(this);   //sin esto me marcaba error :v
             File archivoExtraido = selecciona.getSelectedFile(); //obtiene el archivo en la variable archivo
             String url; //borra la ruta para evitar que se quede una anterior
 
             String etiquetaNombre;
+
             if (archivoExtraido != null) // si no se selecciono ningun archivo no hace nada
             {
-
-                if (archivo) {
-                    ManipulaArchivos.guardar(txtPanelEditando.getText(), rutaArchivo);
-                }
-                url = archivoExtraido.getCanonicalPath(); //obtiene la ruta del archivo
-                etiquetaNombre = archivoExtraido.getName();//obtiene el nombre del archivo/cancion                
-
-                TextPaneTest.appendToPane(txtPanelSalida, "\nAbriendo achivo...", cVerde);
-                String etiExt[] = etiquetaNombre.split(".");
-                for (String etiExt1 : etiExt) {
-                    System.out.println(etiExt1);
-                }
-                String extencion = "";
-                switch (extencion) {
-                    case "html":
-                        //HTML
-                        break;
-                    case "css":
-                        //CSS
-                        break;
-                    case "js":
-                        //JAVASCRIPT
-                        break;
-                    case "pl":
-                        //PROLOG
-                        break;
-                    case "csdos":
-                        //CS-DOS
-                        break;
-                    case "txt":
-                        //TEXTO PLANO
-                        break;
-                    case "c":
-                        //C
-                        break;
-                    case "cs":
-                        //C#
-                        break;
-                    case "php":
-                        //PHP
-                        break;
-                    case "sql":
-                        //SQL
-                        break;
-                    case "ino":
-                        //ARDUINO
-                        break;
-                    case "h":
-                        //LIBRERIA ARDUINO
-                        break;
-                    case "class":
-                        //CLASE DE JAVA
-                        break;
-                    case "java":
-                        //JAVA
-                        break;
-                    case "asm":
-                        //ENSAMBLADOR
-                        break;
-                    case "hs":
-                        //HASKEL
-                        break;
-                    default:
-                        break;
-                }
-                String s = "";
-                ArrayList<String> ar = ManipulaArchivos.cargar(url);
-
-                rutaArchivo = url;
-                this.archivo = true;
-                if (ar != null) {
-                    for (int j = 0; j < ar.size(); j++) {
-                        s += ar.get(j);
+                if (archivoExtraido.isFile()) {
+                    if (archivo) {
+                        ManipulaArchivos.guardar(txtPanelEditando.getText(), rutaArchivo);
                     }
-                    //Escribiendo el texto en el editor
-                    if (txtPanelEditando == null) {
-                        crearPestaniaEdicion();
+                    url = archivoExtraido.getCanonicalPath(); //obtiene la ruta del archivo
+                    etiquetaNombre = archivoExtraido.getName();//obtiene el nombre del archivo/cancion                
 
-                        txtPanelEditando.setText(s);
-                    } else {
-                        if (txtPanelEditando.getText().isEmpty()) {
+                    TextPaneTest.appendToPane(txtPanelSalida, "\nAbriendo achivo...", cVerde);
+                    String etiExt[] = etiquetaNombre.split(".");
+                    for (String etiExt1 : etiExt) {
+                        System.out.println(etiExt1);
+                    }
+                    String extencion = "";
+                    switch (extencion) {
+                        case "html":
+                            //HTML
+                            break;
+                        case "css":
+                            //CSS
+                            break;
+                        case "js":
+                            //JAVASCRIPT
+                            break;
+                        case "pl":
+                            //PROLOG
+                            break;
+                        case "csdos":
+                            //CS-DOS
+                            break;
+                        case "txt":
+                            //TEXTO PLANO
+                            break;
+                        case "c":
+                            //C
+                            break;
+                        case "cs":
+                            //C#
+                            break;
+                        case "php":
+                            //PHP
+                            break;
+                        case "sql":
+                            //SQL
+                            break;
+                        case "ino":
+                            //ARDUINO
+                            break;
+                        case "h":
+                            //LIBRERIA ARDUINO
+                            break;
+                        case "class":
+                            //CLASE DE JAVA
+                            break;
+                        case "java":
+                            //JAVA
+                            break;
+                        case "asm":
+                            //ENSAMBLADOR
+                            break;
+                        case "hs":
+                            //HASKEL
+                            break;
+                        default:
+                            break;
+                    }
+                    String s = "";
+                    ArrayList<String> ar = ManipulaArchivos.cargar(url);
+
+                    rutaArchivo = url;
+                    this.archivo = true;
+                    if (ar != null) {
+                        for (int j = 0; j < ar.size(); j++) {
+                            s += ar.get(j);
+                        }
+                        //Escribiendo el texto en el editor
+                        if (txtPanelEditando == null) {
+                            crearPestaniaEdicion();
 
                             txtPanelEditando.setText(s);
                         } else {
-                            crearPagEdicion(s, extencion);
+                            if (txtPanelEditando.getText().isEmpty()) {
+
+                                txtPanelEditando.setText(s);
+                            } else {
+                                crearPagEdicion(s, extencion);
+                            }
+
                         }
+                        //Encabezado con el titulo del archivo
+                        setTitle("Editor Planet" + " - " + etiquetaNombre);
+                        //habilita MenuOpciones
+                        CtrlInterfaz.habilita(true, btnGuardar, btnAbrir, btnBuscar, btnCerrar, btnCompilar, btnEjecutar, btnFormato, btnNuevo, btnReemplazar);
+                        //Deshabilita MenuOpciones
+                        CtrlInterfaz.habilita(false, btnCopiar, btnCortar, btnDeshacer, btnRehacer, btnPegar);
+                        //Habilitar itemMenus
+                        CtrlInterfaz.habilita(true, itemLexico, itemAbrir, itemCerrar, itemCompilar, itemEjecutar, itemGuardar, itemGuardarComo, itemNuevo);
+                        //Deshabilitar itemMenus
+                        CtrlInterfaz.habilita(false, itemIntermedio, itemObjeto, itemOptmizacion, itemSemantico, itemSintactico);
+                        //Habilitar popMenus
+                        CtrlInterfaz.habilita(true, popMBuscar, popMIdentar, popMReemplazar, popMSeleccionTotal);
+                        //Deshabilitar popMenus
+                        CtrlInterfaz.habilita(false, popMCopiar, popMCortar, popMDeshacer, popMPegar);
 
+                        CtrlInterfaz.habilita(true, checkEditando, checkCompilando, checkSalida, checkLexico);
+                        CtrlInterfaz.habilita(false, checkIntermedio, checkObjeto, checkOptimizacion, checkSemantico, checkSintactico);
                     }
-                    //Encabezado con el titulo del archivo
-                    setTitle("Editor Planet" + " - " + etiquetaNombre);
-                    //habilita MenuOpciones
-                    CtrlInterfaz.habilita(true, btnGuardar, btnAbrir, btnBuscar, btnCerrar, btnCompilar, btnEjecutar, btnFormato, btnNuevo, btnReemplazar);
-                    //Deshabilita MenuOpciones
-                    CtrlInterfaz.habilita(false, btnCopiar, btnCortar, btnDeshacer, btnRehacer, btnPegar);
-                    //Habilitar itemMenus
-                    CtrlInterfaz.habilita(true, itemLexico, itemAbrir, itemCerrar, itemCompilar, itemEjecutar, itemGuardar, itemGuardarComo, itemNuevo);
-                    //Deshabilitar itemMenus
-                    CtrlInterfaz.habilita(false, itemIntermedio, itemObjeto, itemOptmizacion, itemSemantico, itemSintactico);
-                    //Habilitar popMenus
-                    CtrlInterfaz.habilita(true, popMBuscar, popMIdentar, popMReemplazar, popMSeleccionTotal);
-                    //Deshabilitar popMenus
-                    CtrlInterfaz.habilita(false, popMCopiar, popMCortar, popMDeshacer, popMPegar);
+                } else {
 
-                    CtrlInterfaz.habilita(true, checkEditando, checkCompilando, checkSalida, checkLexico);
-                    CtrlInterfaz.habilita(false, checkIntermedio, checkObjeto, checkOptimizacion, checkSemantico, checkSintactico);
                 }
+
+                Node cat2 = new Node(Utils.TypeFile.PROYECT, archivoExtraido.getName());
+                root = new DefaultMutableTreeNode(cat2);
+                modelo = new DefaultTreeModel(root);
+                crea(root, archivoExtraido);
+                jTree1.setModel(modelo);
 
             }
 
@@ -3163,9 +3220,9 @@ public final class EditorPlanetProgramming extends javax.swing.JFrame {
     }
 
     public void semantico() {
-        RutinasSemanticas rSem=new RutinasSemanticas(lexemas);
+        RutinasSemanticas rSem = new RutinasSemanticas(lexemas);
         rSem.analisisSemantico();
-        
+
         CtrlInterfaz.habilita(true, itemGuardar, itemLexico, itemSintactico, itemSemantico, itemIntermedio);
         CtrlInterfaz.habilita(false, itemOptmizacion, itemObjeto);
         CtrlInterfaz.habilita(true, checkEditando, checkCompilando, checkSalida, checkLexico, checkSintactico, checkSemantico, checkIntermedio);
@@ -3587,6 +3644,7 @@ public final class EditorPlanetProgramming extends javax.swing.JFrame {
 
     //Fin de la eclaracion de variables estáticas de la clase 
     //Declaracion de constantes de la clase 
+    private final ImageIcon imageProyectos = new ImageIcon(ClassLoader.getSystemResource("imagenes/FolderCodes.png"));
     private final ImageIcon imageLenguaje = new ImageIcon(ClassLoader.getSystemResource("imagenes/coffeCode.png"));
     private final ImageIcon imageEditar = new ImageIcon(ClassLoader.getSystemResource("iconos/18171 - editors package.png"));
     private final ImageIcon imageCompilar = new ImageIcon(ClassLoader.getSystemResource("iconos/118830 - terminal utilities_1.png"));
@@ -3736,6 +3794,9 @@ public final class EditorPlanetProgramming extends javax.swing.JFrame {
     private javax.swing.JMenuItem jMenuItem7;
     private javax.swing.JMenuItem jMenuItem8;
     private javax.swing.JMenuItem jMenuItem9;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JTabbedPane jTabbedPane1;
+    private javax.swing.JTree jTree1;
     private javax.swing.JLabel lblProgreso;
     private javax.swing.JMenu menuArchivo;
     private javax.swing.JMenu menuAyuda;
@@ -3779,6 +3840,7 @@ public final class EditorPlanetProgramming extends javax.swing.JFrame {
     private javax.swing.JPopupMenu.Separator spEntrerRehacerCortar;
     private javax.swing.JToolBar toolBarAccesosDirectos;
     // End of variables declaration//GEN-END:variables
+private final CustomJTree tree = new CustomJTree();
 
     public javax.swing.JTabbedPane getPestaniasEntradaSalidas() {
         return pestaniasEntradaSalidas;
@@ -3863,8 +3925,97 @@ public final class EditorPlanetProgramming extends javax.swing.JFrame {
             super.repaint(tm, 0, 0, getWidth(), getHeight());
         }
     }
+    private DefaultTreeModel modelo;
+    private DefaultMutableTreeNode root;
 
+    private void actualizar(File fichero) {
+        //  root = new DefaultMutableTreeNode(fichero.getName());
+        Node cat2 = new Node(Utils.TypeFile.PROYECT, fichero.getName());
+        root = new DefaultMutableTreeNode(cat2);
+        modelo = new DefaultTreeModel(root);
+        crea(root, fichero);
+        jTree1.setModel(modelo);
+    }
+
+    private void iniciarModelo() {
+
+        root = new DefaultMutableTreeNode("Raiz");
+        modelo = new DefaultTreeModel(root);
+        Node cat1 = new Node(Utils.TypeFile.PROYECT, "Categoria 1");
+        Node cat2 = new Node(Utils.TypeFile.PROYECT, "Categoria 2");
+
+        DefaultMutableTreeNode hijo1 = new DefaultMutableTreeNode(cat1);
+        DefaultMutableTreeNode hijo2 = new DefaultMutableTreeNode(cat2);
+        modelo.insertNodeInto(hijo1, root, 0);
+        modelo.insertNodeInto(hijo2, root, 1);
+
+        jTree1.setModel(modelo);
+        jTree1.setCellRenderer(tree);
+    }
+
+    private void crea(DefaultMutableTreeNode root, File fichero) {
+        File[] archivos = fichero.listFiles();
+        if (archivos != null) {
+            int contador = 0;
+            for (File f : archivos) {
+
+                if (f.isFile()) {
+                    if (f.getName().contains(".java")) {
+                        Node cat2 = new Node(Utils.TypeFile.CLASS, f.getName());
+                        DefaultMutableTreeNode hijo = new DefaultMutableTreeNode(cat2);
+                        //DefaultMutableTreeNode hijo = new DefaultMutableTreeNode(f.getName());
+                        modelo.insertNodeInto(hijo, root, contador);
+                        contador++;
+                    } else if (f.getName().contains(".png") || f.getName().contains(".jpg")) {
+                        Node cat2 = new Node(Utils.TypeFile.IMAGE, f.getName());
+                        DefaultMutableTreeNode hijo = new DefaultMutableTreeNode(cat2);
+                        //DefaultMutableTreeNode hijo = new DefaultMutableTreeNode(f.getName());
+                        modelo.insertNodeInto(hijo, root, contador);
+                        contador++;
+                    } else if (f.getName().contains(".word")) {
+                        Node cat2 = new Node(Utils.TypeFile.COMPILED_CLASS, f.getName());
+                        DefaultMutableTreeNode hijo = new DefaultMutableTreeNode(cat2);
+                        //DefaultMutableTreeNode hijo = new DefaultMutableTreeNode(f.getName());
+                        modelo.insertNodeInto(hijo, root, contador);
+                        contador++;
+                    } else {
+                        Node cat2 = new Node(Utils.TypeFile.CLASS, f.getName());
+                        DefaultMutableTreeNode hijo = new DefaultMutableTreeNode(cat2);
+                        //DefaultMutableTreeNode hijo = new DefaultMutableTreeNode(f.getName());
+                        modelo.insertNodeInto(hijo, root, contador);
+                        contador++;
+                    }
+
+                } else if (f.isDirectory()) {
+                    if (f.getName().equals("Source Package")) {
+                        Node cat2 = new Node(Utils.TypeFile.FOLDER_BUILD, f.getName());
+                        DefaultMutableTreeNode hijo = new DefaultMutableTreeNode(cat2);
+                        //DefaultMutableTreeNode hijo = new DefaultMutableTreeNode(f.getName());
+                        modelo.insertNodeInto(hijo, root, contador);
+                        contador++;
+                        crea(hijo, f);
+                    } else if (f.getName().equals("Libraries")) {
+                        Node cat2 = new Node(Utils.TypeFile.PACKAGE, f.getName());
+                        DefaultMutableTreeNode hijo = new DefaultMutableTreeNode(cat2);
+                        //DefaultMutableTreeNode hijo = new DefaultMutableTreeNode(f.getName());
+                        modelo.insertNodeInto(hijo, root, contador);
+                        contador++;
+                        crea(hijo, f);
+                    } else {
+                        Node cat2 = new Node(Utils.TypeFile.FOLDER_SOURCE, f.getName());
+                        DefaultMutableTreeNode hijo = new DefaultMutableTreeNode(cat2);
+                        //DefaultMutableTreeNode hijo = new DefaultMutableTreeNode(f.getName());
+                        modelo.insertNodeInto(hijo, root, contador);
+                        contador++;
+                        crea(hijo, f);
+                    }
+
+                }
+            }
+        }
+    }
 // Creates highlights around all occurrences of pattern in textComp
+
     public void highlight(JTextComponent textComp, String pattern) {
         // First remove all old highlights
         removeHighlights(textComp);

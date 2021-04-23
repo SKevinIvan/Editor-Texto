@@ -16,9 +16,9 @@ import javax.swing.*;
 public class CmpntTabPane extends JPanel {
 
     //Declaración de las variables para la clase
-    private final JTabbedPane txtPane;
-    private final int tipoX;
-    private final ImageIcon image;
+    private JTabbedPane txtPane;
+    private int tipoX;
+    private ImageIcon image;
     //Fin de la declaración de las variables para la clase
 
     /**
@@ -62,4 +62,29 @@ public class CmpntTabPane extends JPanel {
             add(button);
         }
     }
+
+    public JTabbedPane getTxtPane() {
+        return txtPane;
+    }
+
+    public void setTxtPane(JTabbedPane txtPane) {
+        this.txtPane = txtPane;
+    }
+
+    public int getTipoX() {
+        return tipoX;
+    }
+
+    public void setTipoX(int tipoX) {
+        this.tipoX = tipoX;
+    }
+
+    public ImageIcon getImage() {
+        return image;
+    }
+
+    public void setImage(ImageIcon image) {
+        this.image = image;
+    }
+
 }

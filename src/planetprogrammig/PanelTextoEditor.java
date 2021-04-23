@@ -60,7 +60,7 @@ public class PanelTextoEditor extends javax.swing.JTextPane implements javax.swi
         this.setEditorKit(new TabSizeEditorKit());
 
         this.setFont(new java.awt.Font("Monospaced", 0, 14)); // NOI18N
-        this.setSelectionColor(new java.awt.Color(153, 204, 255));
+        this.setSelectionColor(new java.awt.Color(102, 153, 255));
         this.addKeyListener(new java.awt.event.KeyAdapter() {
             @Override
             public void keyPressed(java.awt.event.KeyEvent evt) {

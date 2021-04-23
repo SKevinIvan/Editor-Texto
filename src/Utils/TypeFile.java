@@ -34,7 +34,7 @@ public enum TypeFile {
     P(new ImageIcon(TypeFile.class.getResource("/Resources/Img/p.png")), "Folder compiled class"),
     O(new ImageIcon(TypeFile.class.getResource("/Resources/Img/o.png")), "Folder compiled class"),
     NUEVOFOLDER(new ImageIcon(TypeFile.class.getResource("/Resources/Img/nuevoFolder.png")), "Folder compiled class"),
-    LOGOGITHUB(new ImageIcon(TypeFile.class.getResource("/Resources/Img/logoGitHub.png")), "Folder compiled class"),
+    LOGOGITHUB(new ImageIcon(TypeFile.class.getResource("/Resources/Img/logoGiHub.png")), "Folder compiled class"),
     L(new ImageIcon(TypeFile.class.getResource("/Resources/Img/l.png")), "Folder compiled class"),
     JS(new ImageIcon(TypeFile.class.getResource("/Resources/Img/js.png")), "Folder compiled class"),
     JAVA(new ImageIcon(TypeFile.class.getResource("/Resources/Img/java.png")), "Folder compiled class"),
@@ -73,15 +73,15 @@ public enum TypeFile {
     C(new ImageIcon(TypeFile.class.getResource("/Resources/Img/c.png")), "Folder compiled class"),
     ARCHIVOSTEXTO(new ImageIcon(TypeFile.class.getResource("/Resources/Img/archivotexto.png")), "Folder compiled class"),
     ARCHIVOSVACIO(new ImageIcon(TypeFile.class.getResource("/Resources/Img/archivoVacio.png")), "Folder compiled class"),
-    ANGULAR(new ImageIcon(TypeFile.class.getResource("/Resources/Img/anngular.png")), "Folder compiled class"),
+    ANGULAR(new ImageIcon(TypeFile.class.getResource("/Resources/Img/angular.png")), "Folder compiled class"),
     ACROBOAD(new ImageIcon(TypeFile.class.getResource("/Resources/Img/acroread.png")), "Folder compiled class"),
     ADOBE(new ImageIcon(TypeFile.class.getResource("/Resources/Img/acrobatadobe.png")), "Folder compiled class"),
     ACCESS(new ImageIcon(TypeFile.class.getResource("/Resources/Img/access.png")), "Folder compiled class"),
     FOLDERPAQUETES(new ImageIcon(TypeFile.class.getResource("/Resources/Img/FolderPaquetes.png")), "Folder compiled class"),
     IMAGEPNG(new ImageIcon(TypeFile.class.getResource("/Resources/Img/Image.png")), "Folder compiled class"),
-    MUSIC(new ImageIcon(TypeFile.class.getResource("/Resources/Img/FolderBuild.png")), "Folder compiled class"),
-    SOUND(new ImageIcon(TypeFile.class.getResource("/Resources/Img/FolderBuild.png")), "Folder compiled class"),
-    IMAGE(new ImageIcon(TypeFile.class.getResource("/Resources/Img/FolderBuild.png")), "Folder compiled class")
+    MUSIC(new ImageIcon(TypeFile.class.getResource("/Resources/Img/music.png")), "Folder compiled class"),
+    SOUND(new ImageIcon(TypeFile.class.getResource("/Resources/Img/sound.png")), "Folder compiled class"),
+    IMAGE(new ImageIcon(TypeFile.class.getResource("/Resources/Img/Image.png")), "Folder compiled class")
     
     
     

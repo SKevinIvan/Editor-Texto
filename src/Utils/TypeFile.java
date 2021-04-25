@@ -21,7 +21,7 @@ public enum TypeFile {
     VIDEO(new ImageIcon(TypeFile.class.getResource("/Resources/Img/video.png")), "Folder compiled class"),
     TXT(new ImageIcon(TypeFile.class.getResource("/Resources/Img/txt.png")), "Folder compiled class"),
     SQL(new ImageIcon(TypeFile.class.getResource("/Resources/Img/sql.png")), "Folder compiled class"),
-    SKECTK(new ImageIcon(TypeFile.class.getResource("/Resources/Img/sketch.png")), "Folder compiled class"),
+    SKECTK(new ImageIcon(TypeFile.class.getResource("/imagenes/rubi.png")), "Folder compiled class"),
     S(new ImageIcon(TypeFile.class.getResource("/Resources/Img/s.png")), "Folder compiled class"),
     RASPBERRY(new ImageIcon(TypeFile.class.getResource("/Resources/Img/raspberry.png")), "Folder compiled class"),
     PYTHON(new ImageIcon(TypeFile.class.getResource("/Resources/Img/python.png")), "Folder compiled class"),

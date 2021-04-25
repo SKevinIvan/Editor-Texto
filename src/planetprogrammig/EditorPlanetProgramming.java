@@ -3170,8 +3170,9 @@ public final class EditorPlanetProgramming extends javax.swing.JFrame {
     }
     
     public void cerrar() {
-        
+        iniciarModelo();
         if (archivo) {
+            
             ManipulaArchivos.guardar(txtPanelEditando.getText(), rutaArchivo);
             TextPaneTest.appendToPane(txtPanelSalida, "\nCerrando archivo...", cVerde);
             txtPanelEditando.setText("");
@@ -3239,7 +3240,7 @@ public final class EditorPlanetProgramming extends javax.swing.JFrame {
         tablaLexemas.setRowHeight(20);
         tablaLexemas.setSelectionBackground(new java.awt.Color(0, 102, 102));
         
-        tablaLexemas.setColorBackgoundHead(new java.awt.Color(0, 102, 102));
+        tablaLexemas.setColorBackgoundHead(new java.awt.Color(0, 153, 153));
         
         tablaLexemas.setColorBordeFilas(new java.awt.Color(204, 204, 204));
         
@@ -3812,7 +3813,7 @@ public final class EditorPlanetProgramming extends javax.swing.JFrame {
     private final ImageIcon imageVIDEO = new ImageIcon(ClassLoader.getSystemResource("Resources/Img/video.png"));
     private final ImageIcon imageTXT = new ImageIcon(ClassLoader.getSystemResource("Resources/Img/txt.png"));
     private final ImageIcon imageSQL = new ImageIcon(ClassLoader.getSystemResource("Resources/Img/sql.png"));
-    private final ImageIcon imageSKECTK = new ImageIcon(ClassLoader.getSystemResource("Resources/Img/sketch.png"));
+    private final ImageIcon imageSKECTK = new ImageIcon(ClassLoader.getSystemResource("imagenes/rubi.png"));
     private final ImageIcon imageS = new ImageIcon(ClassLoader.getSystemResource("Resources/Img/s.png"));
     private final ImageIcon imageRASPBERRY = new ImageIcon(ClassLoader.getSystemResource("Resources/Img/raspberry.png"));
     private final ImageIcon imagePYTHON = new ImageIcon(ClassLoader.getSystemResource("Resources/Img/python.png"));

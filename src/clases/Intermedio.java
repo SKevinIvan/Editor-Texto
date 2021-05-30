@@ -12,27 +12,21 @@ import java.util.ArrayList;
 
 /**
  *
- * @author por_s
+ * @author Kevin_Sanchez
  */
-public class Semantico_Antes {
+public class Intermedio {
 
-    /**
-     * Método que realiza el proceso de validación entre operaciones, y
-     * asignaciones
-     *
-     * @param arr
-     * @param id
-     * @param tipo
-     * @param tSimbolos
-     */
-    public static void conversionArrayCola(ArrayList<String> arr, String id, String tipo, ArrayList<TablaSimbolos> tSimbolos) {
+    public static void recibeTokens(ArrayList<Lexema> lx, ArrayList<TablaSimbolos> tSimbolos) {
+        //
+        String tipo = "";
+        String id = "";
+
         ColaD colaOperaciones = new ColaD();
-        for (int i = 0; i < arr.size(); i++) {
-            Nodo n = new Nodo(arr.get(i), -1);
+        for (int i = 0; i < lx.size(); i++) {
+            Nodo n = new Nodo(lx.get(i).getLexema(), -1);
             colaOperaciones.inserta(n, null);
         }
-        Semantico_Antes s = new Semantico_Antes();
-        ColaD notacionPostfija = s.posfijo(colaOperaciones);
+        ColaD notacionPostfija = Intermedio.posfijo(colaOperaciones);
         //
         ColaD colaPost = new ColaD();
         ColaD colaPost2 = new ColaD();
@@ -45,20 +39,23 @@ public class Semantico_Antes {
         System.out.println("*****************************************************");
         while (colaPost.getA() != null) {
             Nodo n = colaPost.elimina(null);
-            colaPost2.inserta(n, null);
-            notacionPostfija.inserta(n, null);
+            colaPost2.inserta(new Nodo(n.getS(), -1), null);
+            notacionPostfija.inserta(new Nodo(n.getS(), -1), null);
         }
         //
 
-        String valor = String.valueOf(s.operaciones(notacionPostfija));
-        String tipoDatoValor = s.tipoDato(valor);
-        if (s.asignacion(tipo, tipoDatoValor)) {
+        String valor = String.valueOf(Intermedio.operaciones(notacionPostfija));
+        Intermedio.operacionesIntermedio(colaPost2);
+
+        String tipoDatoValor = Intermedio.tipoDato(valor);
+        if (Intermedio.asignacion(tipo, tipoDatoValor)) {
             System.out.println(id + " = " + valor);
         } else {
             System.out.println("ERROR DE ASIGNACION");
         }
+        /*
         if (tSimbolos != null) {
-            if (s.asignacion(id, valor)) {
+            if (Intermedio.asignacion(id, valor)) {
                 //Insertar el valor en la tabla de simbolos
                 for (int i = 0; i < tSimbolos.size(); i++) {
                     if (tSimbolos.get(i).getLexema().equals(id)) {
@@ -66,21 +63,14 @@ public class Semantico_Antes {
                     }
                 }
             }
-        }
-
+        }*/
     }
 
-    /**
-     * Método que verifica que el lexema sea un operador o no
-     *
-     * @param s
-     * @return si es un operador, retorna true
-     */
-    public boolean isOperadorS(String s) {
-        return s.equals("%") || s.equals("*") || s.equals("^") || s.equals("/") || s.equals("+") || s.equals("-") || s.equals("!") || s.equals("&&") || s.equals("||") || s.equals("<") || s.equals(">") || s.equals(">=") || s.equals("<=") || s.equals("==") || s.equals("!=") || s.equals("(") || s.equals(")");
+    public static boolean isOperadorS(String s) {
+        return s.equals("=") || s.equals("%") || s.equals("*") || s.equals("^") || s.equals("/") || s.equals("+") || s.equals("-") || s.equals("!") || s.equals("&&") || s.equals("||") || s.equals("<") || s.equals(">") || s.equals(">=") || s.equals("<=") || s.equals("==") || s.equals("!=") || s.equals("(") || s.equals(")");
     }
 
-    public ColaD posfijo(ColaD cola) {
+    public static ColaD posfijo(ColaD cola) {
 
         ColaD pResultado = new ColaD();
         PilaD pOperadores = new PilaD();
@@ -94,13 +84,10 @@ public class Semantico_Antes {
                             if (prioridad(s2) >= prioridad(s)) {
                                 pOperadores.inserta(new Nodo(s, -1), null);
                                 pResultado.inserta(new Nodo(s2, -1), null);
-                                System.out.println("Prioridad " + s + " >= " + s2);
                             } else if (prioridad(s2) < prioridad(s)) {
-                                System.out.println("Prioridad " + s2 + " < " + s);
                                 pOperadores.inserta(new Nodo(s2, -1), null);
                                 pOperadores.inserta(new Nodo(s, -1), null);
                             } else {
-                                System.out.println("Prioridad " + s2 + " NO SABE " + s);
                                 pOperadores.inserta(new Nodo(s2, -1), null);
                                 pOperadores.inserta(new Nodo(s, -1), null);
                             }
@@ -136,27 +123,14 @@ public class Semantico_Antes {
         return pResultado;
     }
 
-    /**
-     * Método que verifica que el lexema sea un operador o no
-     *
-     * @param s
-     * @return si es un operador, retorna true
-     */
-    private boolean isOperador(String s) {
-        return s.equals("%") || s.equals("*") || s.equals("^") || s.equals("/") || s.equals("+") || s.equals("-") || s.equals("!") || s.equals("&&") || s.equals("||") || s.equals("<") || s.equals(">") || s.equals(">=") || s.equals("<=") || s.equals("==") || s.equals("!=");
+    private static boolean isOperador(String s) {
+        return s.equals("=") || s.equals("%") || s.equals("*") || s.equals("^") || s.equals("/") || s.equals("+") || s.equals("-") || s.equals("!") || s.equals("&&") || s.equals("||") || s.equals("<") || s.equals(">") || s.equals(">=") || s.equals("<=") || s.equals("==") || s.equals("!=");
     }
 
-    /**
-     * Método que retorna el numero de prioridad de las operaciones, segun su
-     * prioridad
-     *
-     * @param operador
-     * @return
-     */
-    private int prioridad(String operador) {
+    private static int prioridad(String operador) {
         switch (operador) {
             case "=":
-                return 7;
+                return 1;
             case "^":
                 return 6;
             case "/":
@@ -182,9 +156,10 @@ public class Semantico_Antes {
         }
         return 1;
     }
-    ArrayList<Cuaduplos> pilaCuadruplos = new ArrayList<>();
-    int temp = 0;
-    int auxTemp;
+    static int temp = 0;
+    static int Auxtemp = 0;
+    static String operador1;
+    static String operador2;
 
     /**
      * Metodo que realiza la operación, segun la prioridad de las operaciones
@@ -192,7 +167,7 @@ public class Semantico_Antes {
      * @param pResultado
      * @return
      */
-    public Object operaciones(ColaD pResultado) {
+    public static Object operaciones(ColaD pResultado) {
         PilaD pOperacion = new PilaD();
         Object resultado = 0;
         String res[];
@@ -206,10 +181,12 @@ public class Semantico_Antes {
                 String tipoOp2 = tipoDato(op2);
 
                 if (!"NOT".equals(tablaResultados(tipoOp1, tipoOp2, s))) {
-                    
-                    
-                    
+
                     res = expresionFinal(op1, op2, s, tipoOp1, tipoOp2);
+
+                    if (s.equals("=")) {
+
+                    }
                     if ("TRUE".equals(res[0])) {
                         pOperacion.inserta(new Nodo(String.valueOf(res[1]), -1), null);
                         System.out.println("Resultado: " + res[1]);
@@ -229,9 +206,47 @@ public class Semantico_Antes {
                 pOperacion.inserta(new Nodo(s, -1), null);
             }
         }
-
         return resultado;
+    }
 
+    public static Object operacionesIntermedio(ColaD pResultado) {
+        PilaD pOperacion = new PilaD();
+        Object resultado = 0;
+        while (pResultado.getF() != null) {
+            String s = pResultado.elimina(null).getS();
+            Cuaduplos cI = new Cuaduplos();
+            if (isOperador(s)) {
+                Nodo nOp1 = pOperacion.elimina(null);
+                Nodo nOp2 = pOperacion.elimina(null);
+
+                if (nOp1.getTipo() != "-1") {
+
+                } else {
+
+                }
+                if (nOp2.getTipo() != "-1") {
+
+                }
+                String op2 = nOp1.getS();
+                String op1 = nOp2.getS();
+
+                cI.setOp(s);
+                cI.setOp1(op1);
+                cI.setOp2(op2);
+                if (s.equals("=")) {
+                    cI.setTemp(" ");
+                } else {
+                    cI.setTemp("Temp" + temp);
+                }
+
+                pOperacion.inserta(new Nodo("Temp" + temp, -1), null);
+                temp++;
+                System.out.println(cI.getOp() + " " + cI.getOp1() + " " + cI.getOp2() + " " + cI.getTemp());
+            } else {
+                pOperacion.inserta(new Nodo(s, -1), null);
+            }
+        }
+        return resultado;
     }
 
     /**
@@ -247,7 +262,7 @@ public class Semantico_Antes {
      * @return un arreglo de tipo String [0] - regresa si es valido hacer la
      * operacion [1] - retorna el resultado final
      */
-    private String[] expresionFinal(String op1, String op2, String operador, String tipoDato1, String tipoDato2) {
+    private static String[] expresionFinal(String op1, String op2, String operador, String tipoDato1, String tipoDato2) {
         String resultados[] = new String[3];
 
         if (tipoDato1.equals("INTEGER") && tipoDato2.equals("INTEGER")) {
@@ -1183,15 +1198,6 @@ public class Semantico_Antes {
         } else {
             resultados[0] = "FALSE";
         }
-        if (temp == 0) {
-            System.out.println(" " + operador + " " + op2 + " " + op1 + " " + "Temp" + temp);
-
-        } else {
-            int auxTem = temp + 1;
-            temp++;
-            System.out.println(" " + operador + " " + op2 + " " + "Temp" + auxTem + " " + "Temp" + temp);
-
-        }
 
         System.out.println(resultados[1]);
         return resultados;
@@ -1203,7 +1209,7 @@ public class Semantico_Antes {
      * @param s
      * @return
      */
-    public String tipoDato(String s) {
+    public static String tipoDato(String s) {
 
         try {
             int S1 = Integer.parseInt(s);
@@ -1684,7 +1690,7 @@ public class Semantico_Antes {
      * @param tipoDato2
      * @return
      */
-    public boolean asignacion(String tipoDato1, String tipoDato2) {
+    public static boolean asignacion(String tipoDato1, String tipoDato2) {
         if (tipoDato1.equals("INTEGER") && tipoDato2.equals("INTEGER")) {
             return true;
         } else if (tipoDato1.equals("INTEGER") && tipoDato2.equals("FLOAT")) {
@@ -1721,20 +1727,45 @@ public class Semantico_Antes {
 
     }
 
+    static int alondra = 0;
+
     public static void main(String[] args) {
-        ArrayList<String> arr = new ArrayList<>();
-        arr.add("4");
-        arr.add("+");
-        arr.add("2");
-        arr.add("-");
-        arr.add("2");
-        arr.add("*");
-        arr.add("3");
-        String id = "var";
-        String tipo = "INTEGER";
-        Semantico_Antes.conversionArrayCola(arr, id, tipo, null);
-        int c98=98*90*190*1902*9;
-        System.out.println(c98);
+
+        ArrayList<Lexema> arr = new ArrayList<>();
+        Lexema a = new Lexema();
+        a.setLexema("var");
+        arr.add(a);
+        Lexema a2 = new Lexema();
+        a2.setLexema("=");
+        arr.add(a2);
+        Lexema a3 = new Lexema();
+        a3.setLexema("98");
+        arr.add(a3);
+        Lexema a4 = new Lexema();
+        a4.setLexema("*");
+        arr.add(a4);
+        Lexema a5 = new Lexema();
+        a5.setLexema("90");
+        arr.add(a5);
+        Lexema a6 = new Lexema();
+        a6.setLexema("*");
+        arr.add(a6);
+        Lexema a7 = new Lexema();
+        a7.setLexema("190");
+        arr.add(a7);
+        Lexema a8 = new Lexema();
+        a8.setLexema("*");
+        arr.add(a8);
+        Lexema a9 = new Lexema();
+        a9.setLexema("2");
+        arr.add(a9);
+        Lexema a10 = new Lexema();
+        a10.setLexema("*");
+        arr.add(a10);
+        Lexema a11 = new Lexema();
+        a11.setLexema("9");
+        arr.add(a11);
+        Intermedio.recibeTokens(arr, null);
 
     }
 }

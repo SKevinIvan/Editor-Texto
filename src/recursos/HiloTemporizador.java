@@ -1,7 +1,6 @@
 package recursos;
 
 import static java.lang.Thread.sleep;
-import javax.swing.JProgressBar;
 
 /**
  *
@@ -9,14 +8,24 @@ import javax.swing.JProgressBar;
  */
 public class HiloTemporizador extends Thread {
 
-    public int seg;
-    public int min;
-    public int hor;
+    private int seg;
+    private int min;
+    private int hor;
+    private int milisegundos;
 
-    public HiloTemporizador(int seg, int min, int hor) {
+    public HiloTemporizador(int seg, int min, int hor, int mili) {
         this.seg = seg;
         this.min = min;
         this.hor = hor;
+        this.milisegundos=mili;
+    }
+
+    public int getMilisegundos() {
+        return milisegundos;
+    }
+
+    public void setMilisegundos(int milisegundos) {
+        this.milisegundos = milisegundos;
     }
 
     public int getSeg() {
@@ -48,9 +57,14 @@ public class HiloTemporizador extends Thread {
      */
     @Override
     public void run() {
+       
         for (;;) {
             try {
-                seg++;
+                milisegundos++;
+                if (milisegundos > 1000) {
+                    milisegundos = 0;
+                    seg++;
+                }
                 if (seg > 59) {
                     seg = 0;
                     min++;
@@ -65,8 +79,8 @@ public class HiloTemporizador extends Thread {
                     min = 0;
                     hor = 0;
                 }
-                sleep(1000);
-            } catch (Exception e) {
+                sleep(1);
+            } catch (InterruptedException e) {
             }
         }
 

@@ -71,23 +71,23 @@ public final class EditorPlanetProgramming extends javax.swing.JFrame {
      * Creates new form EditorPlanetProgramming
      */
     public EditorPlanetProgramming() {
-        
+
         TabbedPaneUI blackTabbedPaneUI = new TabbedPaneUI();
         TabbedPaneUI blackTabbedPaneUI2 = new TabbedPaneUI();
         panelTab = new CmpntTabPane[9];
         //Inicializacion de las pilas de los cambios
         pilaDeshacer = new PilaD();
         pilaRehacer = new PilaD();
-        
+
         initComponents();
-        
+
         Image icono = Toolkit.getDefaultToolkit().getImage(ClassLoader.getSystemResource("imagenes/planetUrano.png"));
         this.setIconImage(icono);
         setTitle("Planet Editor");
         setLocationRelativeTo(null);
         //para preguntar si se quiere cerrar ventana desactivamos el boton de cerrar
         setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
-        
+
         pestaniasEntradaSalidas.setUI(blackTabbedPaneUI2);
         jTabbedPane1.setUI(blackTabbedPaneUI);
         crearPestaniaInicio();
@@ -109,9 +109,9 @@ public final class EditorPlanetProgramming extends javax.swing.JFrame {
         iniciarPageProyectos();
         iniciarModelo();
     }
-    
+
     private void txtPanelEditandoCaretUpdate(javax.swing.event.CaretEvent evt) {
-        
+
         if (!(txtPanelEditando.getText().isEmpty()) && (true)) {
             btnGuardar.setEnabled(true);
             if (pilaDeshacer.getTope() == null) {
@@ -119,7 +119,7 @@ public final class EditorPlanetProgramming extends javax.swing.JFrame {
                 pilaDeshacer.inserta(n1, null);
                 btnDeshacer.setEnabled(true);
                 itemDeshacer.setEnabled(true);
-                
+
             } else {
                 if (!pilaDeshacer.getTope().getS().equals(txtPanelEditando.getText())) {
                     n1 = new Nodo(txtPanelEditando.getText(), -1);
@@ -136,23 +136,23 @@ public final class EditorPlanetProgramming extends javax.swing.JFrame {
                 }
             }
             if (txtPanelEditando.getSelectedText() != null) {
-                
+
                 itemCopiar.setEnabled(true);
                 itemEliminar.setEnabled(true);
                 itemCortar.setEnabled(true);
                 btnCopiar.setEnabled(true);
                 btnCortar.setEnabled(true);
                 btnGuardar.setEnabled(true);
-                
+
             } else {
-                
+
                 itemCopiar.setEnabled(false);
                 itemEliminar.setEnabled(false);
                 itemCortar.setEnabled(false);
                 btnCopiar.setEnabled(false);
                 btnCortar.setEnabled(false);
             }
-            
+
             if (pegar().isEmpty()) {
                 btnPegar.setEnabled(false);
                 itemPegar.setEnabled(false);
@@ -169,7 +169,7 @@ public final class EditorPlanetProgramming extends javax.swing.JFrame {
             btnCortar.setEnabled(false);
             btnGuardar.setEnabled(false);
         }
-        
+
     }
 
     /**
@@ -1305,7 +1305,7 @@ public final class EditorPlanetProgramming extends javax.swing.JFrame {
     private void btnNuevoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNuevoActionPerformed
         nuevo();
     }//GEN-LAST:event_btnNuevoActionPerformed
-    
+
 
     private void btnAbrirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAbrirActionPerformed
         setCursor(new Cursor(Cursor.WAIT_CURSOR));
@@ -1320,9 +1320,9 @@ public final class EditorPlanetProgramming extends javax.swing.JFrame {
             } catch (Exception e) {
                 System.out.println("Posicion del cursor no valida");
             }
-            
+
         }
-        
+
         setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
     }//GEN-LAST:event_btnAbrirActionPerformed
 
@@ -1353,7 +1353,7 @@ public final class EditorPlanetProgramming extends javax.swing.JFrame {
         String s = pegar();
         StyleContext sc2 = StyleContext.getDefaultStyleContext();
         AttributeSet aset2 = sc2.addAttribute(SimpleAttributeSet.EMPTY, StyleConstants.Foreground, Color.black);
-        
+
         txtPanelEditando.setCaretPosition(p);
         txtPanelEditando.setCharacterAttributes(aset2, true);
         txtPanelEditando.replaceSelection(s);
@@ -1447,19 +1447,19 @@ public final class EditorPlanetProgramming extends javax.swing.JFrame {
     }//GEN-LAST:event_itemGuardarComoActionPerformed
 
     private void itemSintacticoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_itemSintacticoActionPerformed
-        
+
         if (!bError) {
-            
+
             setCursor(new Cursor(Cursor.WAIT_CURSOR));
             crearPestaniaSintactico();
             sintactico();
             bError = false;
-            
+
             setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
         } else {
             Mensaje.advertencia(this, "El analisis sintactico no se puede realizar, debido a que hay un error léxico");
             TextPaneTest.appendToPane(txtPanelSalida, "\nError al realizar analisis sinctatico...", cRojo);
-            
+
         }
     }//GEN-LAST:event_itemSintacticoActionPerformed
 
@@ -1515,7 +1515,7 @@ public final class EditorPlanetProgramming extends javax.swing.JFrame {
         String s = pegar();
         StyleContext sc2 = StyleContext.getDefaultStyleContext();
         AttributeSet aset2 = sc2.addAttribute(SimpleAttributeSet.EMPTY, StyleConstants.Foreground, Color.black);
-        
+
         txtPanelEditando.setCaretPosition(p);
         txtPanelEditando.setCharacterAttributes(aset2, true);
         txtPanelEditando.replaceSelection(s);
@@ -1546,7 +1546,7 @@ public final class EditorPlanetProgramming extends javax.swing.JFrame {
             txtPanelEditando.setCaretPosition(posicionC);
         } catch (Exception e) {
         }
-        
+
         setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
     }//GEN-LAST:event_btnFormatoActionPerformed
 
@@ -1653,7 +1653,7 @@ public final class EditorPlanetProgramming extends javax.swing.JFrame {
 //mousedragged editando
     //seleccionarCadena();
     private void pestaniasEntradaSalidasComponentRemoved(java.awt.event.ContainerEvent evt) {//GEN-FIRST:event_pestaniasEntradaSalidasComponentRemoved
-        
+
         if (evt.getChild().getName() != null) {
             switch (evt.getChild().getName()) {
                 case "scrollPaneEditando":
@@ -1722,7 +1722,7 @@ public final class EditorPlanetProgramming extends javax.swing.JFrame {
                 default:
                     break;
             }
-            
+
         }
         popMCerrarTodo.setEnabled(true);
     }//GEN-LAST:event_pestaniasEntradaSalidasComponentAdded
@@ -1739,7 +1739,7 @@ public final class EditorPlanetProgramming extends javax.swing.JFrame {
     }//GEN-LAST:event_popMCerrarTodoActionPerformed
 
     private void pestaniasEntradaSalidasFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_pestaniasEntradaSalidasFocusLost
-        
+
         if (pestaniasEntradaSalidas.getSelectedIndex() != -1) {
             CtrlInterfaz.habilita(true, popMCerrar, popMLimpiar);
         } else {
@@ -1748,7 +1748,7 @@ public final class EditorPlanetProgramming extends javax.swing.JFrame {
     }//GEN-LAST:event_pestaniasEntradaSalidasFocusLost
 
     private void pestaniasEntradaSalidasFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_pestaniasEntradaSalidasFocusGained
-        
+
         if (pestaniasEntradaSalidas.getSelectedIndex() != -1) {
             CtrlInterfaz.habilita(true, popMCerrarTodo);
         } else {
@@ -1818,7 +1818,7 @@ public final class EditorPlanetProgramming extends javax.swing.JFrame {
     }//GEN-LAST:event_pestaniasEntradaSalidasMouseWheelMoved
 
     private void pestaniasEntradaSalidasMouseDragged(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_pestaniasEntradaSalidasMouseDragged
-        
+
         int tabNumber = pestaniasEntradaSalidas.getUI().tabForCoordinate(pestaniasEntradaSalidas, evt.getX(), evt.getY());
         if (tabNumber != -1) {
             tabIndexOrigen = tabNumber;
@@ -1830,7 +1830,7 @@ public final class EditorPlanetProgramming extends javax.swing.JFrame {
     }//GEN-LAST:event_pestaniasEntradaSalidasCaretPositionChanged
 
     private void pestaniasEntradaSalidasMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_pestaniasEntradaSalidasMouseReleased
-        
+
         int tabNumber = pestaniasEntradaSalidas.getUI().tabForCoordinate(pestaniasEntradaSalidas, evt.getX(), evt.getY());
         if (tabNumber != -1) {
 
@@ -1942,7 +1942,7 @@ public final class EditorPlanetProgramming extends javax.swing.JFrame {
         String s = pegar();
         StyleContext sc2 = StyleContext.getDefaultStyleContext();
         AttributeSet aset2 = sc2.addAttribute(SimpleAttributeSet.EMPTY, StyleConstants.Foreground, Color.black);
-        
+
         txtPanelEditando.setCaretPosition(p);
         txtPanelEditando.setCharacterAttributes(aset2, true);
         txtPanelEditando.replaceSelection(s);
@@ -1954,7 +1954,7 @@ public final class EditorPlanetProgramming extends javax.swing.JFrame {
     }//GEN-LAST:event_pestaniasEntradaSalidasVetoableChange
 
     private void itemCortarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_itemCortarActionPerformed
-        
+
         String s = txtPanelEditando.getSelectedText();
         txtPanelEditando.setText(txtPanelEditando.getText().replaceAll(s, ""));
         cortar(s);
@@ -2010,7 +2010,7 @@ public final class EditorPlanetProgramming extends javax.swing.JFrame {
         int hora = fecha.get(Calendar.HOUR_OF_DAY);
         int minuto = fecha.get(Calendar.MINUTE);
         int segundo = fecha.get(Calendar.SECOND);
-        
+
         String fechaActual = "Fecha Actual: " + dia + "/" + (mes + 1) + "/" + año + " ";
         String horaActual = hora + ":" + minuto + ":" + segundo;
         txtPanelEditando.replaceSelection("\n" + fechaActual + " " + horaActual + "\n");
@@ -2034,11 +2034,11 @@ public final class EditorPlanetProgramming extends javax.swing.JFrame {
         }
          */
         PrinterJob pjob = PrinterJob.getPrinterJob();
-        
+
         PageFormat preformat = pjob.defaultPage();
         preformat.setOrientation(PageFormat.PORTRAIT);
         PageFormat postformat = pjob.pageDialog(preformat);
-        
+
         if (preformat != postformat) {
             pjob.setPrintable(new Printer(txtPanelEditando), postformat);
             if (pjob.printDialog()) {
@@ -2049,7 +2049,7 @@ public final class EditorPlanetProgramming extends javax.swing.JFrame {
                 }
             }
         }
-        
+
 
     }//GEN-LAST:event_jMenuItem5ActionPerformed
 
@@ -2102,7 +2102,7 @@ public final class EditorPlanetProgramming extends javax.swing.JFrame {
         } else {
             try {
                 File arc = new File(url);
-                
+
                 if (arc.isFile()) {
                     if (archivo) {
                         ManipulaArchivos.guardar(txtPanelEditando.getText(), rutaArchivo);
@@ -2116,7 +2116,7 @@ public final class EditorPlanetProgramming extends javax.swing.JFrame {
                     if (etiExt.length != 0) {
                         extencion = etiExt[etiExt.length - 1];
                     }
-                    
+
                     switch (extencion) {
                         case "java":
                             img = imageCLASS;
@@ -2187,11 +2187,11 @@ public final class EditorPlanetProgramming extends javax.swing.JFrame {
                         default:
                             img = imageTXT;
                             break;
-                        
+
                     }
                     String s = "";
                     ArrayList<String> ar = ManipulaArchivos.cargar(url);
-                    
+
                     rutaArchivo = url;
                     this.archivo = true;
                     if (ar != null) {
@@ -2201,7 +2201,7 @@ public final class EditorPlanetProgramming extends javax.swing.JFrame {
                         //Escribiendo el texto en el editor
                         if (txtPanelEditando == null) {
                             crearPestaniaEdicion(img);
-                            
+
                             txtPanelEditando.setText(s);
                         } else {
                             if (txtPanelEditando.getText().isEmpty()) {
@@ -2209,7 +2209,7 @@ public final class EditorPlanetProgramming extends javax.swing.JFrame {
                             } else {
                                 crearPagEdicion(s, img, arc.getName());
                             }
-                            
+
                         }
                         //Encabezado con el titulo del archivo
                         setTitle("Editor Planet" + " - " + arc.getName());
@@ -2225,22 +2225,22 @@ public final class EditorPlanetProgramming extends javax.swing.JFrame {
                         CtrlInterfaz.habilita(true, popMBuscar, popMIdentar, popMReemplazar, popMSeleccionTotal);
                         //Deshabilitar popMenus
                         CtrlInterfaz.habilita(false, popMCopiar, popMCortar, popMDeshacer, popMPegar);
-                        
+
                         CtrlInterfaz.habilita(true, checkEditando, checkCompilando, checkSalida, checkLexico);
                         CtrlInterfaz.habilita(false, checkIntermedio, checkObjeto, checkOptimizacion, checkSemantico, checkSintactico);
                     }
-                    
+
                 } else if (arc.isDirectory()) {
                 } else {
                 }
-                
+
             } catch (Exception e) {
             }
         }
-        
+
 
     }//GEN-LAST:event_jTree1ValueChanged
-    
+
     public void openEditor() {
 
         //Items
@@ -2271,7 +2271,7 @@ public final class EditorPlanetProgramming extends javax.swing.JFrame {
         //Deshabilitar
         CtrlInterfaz.habilita(false, checkIntermedio, checkLexico, checkObjeto, checkOptimizacion, checkSemantico, checkSintactico);
     }
-    
+
     public void crearPestaniaInicio() {
         if (pestaniasEntradaSalidas.getTabCount() == 0 || scrollPaneInicio == null || !pestaniasEntradaSalidas.getComponentAt(0).equals(scrollPaneInicio)) {
             CmpntTabPane panelI = new CmpntTabPane(pestaniasEntradaSalidas, 0, imageInicio);
@@ -2289,35 +2289,35 @@ public final class EditorPlanetProgramming extends javax.swing.JFrame {
                 pestaniasEntradaSalidas.setSelectedIndex(0);
             }
         }
-        
+
     }
     int tb = 0;
-    
+
     public void crearPestaniaEdicion(ImageIcon img) {
-        
+
         if (txtPanelEditando == null) {
             // txtPanelEditando = new javax.swing.JTextPane();
             scrollPaneEditando = new javax.swing.JScrollPane();
-            
+
             txtPanelEditando = new PanelTextoEditor();
             EmptyBorder eb = new EmptyBorder(new Insets(0, 5, 0, 0));
             txtPanelEditando.setBorder(eb);
-            
+
             scrollPaneEditando.setName("scrollPaneEditando");
-            
+
             txtPanelEditando.setFont(new java.awt.Font("Monospaced", 0, 14)); // NOI18N
             // txtPanelEditando.setSelectionColor(new java.awt.Color(153, 204, 255));
 
             txtPanelEditando.setEditorKit(new TabSizeEditorKit());
             AbstractDocument documento = (AbstractDocument) txtPanelEditando.getDocument();
-            
+
             txtPanelEditando.addKeyListener(new java.awt.event.KeyAdapter() {
                 @Override
                 public void keyPressed(java.awt.event.KeyEvent evt) {
                     // txtPanelSalidaKeyPressed(evt);
                     //  documento.setDocumentFilter(new NewLineFilter());
                 }
-                
+
                 @Override
                 public void keyTyped(java.awt.event.KeyEvent evt) {
                     //txtPanelSalidaKeyTyped(evt);
@@ -2326,12 +2326,12 @@ public final class EditorPlanetProgramming extends javax.swing.JFrame {
                     }
                 }
             });
-            
+
             txtPanelEditando.addCaretListener(this::txtPanelEditandoCaretUpdate);
             txtPanelEditando.setComponentPopupMenu(popMenuEditar);
             scrollPaneEditando.setViewportView(txtPanelEditando);
             pestaniasEntradaSalidas.addTab("Editando", scrollPaneEditando);
-            
+
             numLineEditor = new NumeroLinea(txtPanelEditando);
             scrollPaneEditando.setRowHeaderView(numLineEditor);
             panelTab[0] = new CmpntTabPane(pestaniasEntradaSalidas, 0, img);
@@ -2343,19 +2343,19 @@ public final class EditorPlanetProgramming extends javax.swing.JFrame {
             }
             pestaniasEntradaSalidas.setTabComponentAt(indexTab, panelTab[0]);
             checkEditando.setSelected(true);
-            
+
         }
     }
-    
+
     public void crearPestaniaCompilacion() {
-        
+
         ImageIcon image = new ImageIcon(ClassLoader.getSystemResource("iconos/17857 - animal bug insect ladybird.png"));
         if (txtPanelCompilando == null) {
             txtPanelCompilando = new javax.swing.JTextPane();
             // txtPanelCompilando = new HighlightLineTextPaneAzul();
             EmptyBorder eb = new EmptyBorder(new Insets(0, 5, 0, 0));
             txtPanelCompilando.setBorder(eb);
-            
+
             scrollPaneCompilando = new javax.swing.JScrollPane();
             scrollPaneCompilando.setName("scrollPaneCompilando");
             txtPanelCompilando.setFont(new java.awt.Font("Monospaced", 0, 14)); // NOI18N
@@ -2365,19 +2365,19 @@ public final class EditorPlanetProgramming extends javax.swing.JFrame {
                 public void keyPressed(java.awt.event.KeyEvent evt) {
                     // txtPanelSalidaKeyPressed(evt);
                 }
-                
+
                 @Override
                 public void keyTyped(java.awt.event.KeyEvent evt) {
                     //txtPanelSalidaKeyTyped(evt);
                 }
             });
-            
+
             scrollPaneCompilando.setViewportView(txtPanelCompilando);
             pestaniasEntradaSalidas.addTab("Compilando", scrollPaneCompilando);
             // numLineCompilador = new NumeroLinea(txtPanelCompilando);
             // scrollPaneCompilando.setRowHeaderView(numLineCompilador);
             panelTab[1] = new CmpntTabPane(pestaniasEntradaSalidas, 0, imageCompilar);
-            
+
             int indexTab = 0;
             for (int j = 0; j < pestaniasEntradaSalidas.getTabCount(); j++) {
                 if (pestaniasEntradaSalidas.getTitleAt(j).equals("Compilando")) {
@@ -2388,7 +2388,7 @@ public final class EditorPlanetProgramming extends javax.swing.JFrame {
             checkCompilando.setSelected(true);
         }
     }
-    
+
     public void iniciarPageProyectos() {
         jTabbedPane1.addTab("Proyectos", jScrollPane1);
         //  numLineLexico = new NumeroLinea(txtPanelLexico);
@@ -2401,9 +2401,9 @@ public final class EditorPlanetProgramming extends javax.swing.JFrame {
         }
         jTabbedPane1.setTabComponentAt(indexTab, panelTab2);
     }
-    
+
     public void crearPestaniaSalida() {
-        
+
         ImageIcon image = new ImageIcon(ClassLoader.getSystemResource("iconos/17857 - animal bug insect ladybird.png"));
         if (txtPanelSalida == null) {
             txtPanelSalida = new javax.swing.JTextPane();
@@ -2420,13 +2420,13 @@ public final class EditorPlanetProgramming extends javax.swing.JFrame {
                 public void keyPressed(java.awt.event.KeyEvent evt) {
                     // txtPanelSalidaKeyPressed(evt);
                 }
-                
+
                 @Override
                 public void keyTyped(java.awt.event.KeyEvent evt) {
                     //txtPanelSalidaKeyTyped(evt);
                 }
             });
-            
+
             scrollPaneSalida.setViewportView(txtPanelSalida);
             pestaniasEntradaSalidas.addTab("Salida", scrollPaneSalida);
             //  numLineSalida = new NumeroLinea(txtPanelSalida);
@@ -2442,9 +2442,9 @@ public final class EditorPlanetProgramming extends javax.swing.JFrame {
             checkSalida.setSelected(true);
         }
     }
-    
+
     public void crearPestaniaLexico() {
-        
+
         ImageIcon image = new ImageIcon(ClassLoader.getSystemResource("iconos/17857 - animal bug insect ladybird.png"));
         if (txtPanelLexico == null) {
             txtPanelLexico = new javax.swing.JTextPane();
@@ -2457,7 +2457,7 @@ public final class EditorPlanetProgramming extends javax.swing.JFrame {
                 public void keyPressed(java.awt.event.KeyEvent evt) {
                     // txtPanelSalidaKeyPressed(evt);
                 }
-                
+
                 @Override
                 public void keyTyped(java.awt.event.KeyEvent evt) {
                     //txtPanelSalidaKeyTyped(evt);
@@ -2477,20 +2477,20 @@ public final class EditorPlanetProgramming extends javax.swing.JFrame {
             }
             pestaniasEntradaSalidas.setTabComponentAt(indexTab, panelTab[3]);
             checkLexico.setSelected(true);
-            
+
         }
-        
+
     }
     private javax.swing.JSplitPane splitPaneSintactico;
-    
+
     public void crearPestaniaSintactico() {
-        
+
         if (txtPanelSintactico1 == null) {
             splitPaneSintactico = new javax.swing.JSplitPane();
-            
+
             txtPanelSintactico1 = new javax.swing.JTextPane();
             scrollPaneSintactico1 = new javax.swing.JScrollPane();
-            
+
             scrollPaneSintactico1.setName("scrollPaneSintactico");
             txtPanelSintactico1.setFont(new java.awt.Font("Monospaced", 0, 14)); // NOI18N
             txtPanelSintactico1.setSelectionColor(new java.awt.Color(153, 204, 255));
@@ -2499,13 +2499,13 @@ public final class EditorPlanetProgramming extends javax.swing.JFrame {
                 public void keyPressed(java.awt.event.KeyEvent evt) {
                     // txtPanelSalidaKeyPressed(evt);
                 }
-                
+
                 @Override
                 public void keyTyped(java.awt.event.KeyEvent evt) {
                     //txtPanelSalidaKeyTyped(evt);
                 }
             });
-            
+
             txtPanelSintactico2 = new javax.swing.JTextPane();
             scrollPaneSintactico2 = new javax.swing.JScrollPane();
             scrollPaneSintactico2.setName("scrollPaneSintactico");
@@ -2516,18 +2516,18 @@ public final class EditorPlanetProgramming extends javax.swing.JFrame {
                 public void keyPressed(java.awt.event.KeyEvent evt) {
                     // txtPanelSalidaKeyPressed(evt);
                 }
-                
+
                 @Override
                 public void keyTyped(java.awt.event.KeyEvent evt) {
                     //txtPanelSalidaKeyTyped(evt);
                 }
             });
-            
+
             scrollPaneSintactico1.setViewportView(txtPanelSintactico1);
             scrollPaneSintactico2.setViewportView(txtPanelSintactico2);
             splitPaneSintactico.setLeftComponent(scrollPaneSintactico1);
             splitPaneSintactico.setRightComponent(scrollPaneSintactico2);
-            
+
             pestaniasEntradaSalidas.addTab("Sintáctico", splitPaneSintactico);
             numLineSintactico1 = new NumeroLinea(txtPanelSintactico1);
             scrollPaneSintactico1.setRowHeaderView(numLineSintactico1);
@@ -2542,16 +2542,16 @@ public final class EditorPlanetProgramming extends javax.swing.JFrame {
             }
             pestaniasEntradaSalidas.setTabComponentAt(indexTab, panelTab[4]);
             checkSintactico.setSelected(true);
-            
+
         }
     }
-    
+
     public void buscaLaLineaError(int i, String c) {
-        
+
     }
-    
+
     public void crearPestaniaSemantico() {
-        
+
         if (txtPanelSemantico == null) {
             txtPanelSemantico = new javax.swing.JTextPane();
             scrollPaneSemantico = new javax.swing.JScrollPane();
@@ -2563,7 +2563,7 @@ public final class EditorPlanetProgramming extends javax.swing.JFrame {
                 public void keyPressed(java.awt.event.KeyEvent evt) {
                     // txtPanelSalidaKeyPressed(evt);
                 }
-                
+
                 @Override
                 public void keyTyped(java.awt.event.KeyEvent evt) {
                     //txtPanelSalidaKeyTyped(evt);
@@ -2584,9 +2584,9 @@ public final class EditorPlanetProgramming extends javax.swing.JFrame {
             checkSemantico.setSelected(true);
         }
     }
-    
+
     public void crearPestaniaIntermedio() {
-        
+
         if (txtPanelIntermedio == null) {
             txtPanelIntermedio = new javax.swing.JTextPane();
             scrollPaneIntermedio = new javax.swing.JScrollPane();
@@ -2598,7 +2598,7 @@ public final class EditorPlanetProgramming extends javax.swing.JFrame {
                 public void keyPressed(java.awt.event.KeyEvent evt) {
                     // txtPanelSalidaKeyPressed(evt);
                 }
-                
+
                 @Override
                 public void keyTyped(java.awt.event.KeyEvent evt) {
                     //txtPanelSalidaKeyTyped(evt);
@@ -2619,9 +2619,9 @@ public final class EditorPlanetProgramming extends javax.swing.JFrame {
             checkIntermedio.setSelected(true);
         }
     }
-    
+
     public void crearPestaniaOptimizado() {
-        
+
         if (txtPanelOptimizacion == null) {
             txtPanelOptimizacion = new javax.swing.JTextPane();
             scrollPaneOptimizacion = new javax.swing.JScrollPane();
@@ -2633,7 +2633,7 @@ public final class EditorPlanetProgramming extends javax.swing.JFrame {
                 public void keyPressed(java.awt.event.KeyEvent evt) {
                     // txtPanelSalidaKeyPressed(evt);
                 }
-                
+
                 @Override
                 public void keyTyped(java.awt.event.KeyEvent evt) {
                     //txtPanelSalidaKeyTyped(evt);
@@ -2654,9 +2654,9 @@ public final class EditorPlanetProgramming extends javax.swing.JFrame {
             checkOptimizacion.setSelected(true);
         }
     }
-    
+
     public void crearPestaniaObjeto() {
-        
+
         if (txtPanelObjeto == null) {
             txtPanelObjeto = new javax.swing.JTextPane();
             scrollPaneObjeto = new javax.swing.JScrollPane();
@@ -2668,7 +2668,7 @@ public final class EditorPlanetProgramming extends javax.swing.JFrame {
                 public void keyPressed(java.awt.event.KeyEvent evt) {
                     // txtPanelSalidaKeyPressed(evt);
                 }
-                
+
                 @Override
                 public void keyTyped(java.awt.event.KeyEvent evt) {
                     //txtPanelSalidaKeyTyped(evt);
@@ -2689,7 +2689,7 @@ public final class EditorPlanetProgramming extends javax.swing.JFrame {
             checkObjeto.setSelected(true);
         }
     }
-    
+
     public void cerrarPestaniaInicio() {
         if (scrollPaneInicio != null) {
             scrollPaneInicio.removeAll();
@@ -2697,7 +2697,7 @@ public final class EditorPlanetProgramming extends javax.swing.JFrame {
             scrollPaneInicio = null;
         }
     }
-    
+
     public void cerrarPestaniaEdicion() {
         if (txtPanelEditando != null) {
             scrollPaneEditando.removeAll();
@@ -2708,7 +2708,7 @@ public final class EditorPlanetProgramming extends javax.swing.JFrame {
             checkEditando.setSelected(false);
         }
     }
-    
+
     public void cerrarPestaniaCompilacion() {
         if (txtPanelCompilando != null) {
             scrollPaneCompilando.removeAll();
@@ -2719,7 +2719,7 @@ public final class EditorPlanetProgramming extends javax.swing.JFrame {
             checkCompilando.setSelected(false);
         }
     }
-    
+
     public void cerrarPestaniaSalida() {
         if (txtPanelSalida != null) {
             scrollPaneSalida.removeAll();
@@ -2730,7 +2730,7 @@ public final class EditorPlanetProgramming extends javax.swing.JFrame {
             checkSalida.setSelected(false);
         }
     }
-    
+
     public void cerrarPestaniaLexico() {
         if (txtPanelLexico != null) {
             scrollPaneLexico.removeAll();
@@ -2741,7 +2741,7 @@ public final class EditorPlanetProgramming extends javax.swing.JFrame {
             checkLexico.setSelected(false);
         }
     }
-    
+
     public void cerrarPestaniaSintactico() {
         if (txtPanelSintactico1 != null) {
             scrollPaneSintactico1.removeAll();
@@ -2761,7 +2761,7 @@ public final class EditorPlanetProgramming extends javax.swing.JFrame {
         }
         pestaniasEntradaSalidas.remove(splitPaneSintactico);
     }
-    
+
     public void cerrarPestaniaSemantico() {
         if (txtPanelSemantico != null) {
             scrollPaneSemantico.removeAll();
@@ -2772,7 +2772,7 @@ public final class EditorPlanetProgramming extends javax.swing.JFrame {
             checkSemantico.setSelected(false);
         }
     }
-    
+
     public void cerrarPestaniaIntermedio() {
         if (txtPanelIntermedio != null) {
             scrollPaneIntermedio.removeAll();
@@ -2783,7 +2783,7 @@ public final class EditorPlanetProgramming extends javax.swing.JFrame {
             checkIntermedio.setSelected(false);
         }
     }
-    
+
     public void cerrarPestaniaOptimizacion() {
         if (txtPanelOptimizacion != null) {
             scrollPaneOptimizacion.removeAll();
@@ -2794,7 +2794,7 @@ public final class EditorPlanetProgramming extends javax.swing.JFrame {
             checkOptimizacion.setSelected(false);
         }
     }
-    
+
     public void cerrarPestaniaObjeto() {
         if (txtPanelObjeto != null) {
             scrollPaneObjeto.removeAll();
@@ -2805,9 +2805,9 @@ public final class EditorPlanetProgramming extends javax.swing.JFrame {
             checkObjeto.setSelected(false);
         }
     }
-    
+
     public void closeEditor() {
-        
+
         if (archivo) {
             if (txtPanelEditando != null) {
                 ManipulaArchivos.guardar(txtPanelEditando.getText(), rutaArchivo);
@@ -2818,12 +2818,12 @@ public final class EditorPlanetProgramming extends javax.swing.JFrame {
             System.exit(0);
         } else if (txtPanelEditando != null) {
             if (txtPanelEditando.getText().trim().length() != 0) {
-                
+
                 int opcion;
                 String menu[] = {"Si", "No", "Cancelar"};
                 opcion = JOptionPane.showOptionDialog(this, "¿Desea guardar los cambios hechos en el texto?", "Saliendo... Editor Planet", JOptionPane.DEFAULT_OPTION,
                         JOptionPane.QUESTION_MESSAGE, null, menu, menu[0]);
-                
+
                 switch (opcion) {
                     case 0:
                         if (guardarAntesSalir()) {
@@ -2848,7 +2848,7 @@ public final class EditorPlanetProgramming extends javax.swing.JFrame {
                     System.exit(0);
                 }
             }
-            
+
         } else {
             String opc[] = {"Cerrar editor", "Cancelar"};
             int seleccion = JOptionPane.showOptionDialog(this, "¿Desea salir del editor?", "Saliendo... ", JOptionPane.DEFAULT_OPTION,
@@ -2858,9 +2858,9 @@ public final class EditorPlanetProgramming extends javax.swing.JFrame {
             }
         }
     }
-    
+
     public void abrir() {
-        
+
         try {
             JFileChooser selecciona = new JFileChooser();  //crea objeto file chooser
             selecciona.setFileSelectionMode(javax.swing.JFileChooser.FILES_AND_DIRECTORIES);
@@ -2878,7 +2878,7 @@ public final class EditorPlanetProgramming extends javax.swing.JFrame {
                     if (archivo) {
                         ManipulaArchivos.guardar(txtPanelEditando.getText(), rutaArchivo);
                     }
-                    
+
                     url = archivoExtraido.getCanonicalPath(); //obtiene la ruta del archivo
                     etiquetaNombre = archivoExtraido.getName();//obtiene el nombre del archivo/cancion                
 
@@ -2958,11 +2958,11 @@ public final class EditorPlanetProgramming extends javax.swing.JFrame {
                         default:
                             img = imageTXT;
                             break;
-                        
+
                     }
                     String s = "";
                     ArrayList<String> ar = ManipulaArchivos.cargar(url);
-                    
+
                     rutaArchivo = url;
                     this.archivo = true;
                     if (ar != null) {
@@ -2972,7 +2972,7 @@ public final class EditorPlanetProgramming extends javax.swing.JFrame {
                         //Escribiendo el texto en el editor
                         if (txtPanelEditando == null) {
                             crearPestaniaEdicion(img);
-                            
+
                             txtPanelEditando.setText(s);
                         } else {
                             if (txtPanelEditando.getText().isEmpty()) {
@@ -2980,7 +2980,7 @@ public final class EditorPlanetProgramming extends javax.swing.JFrame {
                             } else {
                                 crearPagEdicion(s, img, archivoExtraido.getName());
                             }
-                            
+
                         }
                         //Encabezado con el titulo del archivo
                         setTitle("Editor Planet" + " - " + etiquetaNombre);
@@ -2996,27 +2996,27 @@ public final class EditorPlanetProgramming extends javax.swing.JFrame {
                         CtrlInterfaz.habilita(true, popMBuscar, popMIdentar, popMReemplazar, popMSeleccionTotal);
                         //Deshabilitar popMenus
                         CtrlInterfaz.habilita(false, popMCopiar, popMCortar, popMDeshacer, popMPegar);
-                        
+
                         CtrlInterfaz.habilita(true, checkEditando, checkCompilando, checkSalida, checkLexico);
                         CtrlInterfaz.habilita(false, checkIntermedio, checkObjeto, checkOptimizacion, checkSemantico, checkSintactico);
                     }
-                    
+
                 } else {
                 }
-                
+
                 actualizar(archivoExtraido);
                 rutaPaterna = archivoExtraido.getParent();
             }
-            
+
         } catch (HeadlessException | IOException e) {
             TextPaneTest.appendToPane(txtPanelSalida, "\nNo se pudo abrir el achivo..." + e, cRojo);
         }
-        
+
     }
     private String rutaPaterna = "";
-    
+
     public void nuevo() {
-        
+
         try {
             JFileChooser selecciona = new JFileChooser();  //crea objeto file chooser
             FileNameExtensionFilter filtro = new FileNameExtensionFilter("Archivo .txt", "txt", "txt");  //solo muestra archivos .mp3 en file chocer
@@ -3025,24 +3025,24 @@ public final class EditorPlanetProgramming extends javax.swing.JFrame {
             File archivoNuevo = selecciona.getSelectedFile(); //obtiene el archivo en la variable archivo
             String url; //borra la ruta para evitar que se quede una anterior
             String etiquetaNombre;
-            
+
             if (archivoNuevo != null) // si no se selecciono ningun archivo no hace nada
             {
-                
+
                 if (txtPanelEditando != null) {
                     if (archivo) {
                         ManipulaArchivos.guardar(txtPanelEditando.getText(), rutaArchivo);
                     }
-                    
+
                 } else {
                     crearPestaniaEdicion(imageARCHIVOSVACIO);
-                    
+
                 }
                 TextPaneTest.appendToPane(txtPanelSalida, "\nCreando achivo...", cVerde);
                 url = archivoNuevo.getCanonicalPath(); //obtiene la ruta del archivo
                 etiquetaNombre = archivoNuevo.getName();//obtiene el nombre del archivo
                 setTitle("Editor Planet" + " - " + etiquetaNombre);
-                
+
                 txtPanelEditando.setText("");
                 ManipulaArchivos.crearNuevo(url);
                 rutaArchivo = url;
@@ -3059,18 +3059,18 @@ public final class EditorPlanetProgramming extends javax.swing.JFrame {
                 CtrlInterfaz.habilita(true, popMBuscar, popMIdentar, popMReemplazar, popMSeleccionTotal);
                 //Deshabilitar popMenus
                 CtrlInterfaz.habilita(false, popMCopiar, popMCortar, popMDeshacer, popMPegar);
-                
+
                 CtrlInterfaz.habilita(true, checkEditando, checkCompilando, checkSalida, checkLexico);
                 CtrlInterfaz.habilita(false, checkIntermedio, checkObjeto, checkOptimizacion, checkSemantico, checkSintactico);
             }
-            
+
         } catch (HeadlessException | IOException e) {
             TextPaneTest.appendToPane(txtPanelSalida, "\nError al crear nuevo achivo..." + e, cRojo);
         }
     }
-    
+
     public void guardar() {
-        
+
         if (archivo) {
             ManipulaArchivos.guardar(txtPanelEditando.getText(), rutaArchivo);
             TextPaneTest.appendToPane(txtPanelSalida, "\nGuardando achivo...", cVerde);
@@ -3082,12 +3082,12 @@ public final class EditorPlanetProgramming extends javax.swing.JFrame {
             }
         }
     }
-    
+
     public void guardarComo() {
         if (archivo) {
-            
+
             ManipulaArchivos.guardar(txtPanelEditando.getText(), rutaArchivo);
-            
+
             try {
                 JFileChooser selecciona = new JFileChooser();  //crea objeto file chooser
                 FileNameExtensionFilter filtro = new FileNameExtensionFilter("Archivo .txt", "txt", "txt");  //solo muestra archivos .mp3 en file chocer
@@ -3096,25 +3096,25 @@ public final class EditorPlanetProgramming extends javax.swing.JFrame {
                 File archivoNuevo = selecciona.getSelectedFile(); //obtiene el archivo en la variable archivo
                 String url; //borra la ruta para evitar que se quede una anterior
                 String etiquetaNombre;
-                
+
                 if (archivoNuevo != null) // si no se selecciono ningun archivo no hace nada
                 {
-                    
+
                     url = archivoNuevo.getCanonicalPath(); //obtiene la ruta del archivo
                     etiquetaNombre = archivoNuevo.getName();//obtiene el nombre del archivo/cancion                
 
                     setTitle("Editor Planet" + " - " + etiquetaNombre);
-                    
+
                     ManipulaArchivos.guardarComo(txtPanelEditando.getText(), url);
-                    
+
                     txtPanelEditando.setText("");
-                    
+
                     String s = ManipulaArchivos.cargarArchivo(url);
                     txtPanelEditando.setText(s);
-                    
+
                     rutaArchivo = url;
                     archivo = true;
-                    
+
                     TextPaneTest.appendToPane(txtPanelSalida, "\nGuardando nuevo achivo...", cVerde);
                     Validaciones.enterColor(txtPanelEditando);
                     //habilita MenuOpciones
@@ -3129,21 +3129,21 @@ public final class EditorPlanetProgramming extends javax.swing.JFrame {
                     CtrlInterfaz.habilita(true, popMBuscar, popMIdentar, popMReemplazar, popMSeleccionTotal);
                     //Deshabilitar popMenus
                     CtrlInterfaz.habilita(false, popMCopiar, popMCortar, popMDeshacer, popMPegar);
-                    
+
                     CtrlInterfaz.habilita(true, checkEditando, checkCompilando, checkSalida, checkLexico);
                     CtrlInterfaz.habilita(false, checkIntermedio, checkObjeto, checkOptimizacion, checkSemantico, checkSintactico);
                 }
-                
+
             } catch (HeadlessException | IOException e) {
                 TextPaneTest.appendToPane(txtPanelSalida, "\nError al guardar nuevo archivo..." + e, cRojo);
             }
-            
+
         }
-        
+
     }
-    
+
     public boolean guardarAntesSalir() {
-        
+
         try {
             JFileChooser selecciona = new JFileChooser();  //crea objeto file chooser
             FileNameExtensionFilter filtro = new FileNameExtensionFilter("Archivo .txt", "txt", "txt");  //solo muestra archivos .mp3 en file chocer
@@ -3158,21 +3158,21 @@ public final class EditorPlanetProgramming extends javax.swing.JFrame {
                 ManipulaArchivos.guardarComo(txtPanelEditando.getText(), url);
                 rutaArchivo = url;
                 archivo = true;
-                
+
                 return true;
             }
-            
+
         } catch (HeadlessException | IOException e) {
             return false;
         }
         return false;
-        
+
     }
-    
+
     public void cerrar() {
         iniciarModelo();
         if (archivo) {
-            
+
             ManipulaArchivos.guardar(txtPanelEditando.getText(), rutaArchivo);
             TextPaneTest.appendToPane(txtPanelSalida, "\nCerrando archivo...", cVerde);
             txtPanelEditando.setText("");
@@ -3195,9 +3195,9 @@ public final class EditorPlanetProgramming extends javax.swing.JFrame {
         }
     }
     ArrayList<Lexema> lexemas;
-    
+
     public void lexico() {
-        
+
         bError = false;
         CtrlInterfaz.habilita(true, itemGuardar, itemLexico, itemSintactico);
         CtrlInterfaz.habilita(false, itemSemantico, itemIntermedio, itemOptmizacion, itemObjeto);
@@ -3208,12 +3208,12 @@ public final class EditorPlanetProgramming extends javax.swing.JFrame {
         //char[] alfabeto = {'"', 'A', 'L', '$', '&', '_', '~', '@', 'D', '-', '#', '\'', 'C', '.', '?'};
         //Lexico analisisLexico = new Lexico(txtPanelEditando.getText(), "+-=*&| {}()[]!?^/%;:,<>\n\t\r\b\f", matrizGeneral, alfabeto);
         Lexico analisisLexico = new Lexico(txtPanelEditando.getText(), "+-=*&| {}()[]!?^/%;:,<>\n\t\r\b\f", "Tabla del automata general.xlsx");
-        
+
         lexemas = analisisLexico.analisisLexico();
         rojerusan.RSTableMetro tablaLexemas = new rojerusan.RSTableMetro();
-        
+
         tablaLexemas.setFont(new java.awt.Font("Arial", 0, 14));
-        
+
         tablaLexemas.setModel(new javax.swing.table.DefaultTableModel(
                 new Object[][]{
                     {null, null, null, null},
@@ -3228,38 +3228,34 @@ public final class EditorPlanetProgramming extends javax.swing.JFrame {
             boolean[] canEdit = new boolean[]{
                 false, false, false, false
             };
-            
+
             @Override
             public boolean isCellEditable(int rowIndex, int columnIndex) {
                 return canEdit[columnIndex];
             }
         });
-        
+
         tablaLexemas.getTableHeader().setReorderingAllowed(false);
         tablaLexemas.setGridColor(new java.awt.Color(204, 204, 204));
         tablaLexemas.setRowHeight(20);
         tablaLexemas.setSelectionBackground(new java.awt.Color(0, 102, 102));
-        
         tablaLexemas.setColorBackgoundHead(new java.awt.Color(0, 153, 153));
-        
         tablaLexemas.setColorBordeFilas(new java.awt.Color(204, 204, 204));
-        
         tablaLexemas.setColorBordeHead(new java.awt.Color(204, 204, 204));
-        
         tablaLexemas.setColorFilasForeground1(new java.awt.Color(0, 0, 51));
         tablaLexemas.setColorSelBackgound(new java.awt.Color(0, 153, 153));
         tablaLexemas.setColorFilasForeground2(new java.awt.Color(0, 0, 0));
         tablaLexemas.setSelectionBackground(new java.awt.Color(0, 153, 153));
-        
+        tablaLexemas.setRowHeight(20);
         tablaLexemas.setFuenteHead(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
 
         tablaLexemas.getColumnModel().getSelectionModel().setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
-        
+
         DefaultTableModel model;
         String[] columnas = {"Lexema", "Nombre del token", "No. de token", "Renglón"};
         model = new DefaultTableModel(null, columnas);
         String[] filas = new String[4];
-        
+
         for (int p = 0; p < lexemas.size(); p++) {
             //textoMostrar += " " +  + "\t" +  + "\t" + lexemas.get(i).getNumToken() + "\t" + lexemas.get(i).getRenglon() + "\n";
 
@@ -3267,15 +3263,15 @@ public final class EditorPlanetProgramming extends javax.swing.JFrame {
             filas[1] = lexemas.get(p).getNombreToken();
             filas[2] = String.valueOf(lexemas.get(p).getNumToken());
             filas[3] = String.valueOf(lexemas.get(p).getRenglon());
-            
+
             model.addRow(filas);
         }
         tablaLexemas.setModel(model);
-        
+
         scrollPaneLexico.setViewportView(tablaLexemas);
-        
+
         int errora = 0;
-        
+
         for (int p = 0; p < lexemas.size(); p++) {
             //textoMostrar += " " +  + "\t" +  + "\t" + lexemas.get(i).getNumToken() + "\t" + lexemas.get(i).getRenglon() + "\n";
             if (lexemas.get(p).getNumToken() == 85
@@ -3311,25 +3307,25 @@ public final class EditorPlanetProgramming extends javax.swing.JFrame {
         if (bError) {
             TextPaneTest.appendToPane(txtPanelSalida, "\nLexicamente incorrecto... " + lexemas.get(errora).getNombreToken()
                     + " por " + lexemas.get(errora).getLexema() + " en la linea " + lexemas.get(errora).getRenglon(), cRojo);
-            
+
         } else {
             TextPaneTest.appendToPane(txtPanelSalida, "\nLexicamente correcto...", cVerde);
         }
-        
+
     }
     boolean bError = false;
-    
+
     public void sintactico() {
         CtrlInterfaz.habilita(true, itemGuardar, itemLexico, itemSintactico, itemSemantico);
         CtrlInterfaz.habilita(false, itemIntermedio, itemOptmizacion, itemObjeto);
         TextPaneTest.appendToPane(txtPanelSalida, "\nRealizando análisis sintáctico...", cVerde);
-        
+
         CtrlInterfaz.habilita(true, checkEditando, checkCompilando, checkSalida, checkLexico, checkSintactico, checkSemantico);
         CtrlInterfaz.habilita(false, checkIntermedio, checkObjeto, checkOptimizacion);
         if (lexemas.isEmpty()) {
             TextPaneTest.appendToPane(txtPanelSalida, "\nNo se puede hacer el análisis sintactico, realice el análisis léxico...", cRojo);
         } else {
-            
+
             Sintactico analisisSintactico = new Sintactico();
             analisisSintactico.setLexemas(lexemas);
             analisisSintactico.setPathGramatica("gramaticaLeng.txt");
@@ -3339,10 +3335,10 @@ public final class EditorPlanetProgramming extends javax.swing.JFrame {
             txtPanelSintactico2.setText(o[1]);
             int contador = 0;
             int renglonCaret = 0;
-            
+
             if (analisisSintactico.getNumError() != 0) {
                 StringTokenizer st = new StringTokenizer(txtPanelEditando.getText(), "+ -=*&| {}()[]^/%;:,<>\n\t\r!", true);
-                
+
                 while (st.hasMoreElements()) {
                     String cad = st.nextToken();
                     if (contador == analisisSintactico.getNumError()) {
@@ -3354,34 +3350,34 @@ public final class EditorPlanetProgramming extends javax.swing.JFrame {
                     } else {
                         char[] toCharArray = cad.toCharArray();
                         renglonCaret += toCharArray.length;
-                        
+
                     }
-                    
+
                 }
-                
+
                 txtPanelEditando.setCaretPosition(renglonCaret - 1);
-                TextPaneTest.appendToPane(txtPanelSalida, "\nSintacticamente incorrecto..." + " error en la línea " + analisisSintactico.getNumError() + "(tiempo total: " + c.min + " minutos " + c.seg + " segundos)", cRojo);
+                TextPaneTest.appendToPane(txtPanelSalida, "\nSintacticamente incorrecto..." + " error en la línea " + analisisSintactico.getNumError() + " (tiempo total: " + c.getMin() + " minutos " + c.getSeg() + " segundos " + c.getMilisegundos() + " milisegundos)", cRojo);
             } else {
-                
-                TextPaneTest.appendToPane(txtPanelSalida, "\nSintacticamente correcto..." + "  (tiempo total: " + c.min + " minutos " + c.seg + " segundos)", cVerde);
+
+                TextPaneTest.appendToPane(txtPanelSalida, "\nSintacticamente correcto..." + " (tiempo total: " + c.getMin() + " minutos " + c.getSeg() + " segundos " + c.getMilisegundos() + " milisegundos)", cVerde);
             }
-            
+
         }
-        
+
     }
-    
+
     public void semantico() {
         RutinasSemanticas rSem = new RutinasSemanticas(lexemas);
         rSem.analisisSemantico();
-        
+
         CtrlInterfaz.habilita(true, itemGuardar, itemLexico, itemSintactico, itemSemantico, itemIntermedio);
         CtrlInterfaz.habilita(false, itemOptmizacion, itemObjeto);
         CtrlInterfaz.habilita(true, checkEditando, checkCompilando, checkSalida, checkLexico, checkSintactico, checkSemantico, checkIntermedio);
         CtrlInterfaz.habilita(false, checkObjeto, checkOptimizacion);
         TextPaneTest.appendToPane(txtPanelSalida, "\nRealizando análisis semántico...", cVerde);
-        
+
     }
-    
+
     public void intermedio() {
         CtrlInterfaz.habilita(true, itemGuardar, itemLexico, itemSintactico, itemSemantico, itemIntermedio, itemOptmizacion);
         CtrlInterfaz.habilita(false, itemObjeto);
@@ -3389,60 +3385,60 @@ public final class EditorPlanetProgramming extends javax.swing.JFrame {
         CtrlInterfaz.habilita(false, checkObjeto);
         TextPaneTest.appendToPane(txtPanelSalida, "\nGenerando código intermedio...", cVerde);
     }
-    
+
     public void optimizacion() {
         CtrlInterfaz.habilita(true, itemGuardar, itemLexico, itemSintactico, itemSemantico, itemIntermedio, itemOptmizacion, itemObjeto);
         CtrlInterfaz.habilita(true, checkEditando, checkCompilando, checkSalida, checkLexico, checkSintactico, checkSemantico, checkIntermedio, checkOptimizacion, checkObjeto);
-        
+
         TextPaneTest.appendToPane(txtPanelSalida, "\nRealizando optimización del código...", cVerde);
-        
+
     }
-    
+
     public void objeto() {
         CtrlInterfaz.habilita(true, itemGuardar, itemLexico, itemSintactico, itemSemantico, itemIntermedio, itemOptmizacion, itemObjeto);
         CtrlInterfaz.habilita(true, checkEditando, checkCompilando, checkSalida, checkLexico, checkSintactico, checkSemantico, checkIntermedio, checkOptimizacion, checkObjeto);
         TextPaneTest.appendToPane(txtPanelSalida, "\nGenerando código objeto...", cVerde);
-        
+
     }
-    int seg = 0;
-    int min = 0;
-    int hor = 0;
     HiloTemporizador c;
-    
+
     public void compilar() {
-        
+
         if (checkCompilando.isSelected()) {
             crearPestaniaCompilacion();
         }
-        
+
         ArrayList<Errores> lsErr = new ArrayList<>();
         ArrayList<Informacion> lsInf = new ArrayList<>();
         lstError = lsErr;
         lstInfo = lsInf;
-        c = new HiloTemporizador(0, 0, 0);
+        c = new HiloTemporizador(0, 0, 0, 0);
         c.start();
         setCursor(new Cursor(Cursor.WAIT_CURSOR));
         crearPestaniaLexico();
         lexico();
-        
+
         setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
         if (!bError) {
-            
+
             setCursor(new Cursor(Cursor.WAIT_CURSOR));
             crearPestaniaSintactico();
             sintactico();
             bError = false;
-            
+            try {
+                c.stop();
+            } catch (Exception e) {
+            }
             setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
-            
+
         } else {
             try {
                 c.stop();
             } catch (Exception e) {
             }
             Mensaje.advertencia(this, "El analisis sintactico no se puede realizar, debido a que hay un error léxico");
-            TextPaneTest.appendToPane(txtPanelSalida, "\nError al realizar analisis sinctatico... (tiempo total: " + c.min + " minutos " + c.seg + " segundos)", cRojo);
-            
+            TextPaneTest.appendToPane(txtPanelSalida, "\nError al realizar analisis sinctatico... (tiempo total: " + c.getMin() + " minutos " + c.getSeg() + " segundos " + c.getMilisegundos() + " milisegundos)", cRojo);
+
         }
         txtPanelCompilando.setEditable(true);
         txtPanelCompilando.setText("");
@@ -3453,57 +3449,66 @@ public final class EditorPlanetProgramming extends javax.swing.JFrame {
         TextPaneTest.ponerEstilo(txtPanelCompilando, "NEGRITAS", "Lenguaje: CoffeeCode\n");
         TextPaneTest.ponerEstilo(txtPanelCompilando, "NEGRITAS", "------------------------------------------------------------------------------------------------------------------------------------------\n"
                 + "EXTRAYENDO ARCHIVOS NECESARIOS");
-        
+
         TextPaneTest.appendToPane(txtPanelCompilando, "\n" + inf, cNegro);
-        
+
         String errores = "";
         for (int j = 0; j < EditorPlanetProgramming.lstError.size(); j++) {
             errores += EditorPlanetProgramming.lstError.get(j).getIdError() + " ::\t" + EditorPlanetProgramming.lstError.get(j).getTipo() + " ::\t" + EditorPlanetProgramming.lstError.get(j).getDescripcion() + " ::\tEn la línea " + EditorPlanetProgramming.lstError.get(j).getLineaCodigo() + "\n";
         }
         if (errores.isEmpty()) {
             TextPaneTest.ponerEstilo(txtPanelCompilando, "NEGRITAS", "------------------------------------------------------------------------------------------------------------------------------------------\n");
-            
+
             TextPaneTest.appendToPane(txtPanelCompilando, "\n" + "COMPILACION EXITOSA", cAzul);
-            
+
         } else {
             TextPaneTest.ponerEstilo(txtPanelCompilando, "NEGRITAS", "------------------------------------------------------------------------------------------------------------------------------------------\n");
-            
+
             TextPaneTest.appendToPane(txtPanelCompilando, "\n" + "HAY ERRORES DE COMPILACIÓN", cRojo);
             TextPaneTest.appendToPane(txtPanelCompilando, "\n" + errores, cNegro);
-            
+
         }
         txtPanelCompilando.setEditable(false);
-        
+
     }
-    
+
     public void ejecutar() {
-        
+        ArrayList<Lexema> lexemas2 = new ArrayList<>();
+
+        for (int j = 0; j < lexemas.size(); j++) {
+            if (!lexemas.get(j).getLexema().equals("Comentatio")) {
+                Lexema l = new Lexema();
+                l.setLexema(lexemas.get(j).getLexema());
+                lexemas2.add(lexemas.get(j));
+            }
+
+        }
     }
-    
+
     public void fuente() {
         VtnConfiguracion vtnConfig = new VtnConfiguracion(this, true);
         vtnConfig.setVisible(true);
-        
+
     }
-    
+
     public void ayuda() {
         VtnAyuda vtnAy = new VtnAyuda(this, false);
         vtnAy.setVisible(true);
     }
-    
+
     public void acercaDe() {
         VtnAcercaDe abaut = new VtnAcercaDe(this, false);
         abaut.setVisible(true);
     }
-    
+
     public void eliminarPalabra() {
-        
+
     }
-    
+
     public void limpiar() {
-        
+
     }
-    
+
     public void cortar(String txtCopy) {
         StringSelection ss = new StringSelection(txtCopy);
 
@@ -3512,7 +3517,7 @@ public final class EditorPlanetProgramming extends javax.swing.JFrame {
         //Ajustamos el contenido al portapapeles
         cb.setContents(ss, null);
     }
-    
+
     public void copiar(String txtCopy) {
         StringSelection ss = new StringSelection(txtCopy);
 
@@ -3521,7 +3526,7 @@ public final class EditorPlanetProgramming extends javax.swing.JFrame {
         //Ajustamos el contenido al portapapeles
         cb.setContents(ss, null);
     }
-    
+
     public String pegar() {
         String rs = "";
         Clipboard cb = Toolkit.getDefaultToolkit().getSystemClipboard();
@@ -3535,13 +3540,13 @@ public final class EditorPlanetProgramming extends javax.swing.JFrame {
         } catch (UnsupportedFlavorException | IOException e) {
             Mensaje.error(this, "Ha ocurrido un error al pegar contenido");
         }
-        
+
         return rs;
     }
-    
+
     public void deshacer() {
         if (pilaDeshacer.getTope() != null) {
-            
+
             pilaRehacer.inserta(pilaDeshacer.elimina(null), null);
             btnRehacer.setEnabled(true);
             itemRehacer.setEnabled(true);
@@ -3552,15 +3557,15 @@ public final class EditorPlanetProgramming extends javax.swing.JFrame {
             } else {
                 txtPanelEditando.setText(pilaDeshacer.getTope().getS());
             }
-            
+
         } else {
             btnDeshacer.setEnabled(false);
             itemDeshacer.setEnabled(false);
         }
     }
-    
+
     public void rehacer() {
-        
+
         if (pilaRehacer.getTope() != null) {
             pilaDeshacer.inserta(pilaRehacer.elimina(null), null);
             btnDeshacer.setEnabled(true);
@@ -3570,29 +3575,29 @@ public final class EditorPlanetProgramming extends javax.swing.JFrame {
                 btnRehacer.setEnabled(false);
                 itemRehacer.setEnabled(false);
             }
-            
+
         } else {
             btnRehacer.setEnabled(false);
             itemRehacer.setEnabled(false);
         }
     }
-    
+
     public void buscar() {
         VtnBuscarReemplazar vtnBR = new VtnBuscarReemplazar(this, false);
         vtnBR.getjTabbedPane1().setSelectedIndex(0);
         vtnBR.setVisible(true);
     }
-    
+
     public void buscarReemplazar() {
         VtnBuscarReemplazar vtnBR = new VtnBuscarReemplazar(this, false);
         vtnBR.getjTabbedPane1().setSelectedIndex(1);
         vtnBR.setVisible(true);
     }
-    
+
     public void seleccionarPalabra() {
         int finalS = txtPanelEditando.getSelectionEnd();
         int inicioS = txtPanelEditando.getSelectionStart();
-        
+
         if (inicioS != finalS) {
             palabraSeleccionada = txtPanelEditando.getText().substring(inicioS, finalS);
 
@@ -3602,7 +3607,7 @@ public final class EditorPlanetProgramming extends javax.swing.JFrame {
             //Habilitar MenuOpciones
             CtrlInterfaz.habilita(true, btnBuscar,
                     btnCopiar, btnCortar);
-            
+
         } else {
             //deshabilitar popMenu
             CtrlInterfaz.habilita(false, popMBuscar,
@@ -3612,7 +3617,7 @@ public final class EditorPlanetProgramming extends javax.swing.JFrame {
                     btnCopiar, btnCortar);
         }
     }
-    
+
     public void seleccionarTodoCodigo() {
         txtPanelEditando.setSelectionEnd(0);
         txtPanelEditando.setSelectionStart(txtPanelEditando.getText().length());
@@ -3626,7 +3631,7 @@ public final class EditorPlanetProgramming extends javax.swing.JFrame {
             //Habilitar MenuOpciones
             CtrlInterfaz.habilita(true, btnBuscar,
                     btnCopiar, btnCortar);
-            
+
         } else {
             //deshabilitar popMenu
             CtrlInterfaz.habilita(false, popMBuscar,
@@ -3636,7 +3641,7 @@ public final class EditorPlanetProgramming extends javax.swing.JFrame {
                     btnCopiar, btnCortar);
         }
     }
-    
+
     public void seleccionarCadena() {
         int finalS = txtPanelEditando.getSelectionEnd();
         int inicioS = txtPanelEditando.getSelectionStart();
@@ -3648,7 +3653,7 @@ public final class EditorPlanetProgramming extends javax.swing.JFrame {
             //Habilitar MenuOpciones
             CtrlInterfaz.habilita(true, btnBuscar,
                     btnCopiar, btnCortar);
-            
+
         } else {
             //deshabilitar popMenu
             CtrlInterfaz.habilita(false, popMBuscar,
@@ -3657,9 +3662,9 @@ public final class EditorPlanetProgramming extends javax.swing.JFrame {
             CtrlInterfaz.habilita(false, btnBuscar,
                     btnCopiar, btnCortar);
         }
-        
+
     }
-    
+
     public void editando() {
         CtrlInterfaz.habilita(true, btnGuardar, btnEjecutar, btnCerrar, btnReemplazar, btnBuscar, btnCompilar);
         //Habilitar popMenu
@@ -3668,40 +3673,40 @@ public final class EditorPlanetProgramming extends javax.swing.JFrame {
         CtrlInterfaz.habilita(true, itemCompilar, itemEjecutar, itemGuardar, itemGuardarComo, itemNuevo, itemLexico);
         //Deshabilitar itemMenus
         CtrlInterfaz.habilita(false, itemIntermedio, itemObjeto, itemOptmizacion, itemSemantico, itemSintactico);
-        
+
     }
-    
+
     public void formato() {
         Validaciones.enterColor(txtPanelEditando);
     }
-    
+
     public void esperandoDatos(String s) {
         TextPaneTest.appendToPane(txtPanelSalida, s + "\n", cNegro);
         pointInicio = txtPanelSalida.getText().length();
         txtPanelSalida.setEditable(true);
     }
-    
+
     public void introductiendoDatos() {
         //pointFinal = txtPanelEditando.getCaretPosition();
         //pointFinal = txtPanelSalida.getCaretPosition();
         StyleContext sc2 = StyleContext.getDefaultStyleContext();
         AttributeSet aset2 = sc2.addAttribute(SimpleAttributeSet.EMPTY, StyleConstants.Foreground, Color.black);
-        
+
         int len2 = txtPanelSalida.getDocument().getLength();
         txtPanelSalida.setCaretPosition(len2);
         txtPanelSalida.setCharacterAttributes(aset2, true);
         txtPanelSalida.replaceSelection("");
-        
+
     }
-    
+
     public void entradandoDatos() {
         pointFinal = txtPanelSalida.getText().length();
         txtPanelSalida.setEditable(false);
         entrada = txtPanelSalida.getText().substring(pointInicio, pointFinal);
         System.out.println("Salida del dato: " + entrada);
-        
+
         TextPaneTest.ponerEstilo(txtPanelSalida, "CURSIVA Y NEGRITA", "\n" + entrada);
-        
+
     }
 
     /**
@@ -3713,7 +3718,7 @@ public final class EditorPlanetProgramming extends javax.swing.JFrame {
         /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
          * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
          */
-        
+
         try {
             for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
                 if ("Windows".equals(info.getName())) {
@@ -3732,11 +3737,11 @@ public final class EditorPlanetProgramming extends javax.swing.JFrame {
             new EditorPlanetProgramming().setVisible(true);
         });
     }
-    
+
     public JTextPane getTxtPanelCompilando() {
         return txtPanelCompilando;
     }
-    
+
     public void setTxtPanelCompilando(JTextPane txtPanelCompilando) {
         this.txtPanelCompilando = txtPanelCompilando;
     }
@@ -3874,7 +3879,7 @@ public final class EditorPlanetProgramming extends javax.swing.JFrame {
     private final ImageIcon imageMUSIC = new ImageIcon(ClassLoader.getSystemResource("Resources/Img/music.png"));
     private final ImageIcon imageSOUND = new ImageIcon(ClassLoader.getSystemResource("Resources/Img/sound.png"));
     private final ImageIcon imageIMAGE = new ImageIcon(ClassLoader.getSystemResource("Resources/Img/Image.png"));
-    
+
     private final ImageIcon imageProyectos = new ImageIcon(ClassLoader.getSystemResource("imagenes/FolderCodes.png"));
     private final ImageIcon imageLenguaje = new ImageIcon(ClassLoader.getSystemResource("imagenes/coffeCode.png"));
     private final ImageIcon imageEditar = new ImageIcon(ClassLoader.getSystemResource("iconos/18171 - editors package.png"));
@@ -3898,18 +3903,18 @@ public final class EditorPlanetProgramming extends javax.swing.JFrame {
     private NumeroLinea numLineIntermedio;
     private NumeroLinea numLineObjeto;
     private NumeroLinea numLineOptimizado;
-    
+
     private boolean archivo = false;
     public String rutaArchivo = "";
-    
+
     private String cadenaSeleccionada = "";
     private String palabraSeleccionada = "";
     private String textoPanelEditando = "";
-    
+
     private String entrada = "";
     private int pointInicio = 0;
     private int pointFinal = 0;
-    
+
     private int vecSal[];
     private final CmpntTabPane panelTab[];
     //Cursor
@@ -4072,25 +4077,25 @@ public final class EditorPlanetProgramming extends javax.swing.JFrame {
     private javax.swing.JToolBar toolBarAccesosDirectos;
     // End of variables declaration//GEN-END:variables
 private final CustomJTree tree = new CustomJTree();
-    
+
     public javax.swing.JTabbedPane getPestaniasEntradaSalidas() {
         return pestaniasEntradaSalidas;
     }
-    
+
     public void setPestaniasEntradaSalidas(javax.swing.JTabbedPane pestaniasEntradaSalidas) {
         this.pestaniasEntradaSalidas = pestaniasEntradaSalidas;
     }
-    
+
     public Image zoomImage(int w, int h, Image img) {
         BufferedImage buf = new BufferedImage(w, h, BufferedImage.TYPE_INT_RGB);
         Graphics2D grf = buf.createGraphics();
         grf.setRenderingHint(RenderingHints.KEY_INTERPOLATION, RenderingHints.VALUE_INTERPOLATION_BILINEAR);
         grf.drawImage(img, 0, 0, w, h, null);
         grf.dispose();
-        
+
         return buf;
     }
-    
+
     private void crearPagEdicion(String s, ImageIcon extension, String nombre) {
         javax.swing.JScrollPane scrollPag = new javax.swing.JScrollPane();
         PanelTextoEditor pag = new PanelTextoEditor();
@@ -4105,7 +4110,7 @@ private final CustomJTree tree = new CustomJTree();
         i++;
         NumeroLinea numLinea = new NumeroLinea(pag);
         scrollPag.setRowHeaderView(numLinea);
-        
+
         CmpntTabPane pnlTab = new CmpntTabPane(pestaniasEntradaSalidas, 0, extension);
         int indexTab = 0;
         /*
@@ -4123,19 +4128,19 @@ private final CustomJTree tree = new CustomJTree();
         checkEditando.setSelected(true);
          */
     }
-    
+
     private void formatoIngles() {
-        
+
     }
-    
+
     private static class HighlightLineTextPaneAzul extends JTextPane {
-        
+
         public HighlightLineTextPaneAzul() {
             // Has to be marked as transparent so the background is not replaced by 
             // super.paintComponent(g); 
             setOpaque(false);
         }
-        
+
         @Override
         protected void paintComponent(Graphics g) {
             g.setColor(getBackground());
@@ -4152,7 +4157,7 @@ private final CustomJTree tree = new CustomJTree();
             }
             super.paintComponent(g);
         }
-        
+
         @Override
         public void repaint(long tm, int x, int y, int width, int height) {
             // This forces repaints to repaint the entire TextPane. 
@@ -4161,84 +4166,84 @@ private final CustomJTree tree = new CustomJTree();
     }
     private DefaultTreeModel modelo;
     private DefaultMutableTreeNode root;
-    
+
     private void actualizar(File fichero) {
         //  root = new DefaultMutableTreeNode(fichero.getName());
         Node cat2 = null;
-        
+
         if (creaa(root, fichero)) {
             cat2 = new Node(Utils.TypeFile.PROYECT, fichero.getName());
         } else {
             if (fichero.isFile()) {
                 if (fichero.getName().contains(".java")) {
                     cat2 = new Node(Utils.TypeFile.CLASS, fichero.getName());
-                    
+
                 } else if (fichero.getName().contains(".png")) {
                     cat2 = new Node(Utils.TypeFile.IMAGEPNG, fichero.getName());
-                    
+
                 } else if (fichero.getName().contains(".class")) {
                     cat2 = new Node(Utils.TypeFile.JAVA, fichero.getName());
-                    
+
                 } else if (fichero.getName().contains(".jpg")) {
                     cat2 = new Node(Utils.TypeFile.IMAGE, fichero.getName());
-                    
+
                 } else if (fichero.getName().contains(".gif")) {
                     cat2 = new Node(Utils.TypeFile.PICTURE, fichero.getName());
-                    
+
                 } else if (fichero.getName().contains(".docx")) {
                     cat2 = new Node(Utils.TypeFile.WORD, fichero.getName());
-                    
+
                 } else if (fichero.getName().contains(".zip")) {
                     cat2 = new Node(Utils.TypeFile.FOLDERAMARILLO, fichero.getName());
-                    
+
                 } else if (fichero.getName().contains(".rar")) {
                     cat2 = new Node(Utils.TypeFile.FOLDERROJO, fichero.getName());
-                    
+
                 } else if (fichero.getName().contains(".sql")) {
                     cat2 = new Node(Utils.TypeFile.SQL, fichero.getName());
-                    
+
                 } else if (fichero.getName().contains(".xlsx")) {
                     cat2 = new Node(Utils.TypeFile.EXCEL, fichero.getName());
-                    
+
                 } else if (fichero.getName().contains(".pptx")) {
                     cat2 = new Node(Utils.TypeFile.POWERPOINT, fichero.getName());
-                    
+
                 } else if (fichero.getName().contains(".mp3")) {
                     cat2 = new Node(Utils.TypeFile.MUSIC, fichero.getName());
-                    
+
                 } else if (fichero.getName().contains(".html")) {
                     cat2 = new Node(Utils.TypeFile.HTML5, fichero.getName());
-                    
+
                 } else if (fichero.getName().contains(".css")) {
                     cat2 = new Node(Utils.TypeFile.CSS3, fichero.getName());
-                    
+
                 } else if (fichero.getName().contains(".js")) {
                     cat2 = new Node(Utils.TypeFile.JS, fichero.getName());
-                    
+
                 } else if (fichero.getName().contains(".py")) {
                     cat2 = new Node(Utils.TypeFile.PYTHON, fichero.getName());
-                    
+
                 } else if (fichero.getName().contains(".pdf")) {
                     cat2 = new Node(Utils.TypeFile.ADOBE, fichero.getName());
-                    
+
                 } else if (fichero.getName().contains(".mp3")) {
                     cat2 = new Node(Utils.TypeFile.MUSIC, fichero.getName());
-                    
+
                 } else if (fichero.getName().contains(".mp4")) {
                     cat2 = new Node(Utils.TypeFile.VIDEO, fichero.getName());
-                    
+
                 } else if (fichero.getName().contains(".txt")) {
                     cat2 = new Node(Utils.TypeFile.ARCHIVOSTEXTO, fichero.getName());
-                    
+
                 } else if (fichero.getName().contains(".rb")) {
                     cat2 = new Node(Utils.TypeFile.SKECTK, fichero.getName());
-                    
+
                 } else if (fichero.getName().contains(".form")) {
                     cat2 = new Node(Utils.TypeFile.FORM, fichero.getName());
-                    
+
                 } else if (fichero.getName().contains(".svg")) {
                     cat2 = new Node(Utils.TypeFile.WEB, fichero.getName());
-                    
+
                 } else if (fichero.getName().contains(".git")) {
                     cat2 = new Node(Utils.TypeFile.LOGOGITHUB, fichero.getName());
                 } else if (fichero.getName().contains(".php")) {
@@ -4250,58 +4255,58 @@ private final CustomJTree tree = new CustomJTree();
                 switch (fichero.getName()) {
                     case "Source Package": {
                         cat2 = new Node(Utils.TypeFile.FOLDERPAQUETES, fichero.getName());
-                        
+
                         break;
                     }
                     case "Libraries": {
                         cat2 = new Node(Utils.TypeFile.FOLDERAMARILLO, fichero.getName());
-                        
+
                         break;
                     }
                     case "Desktop": {
                         cat2 = new Node(Utils.TypeFile.ESCRITORIO, fichero.getName());
-                        
+
                         break;
                     }
                     case "Escritorio": {
                         cat2 = new Node(Utils.TypeFile.ESCRITORIO, fichero.getName());
-                        
+
                         break;
                     }
                     case "Imagenes": {
                         cat2 = new Node(Utils.TypeFile.FOLDERIMAGENES, fichero.getName());
-                        
+
                         break;
                     }
                     case "Music": {
                         cat2 = new Node(Utils.TypeFile.FOLDERSONIDO, fichero.getName());
-                        
+
                         break;
                     }
                     case "Movies": {
                         cat2 = new Node(Utils.TypeFile.FOLDERVIDEO, fichero.getName());
-                        
+
                         break;
                     }
                     case "Documents": {
                         cat2 = new Node(Utils.TypeFile.FOLDERDOCUMENTOS, fichero.getName());
-                        
+
                         break;
                     }
                     case "Documentos": {
                         cat2 = new Node(Utils.TypeFile.FOLDERDOCUMENTOS, fichero.getName());
-                        
+
                         break;
                     }
-                    
+
                     default: {
                         cat2 = new Node(Utils.TypeFile.FOLDER_SOURCE, fichero.getName());
-                        
+
                         break;
                     }
                 }
             }
-            
+
         }
         root = new DefaultMutableTreeNode(cat2);
         modelo = new DefaultTreeModel(root);
@@ -4310,23 +4315,23 @@ private final CustomJTree tree = new CustomJTree();
         } else {
             crea(root, fichero);
         }
-        
+
         jTree1.setModel(modelo);
     }
-    
+
     private void iniciarModelo() {
         root = new DefaultMutableTreeNode("Vacío");
         modelo = new DefaultTreeModel(root);
         jTree1.setModel(modelo);
         jTree1.setCellRenderer(tree);
     }
-    
+
     private void creaJava(DefaultMutableTreeNode root, File fichero) {
         File[] archivos = fichero.listFiles();
         if (archivos != null) {
             int contador = 0;
             for (File f : archivos) {
-                
+
                 if (f.isFile()) {
                     if (f.getName().contains(".java")) {
                         Node cat2 = new Node(Utils.TypeFile.CLASS, f.getName());
@@ -4388,21 +4393,21 @@ private final CustomJTree tree = new CustomJTree();
                         //DefaultMutableTreeNode hijo = new DefaultMutableTreeNode(f.getName());
                         modelo.insertNodeInto(hijo, root, contador);
                         contador++;
-                        
+
                     } else if (f.getName().contains(".pptx")) {
                         Node cat2 = new Node(Utils.TypeFile.POWERPOINT, f.getName());
                         DefaultMutableTreeNode hijo = new DefaultMutableTreeNode(cat2);
                         //DefaultMutableTreeNode hijo = new DefaultMutableTreeNode(f.getName());
                         modelo.insertNodeInto(hijo, root, contador);
                         contador++;
-                        
+
                     } else if (f.getName().contains(".mp3")) {
                         Node cat2 = new Node(Utils.TypeFile.MUSIC, f.getName());
                         DefaultMutableTreeNode hijo = new DefaultMutableTreeNode(cat2);
                         //DefaultMutableTreeNode hijo = new DefaultMutableTreeNode(f.getName());
                         modelo.insertNodeInto(hijo, root, contador);
                         contador++;
-                        
+
                     } else if (f.getName().contains(".html")) {
                         Node cat2 = new Node(Utils.TypeFile.HTML5, f.getName());
                         DefaultMutableTreeNode hijo = new DefaultMutableTreeNode(cat2);
@@ -4488,7 +4493,7 @@ private final CustomJTree tree = new CustomJTree();
                         modelo.insertNodeInto(hijo, root, contador);
                         contador++;
                     }
-                    
+
                 } else if (f.isDirectory()) {
                     switch (f.getName()) {
                         case "src": {
@@ -4563,7 +4568,7 @@ private final CustomJTree tree = new CustomJTree();
                             crea(hijo, f);
                             break;
                         }
-                        
+
                         default: {
                             Node cat2 = new Node(Utils.TypeFile.FOLDER_SOURCE, f.getName());
                             DefaultMutableTreeNode hijo = new DefaultMutableTreeNode(cat2);
@@ -4574,18 +4579,18 @@ private final CustomJTree tree = new CustomJTree();
                             break;
                         }
                     }
-                    
+
                 }
             }
         }
     }
-    
+
     private void creaPaquetes(DefaultMutableTreeNode root, File fichero) {
         File[] archivos = fichero.listFiles();
         if (archivos != null) {
             int contador = 0;
             for (File f : archivos) {
-                
+
                 if (f.isFile()) {
                     if (f.getName().contains(".java")) {
                         Node cat2 = new Node(Utils.TypeFile.CLASS, f.getName());
@@ -4647,21 +4652,21 @@ private final CustomJTree tree = new CustomJTree();
                         //DefaultMutableTreeNode hijo = new DefaultMutableTreeNode(f.getName());
                         modelo.insertNodeInto(hijo, root, contador);
                         contador++;
-                        
+
                     } else if (f.getName().contains(".pptx")) {
                         Node cat2 = new Node(Utils.TypeFile.POWERPOINT, f.getName());
                         DefaultMutableTreeNode hijo = new DefaultMutableTreeNode(cat2);
                         //DefaultMutableTreeNode hijo = new DefaultMutableTreeNode(f.getName());
                         modelo.insertNodeInto(hijo, root, contador);
                         contador++;
-                        
+
                     } else if (f.getName().contains(".mp3")) {
                         Node cat2 = new Node(Utils.TypeFile.MUSIC, f.getName());
                         DefaultMutableTreeNode hijo = new DefaultMutableTreeNode(cat2);
                         //DefaultMutableTreeNode hijo = new DefaultMutableTreeNode(f.getName());
                         modelo.insertNodeInto(hijo, root, contador);
                         contador++;
-                        
+
                     } else if (f.getName().contains(".html")) {
                         Node cat2 = new Node(Utils.TypeFile.HTML5, f.getName());
                         DefaultMutableTreeNode hijo = new DefaultMutableTreeNode(cat2);
@@ -4747,27 +4752,27 @@ private final CustomJTree tree = new CustomJTree();
                         modelo.insertNodeInto(hijo, root, contador);
                         contador++;
                     }
-                    
+
                 } else if (f.isDirectory()) {
-                    
+
                     Node cat2 = new Node(Utils.TypeFile.PACKAGE, f.getName());
                     DefaultMutableTreeNode hijo = new DefaultMutableTreeNode(cat2);
                     //DefaultMutableTreeNode hijo = new DefaultMutableTreeNode(f.getName());
                     modelo.insertNodeInto(hijo, root, contador);
                     contador++;
                     creaPaquetes(hijo, f);
-                    
+
                 }
             }
         }
     }
-    
+
     private void crea(DefaultMutableTreeNode root, File fichero) {
         File[] archivos = fichero.listFiles();
         if (archivos != null) {
             int contador = 0;
             for (File f : archivos) {
-                
+
                 if (f.isFile()) {
                     if (f.getName().contains(".java")) {
                         Node cat2 = new Node(Utils.TypeFile.CLASS, f.getName());
@@ -4829,21 +4834,21 @@ private final CustomJTree tree = new CustomJTree();
                         //DefaultMutableTreeNode hijo = new DefaultMutableTreeNode(f.getName());
                         modelo.insertNodeInto(hijo, root, contador);
                         contador++;
-                        
+
                     } else if (f.getName().contains(".pptx")) {
                         Node cat2 = new Node(Utils.TypeFile.POWERPOINT, f.getName());
                         DefaultMutableTreeNode hijo = new DefaultMutableTreeNode(cat2);
                         //DefaultMutableTreeNode hijo = new DefaultMutableTreeNode(f.getName());
                         modelo.insertNodeInto(hijo, root, contador);
                         contador++;
-                        
+
                     } else if (f.getName().contains(".mp3")) {
                         Node cat2 = new Node(Utils.TypeFile.MUSIC, f.getName());
                         DefaultMutableTreeNode hijo = new DefaultMutableTreeNode(cat2);
                         //DefaultMutableTreeNode hijo = new DefaultMutableTreeNode(f.getName());
                         modelo.insertNodeInto(hijo, root, contador);
                         contador++;
-                        
+
                     } else if (f.getName().contains(".html")) {
                         Node cat2 = new Node(Utils.TypeFile.HTML5, f.getName());
                         DefaultMutableTreeNode hijo = new DefaultMutableTreeNode(cat2);
@@ -4929,7 +4934,7 @@ private final CustomJTree tree = new CustomJTree();
                         modelo.insertNodeInto(hijo, root, contador);
                         contador++;
                     }
-                    
+
                 } else if (f.isDirectory()) {
                     switch (f.getName()) {
                         case "Source Package": {
@@ -5004,7 +5009,7 @@ private final CustomJTree tree = new CustomJTree();
                             crea(hijo, f);
                             break;
                         }
-                        
+
                         default: {
                             Node cat2 = new Node(Utils.TypeFile.FOLDER_SOURCE, f.getName());
                             DefaultMutableTreeNode hijo = new DefaultMutableTreeNode(cat2);
@@ -5015,27 +5020,27 @@ private final CustomJTree tree = new CustomJTree();
                             break;
                         }
                     }
-                    
+
                 }
             }
         }
     }
-    
+
     private boolean creaa(DefaultMutableTreeNode root, File fichero) {
-        
+
         boolean cap2 = false;
         boolean cap3 = false;
-        
+
         boolean cap;
         File[] archivos = fichero.listFiles();
         if (archivos != null) {
             for (File f : archivos) {
-                
+
                 if (f.isFile()) {
-                    
+
                 } else if (f.isDirectory()) {
                     switch (f.getName()) {
-                        
+
                         case "nbproject": {
                             cap2 = true;
                             break;
@@ -5044,24 +5049,24 @@ private final CustomJTree tree = new CustomJTree();
                             cap3 = true;
                             break;
                         }
-                        
+
                         default:
                             break;
                     }
                 }
-                
+
             }
         }
         cap = cap2 && cap3;
         return cap;
-        
+
     }
 // Creates highlights around all occurrences of pattern in textComp
 
     public void highlight(JTextComponent textComp, String pattern) {
         // First remove all old highlights
         removeHighlights(textComp);
-        
+
         try {
             Highlighter hilite = textComp.getHighlighter();
             Document doc = textComp.getDocument();
@@ -5082,24 +5087,50 @@ private final CustomJTree tree = new CustomJTree();
     public void removeHighlights(JTextComponent textComp) {
         Highlighter hilite = textComp.getHighlighter();
         Highlighter.Highlight[] hilites = hilite.getHighlights();
-        
+
         for (Highlighter.Highlight hilite1 : hilites) {
             if (hilite1.getPainter() instanceof MyHighlightPainter) {
                 hilite.removeHighlight(hilite1);
             }
         }
+
     }
 
+    public void optimizarComentarios() {
+        ArrayList<Lexema> lista2 = new ArrayList<>();
+        for (int j = 0; j < lexemas.size(); j++) {
+            if (!(lexemas.get(j).getNumToken() == 59) || !(lexemas.get(j).getNumToken() == 60)) {
+                Lexema lx = new Lexema();
+                lx.setLexema(lexemas.get(j).getLexema());
+                lx.setNombreToken(lexemas.get(j).getNombreToken());
+                lx.setNumToken(lexemas.get(j).getNumToken());
+                lx.setRenglon(lexemas.get(j).getRenglon());
+                lista2.add(lx);
+            }
+        }
+        
+    }
+    public void ordenarOperandos(){
+        ArrayList<Lexema> lista2=new ArrayList<Lexema>();
+        for (int j = 0; j < lista2.size(); j++) {
+            if(lista2.get(j).getNumToken()==53){
+                
+            }
+        }
+    }
+    
+    
+    
 // An instance of the private subclass of the default highlight painter
     Highlighter.HighlightPainter myHighlightPainter = new MyHighlightPainter(Color.YELLOW);
 
 // A private subclass of the default highlight painter
     class MyHighlightPainter extends DefaultHighlighter.DefaultHighlightPainter {
-        
+
         public MyHighlightPainter(Color color) {
             super(color);
-            
+
         }
     }
-    
+
 }
